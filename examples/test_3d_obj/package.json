@@ -1,0 +1,18 @@
+{
+  "name": "test_3d_obj",
+  "version": "1.0.0",
+  "description": "load and display 3d obj model",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SJ",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^32.2.0"
+  },
+  "dependencies": {
+    "three": "^0.169.0"
+  }
+}

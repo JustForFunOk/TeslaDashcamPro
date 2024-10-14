@@ -1,0 +1,41 @@
+<!-- video-player.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频播放器</title>
+</head>
+
+<body>
+    <h1>视频播放器</h1>
+
+    <!-- 返回按钮 -->
+    <button id="back-button">返回主页</button>
+
+    <video id="video-player" width="800" controls></video>
+
+    <script>
+        // 获取URL中的查询参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoFilePath = urlParams.get('file');  // 获取传递的文件路径
+
+        if (videoFilePath) {
+            const videoPlayer = document.getElementById('video-player');
+            videoPlayer.src = videoFilePath;  // 设置视频的src为传递的文件路径
+            videoPlayer.play();  // 自动播放
+        } else {
+            alert('未找到视频文件路径');
+        }
+
+        // 返回按钮点击事件，跳转回主页面
+        const backButton = document.getElementById('back-button');
+        backButton.addEventListener('click', () => {
+            window.location.href = 'index.html';  // 跳转回主页面
+        });
+    </script>
+</body>
+
+</html>

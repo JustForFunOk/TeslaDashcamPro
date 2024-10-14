@@ -1,0 +1,19 @@
+{
+  "name": "my-electron-app",
+  "version": "1.0.0",
+  "description": "eletron app hello world",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SJ",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^32.2.0"
+  },
+  "dependencies": {
+    "three": "^0.169.0",
+    "three-obj-loader": "^1.1.3"
+  }
+}

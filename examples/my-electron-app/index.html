@@ -1,0 +1,67 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择视频文件</title>
+</head>
+
+<body>
+    <h1>选择视频文件</h1>
+    <button id="select-folder">选择文件夹</button>
+    <ul id="video-list"></ul>
+
+    <script>
+        const selectFolderButton = document.getElementById('select-folder');
+        const videoList = document.getElementById('video-list');
+
+        // 加载已保存的视频列表（如果存在）
+        function loadSavedVideoList() {
+            const savedVideoFiles = JSON.parse(localStorage.getItem('videoFiles'));
+
+            if (savedVideoFiles) {
+                // 显示已保存的视频文件
+                for (const [fileName, filePath] of Object.entries(savedVideoFiles)) {
+                    const li = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `video-player.html?file=${encodeURIComponent(filePath)}`;
+                    link.textContent = fileName;
+                    li.appendChild(link);
+                    videoList.appendChild(li);
+                }
+            }
+        }
+
+        // 初始加载时恢复状态
+        window.onload = loadSavedVideoList;
+
+        selectFolderButton.addEventListener('click', async () => {
+            // 调用 Electron API 选择文件夹
+            const videoFiles = await window.electronAPI.selectFolder();
+
+            // 清空视频列表
+            videoList.innerHTML = '';
+
+            // 保存视频列表到localStorage
+            localStorage.setItem('videoFiles', JSON.stringify(videoFiles));
+
+            // 显示视频文件
+            for (const [fileName, filePath] of Object.entries(videoFiles)) {
+                const li = document.createElement('li');
+
+                // 创建一个可点击的链接
+                const link = document.createElement('a');
+                link.href = `video-player.html?file=${encodeURIComponent(filePath)}`;  // 通过URL传递文件路径
+                link.textContent = fileName;
+                li.appendChild(link);
+
+                videoList.appendChild(li);
+            }
+        });
+    </script>
+</body>
+
+</html>
