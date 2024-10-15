@@ -23,7 +23,6 @@
     "electron": "^32.2.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1",
-    "three": "^0.169.0"
+    "electron-squirrel-startup": "^1.0.1"
   }
 }
