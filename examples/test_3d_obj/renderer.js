@@ -1,30 +1,27 @@
 // src/js/main.js
 
-import * as THREE from './node_modules/three/build/three.module.js';
+import * as THREE from './libs/three.module.js';
+import { OBJLoader } from './libs/OBJLoader.js';
+import { OrbitControls } from './libs/OrbitControls.js';
 
 // 初始化场景、相机和渲染器
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
+const controls = new OrbitControls(camera, renderer.domElement);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// 创建立方体
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+const objLoader = new OBJLoader();
+objLoader.load('assets/car.obj', (object) => {
+    scene.add(object);
+});
 
 camera.position.z = 5;
 
-// 动画循环
 function animate() {
     requestAnimationFrame(animate);
-
-    // 旋转立方体
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-
+    controls.update();
     renderer.render(scene, camera);
 }
 
