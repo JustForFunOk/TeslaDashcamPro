@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- fix Electron Security Warning (Insecure Content-Security-Policy) -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
     <title>Three.js OBJ Loader</title>
     <style>
         body {
@@ -17,8 +19,8 @@
 </head>
 
 <body>
-
-    <script type="module" src="/renderer.js"></script>
+    <!-- three新版本目前只支持使用ES6的形式使用three： https://discourse.threejs.org/t/cant-find-threejs-and-threejs-min-js-file/65270 -->>
+    <script type="module" src="./renderer.js"></script>
 </body>
 
 </html>
