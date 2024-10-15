@@ -1,0 +1,40 @@
+#main-video-container {
+    position: relative;
+    width: 80%;
+    margin: auto;
+    padding-top: 20px;
+}
+
+#main-video {
+    width: 100%;
+}
+
+.thumbnail {
+    position: absolute;
+    width: 20%;
+    cursor: pointer;
+}
+
+#left_repeater {
+    top: 5%;
+    left: 5%;
+}
+
+#right_repeater {
+    top: 5%;
+    right: 5%;
+}
+
+#back {
+    bottom: 5%;
+    right: 5%;
+}
+
+#front {
+    bottom: 5%;
+    left: 5%;
+}
+
+.thumbnail video {
+    width: 100%;
+}

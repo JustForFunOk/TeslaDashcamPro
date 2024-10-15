@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi View Video Player</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div id="main-video-container">
+        <video id="main-video" controls>
+            <!-- 默认加载 front 视频 -->
+            <source src="./video_data/2024-10-02_14-49-54-front.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- 缩略图视角视频 -->
+        <div class="thumbnail" id="left_repeater">
+            <video muted>
+                <source src="./video_data/2024-10-02_14-49-54-left_repeater.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="thumbnail" id="right_repeater">
+            <video muted>
+                <source src="./video_data/2024-10-02_14-49-54-right_repeater.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="thumbnail" id="back">
+            <video muted>
+                <source src="./video_data/2024-10-02_14-49-54-back.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="thumbnail" id="front">
+            <video muted>
+                <source src="./video_data/2024-10-02_14-49-54-front.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+    <!-- 进度条控制 -->
+    <input type="range" id="progress-bar" value="0" step="0.01" min="0" max="1">
+
+    <!-- 引入 JavaScript -->
+    <script src="./multi_video_layout_manager.js"></script>
+</body>
+
+</html>

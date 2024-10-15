@@ -1,0 +1,12 @@
+{
+  "name": "test_multi_video_layout",
+  "version": "1.0.0",
+  "description": "test tesla mutlti video player layout",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SJ",
+  "license": "ISC"
+}
