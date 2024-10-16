@@ -9,37 +9,25 @@
 </head>
 
 <body>
-    <div id="main-video-container">
-        <video id="main-video" controls>
-            <!-- 默认加载 front 视频 -->
+    <div class="video-container">
+        <video id="video-1" class="video large" onclick="selectVideo(this)" autoplay loop muted>
             <source src="./video_data/2024-10-02_14-49-54-front.mp4" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
-
+        <video id="video-2" class="video small" onclick="selectVideo(this)" autoplay loop muted>
+            <source src="./video_data/2024-10-02_14-49-54-back.mp4" type="video/mp4">
+        </video>
+        <video id="video-3" class="video small" onclick="selectVideo(this)" autoplay loop muted>
+            <source src="./video_data/2024-10-02_14-49-54-left_repeater.mp4" type="video/mp4">
+        </video>
+        <video id="video-4" class="video small" onclick="selectVideo(this)" autoplay loop muted>
+            <source src="./video_data/2024-10-02_14-49-54-right_repeater.mp4" type="video/mp4">
+        </video>
         <!-- 缩略图视角视频 -->
-        <div class="thumbnail" id="left_repeater">
-            <video muted>
-                <source src="./video_data/2024-10-02_14-49-54-left_repeater.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="thumbnail" id="right_repeater">
-            <video muted>
-                <source src="./video_data/2024-10-02_14-49-54-right_repeater.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="thumbnail" id="back">
-            <video muted>
-                <source src="./video_data/2024-10-02_14-49-54-back.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="thumbnail" id="front">
-            <video muted>
-                <source src="./video_data/2024-10-02_14-49-54-front.mp4" type="video/mp4">
-            </video>
-        </div>
     </div>
-    <!-- 进度条控制 -->
-    <input type="range" id="progress-bar" value="0" step="0.01" min="0" max="1">
+    <div class="controls">
+        <button id="play-pause-btn" onclick="togglePlayPause()">暂停</button>
+        <input type="range" id="progress-bar" value="0" onchange="setVideoTime(this.value)">
+    </div>
 
     <!-- 引入 JavaScript -->
     <script src="./multi_video_layout_manager.js"></script>

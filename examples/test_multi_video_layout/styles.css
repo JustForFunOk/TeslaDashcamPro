@@ -1,40 +1,74 @@
-#main-video-container {
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #000;
+}
+
+.video-container {
     position: relative;
-    width: 80%;
-    margin: auto;
-    padding-top: 20px;
-}
-
-#main-video {
     width: 100%;
+    /* 容器宽度为 100% 的视口宽度 */
+    height: 80%;
+    /* 容器高度为 80% 的视口高度 */
+    overflow: hidden;
+    /* 隐藏溢出的部分 */
 }
 
-.thumbnail {
+.video {
     position: absolute;
-    width: 20%;
-    cursor: pointer;
+    object-fit: cover;
+    /* 保持视频的宽高比 */
 }
 
-#left_repeater {
-    top: 5%;
-    left: 5%;
-}
-
-#right_repeater {
-    top: 5%;
-    right: 5%;
-}
-
-#back {
-    bottom: 5%;
-    right: 5%;
-}
-
-#front {
-    bottom: 5%;
-    left: 5%;
-}
-
-.thumbnail video {
+.large {
     width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.small {
+    width: 15%;
+    height: 15%;
+    z-index: 1;
+}
+
+
+#video-1 {
+    top: 2%;
+    left: 2%;
+}
+
+#video-2 {
+    top: 2%;
+    right: 2%;
+}
+
+#video-3 {
+    bottom: 2%;
+    left: 2%;
+}
+
+#video-4 {
+    bottom: 2%;
+    right: 2%;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+input[type="range"] {
+    width: 300px;
 }
