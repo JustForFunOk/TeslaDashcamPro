@@ -11,11 +11,20 @@
 <body>
     <div class="video-container">
         <!-- 半透明的灰色窗口 -->
-        <div id="overlay-1" class="overlay"></div>
-        <div id="overlay-2" class="overlay"></div>
-        <div id="overlay-3" class="overlay"></div>
-        <div id="overlay-4" class="overlay"></div>
+        <div id="overlay-1" class="overlay">
+            <div id="label-1" class="label">前</div>
+        </div>
+        <div id="overlay-2" class="overlay">
+            <div id="label-2" class="label">后</div>
+        </div>
+        <div id="overlay-3" class="overlay">
+            <div id="label-3" class="label">左</div>
+        </div>
+        <div id="overlay-4" class="overlay">
+            <div id="label-4" class="label">右</div>
+        </div>
 
+        <!-- 缩略图视角视频 -->
         <video id="video-1" class="video large" onclick="selectVideo(this)" autoplay loop muted>
             <source src="./video_data/2024-10-02_14-49-54-front.mp4" type="video/mp4">
         </video>
@@ -28,7 +37,8 @@
         <video id="video-4" class="video small" onclick="selectVideo(this)" autoplay loop muted>
             <source src="./video_data/2024-10-02_14-49-54-right_repeater.mp4" type="video/mp4">
         </video>
-        <!-- 缩略图视角视频 -->
+
+
     </div>
     <div class="controls">
         <button id="play-pause-btn" onclick="togglePlayPause()">暂停</button>
