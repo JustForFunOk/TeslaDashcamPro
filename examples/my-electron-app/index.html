@@ -24,11 +24,13 @@
 
             if (savedVideoFiles) {
                 // 显示已保存的视频文件
-                for (const [fileName, filePath] of Object.entries(savedVideoFiles)) {
+                for (const [ts, files] of Object.entries(savedVideoFiles)) {
                     const li = document.createElement('li');
                     const link = document.createElement('a');
-                    link.href = `video-player.html?file=${encodeURIComponent(filePath)}`;
-                    link.textContent = fileName;
+
+                    // 创建链接，点击时将时间戳对应的文件信息传递到下一个页面
+                    link.href = `video-player.html?ts=${encodeURIComponent(ts)}&F=${encodeURIComponent(files.F)}&B=${encodeURIComponent(files.B)}&L=${encodeURIComponent(files.L)}&R=${encodeURIComponent(files.R)}`;
+                    link.textContent = ts;  // 显示时间戳
                     li.appendChild(link);
                     videoList.appendChild(li);
                 }
@@ -49,13 +51,13 @@
             localStorage.setItem('videoFiles', JSON.stringify(videoFiles));
 
             // 显示视频文件
-            for (const [fileName, filePath] of Object.entries(videoFiles)) {
+            for (const [ts, files] of Object.entries(videoFiles)) {
                 const li = document.createElement('li');
 
                 // 创建一个可点击的链接
                 const link = document.createElement('a');
-                link.href = `video-player.html?file=${encodeURIComponent(filePath)}`;  // 通过URL传递文件路径
-                link.textContent = fileName;
+                link.href = `video-player.html?ts=${encodeURIComponent(ts)}&F=${encodeURIComponent(files.F)}&B=${encodeURIComponent(files.B)}&L=${encodeURIComponent(files.L)}&R=${encodeURIComponent(files.R)}`;
+                link.textContent = ts;  // 显示时间戳
                 li.appendChild(link);
 
                 videoList.appendChild(li);
