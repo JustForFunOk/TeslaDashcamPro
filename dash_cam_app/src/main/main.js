@@ -6,115 +6,198 @@ const fs = require('fs');
 const allowedExtensions = ['.mp4'];
 
 
-// 文件名格式为Y-M-D-h-m-s-front.mp4, Y-M-D-h-m-s-back.mp4, Y-M-D-h-m-s-left_repeater.mp4, Y-M-D-h-m-s-right_repeater.mp4
-// Y-M-D-h-m-s代表时间
-// front, back, left_repeater, right_repeater分别对应4个位置
+// js中实现函数实现如下功能：给出指定的文件夹路径，通过文件夹名称，文件名称的解析，返回文件夹内的文件的信息到列表中
 
-// 通过文件名，将文件读取到结果中
+// 文件夹的目录结构介绍如下
+// 文件名格式为Y-M-D_h-m-s-front.mp4, Y-M-D_h-m-s-back.mp4, Y-M-D_h-m-s-left_repeater.mp4, Y-M-D_h-m-s-right_repeater.mp4
+// Y-M-D_h-m-s代表时间
+// front, back, left_repeater, right_repeater分别对应4个位置
+// 可能会有SavedClips文件夹或SentryClips文件夹，这两个文件夹下全都是子文件夹，子文件夹的名称格式为Y-M-D_h-m-s，然后这些子文件夹里存放的都是mp4视频文件
+
+// 通过文件名，文件夹名将读取结果处理后放到字典中返回
 // 其中返回结果的格式如下：
-// ts为时间，通过文件名Y-M-D-h-m-s解析
+// SavedClips字典储存SavedClips文件夹下的，若无则为空
+// SentryClips字典储存SentryClips文件夹下的，若无则为空
+// 其中folder_ts为SavedClips和SentryClips下子文件夹名称，按照时间从新到旧返回，新的时间在前面
+// file_ts为时间，通过文件名Y-M-D_h-m-s解析
 // F,B,L,R分别对应文件名中为front,back,left_repeater,right_repeater的文件，这4个文件不一定都存在
+// 而AllClips则是所选文件夹下包括所有子文件夹甚至SavedClips和SentryClips文件夹中所有符合Y-M-D_h-m-s-xxx.mp4文件，
+// 按照时间戳将这些mp4文件排序并根据时间间隔分组，
+// 如果相邻两个时间戳之间的差小于3分钟，则这两个视频归于1组，否则则归于2组，其中hour_minute_start-hour_minute_end表示分组之后
+// 该组视频的起始时间和终止时间，hour_minute_start从组最开始的视频的小时分钟中解析，hour_minute_end从组内最末尾的视频的小时分钟中解析，
+// 组在AllClips中按照时间从新到旧排列。
+// 所有的file_ts在file_ts以及hour_minute_start-hour_minute_end中都按照从旧到新排序以便连续播放
 
 // const RetType =
 // {
-//     "ts": {
-//         "F": "",
-//         "B": "",
-//         "L": "",
-//         "R": "",
+//     "SavedClips":{
+//         "folder_ts":{
+//             "file_ts": {
+//                 "F": "",
+//                 "B": "",
+//                 "L": "",
+//                 "R": "",
+//             },
+        
+//             "file_ts": {
+//                 "F": "",
+//                 "B": "",
+//                 "L": "",
+//                 "R": "",
+//             },
+//         }
 //     },
-
-//     "ts": {
-//         "F": "",
-//         "B": "",
-//         "L": "",
-//         "R": "",
+//     "SentryClips":{
+//         "folder_ts":{
+//             "file_ts": {
+//                 "F": "",
+//                 "B": "",
+//                 "L": "",
+//                 "R": "",
+//             },
+        
+//             "file_ts": {
+//                 "F": "",
+//                 "B": "",
+//                 "L": "",
+//                 "R": "",
+//             },
+//         }
 //     },
+//     "AllClips":{
+//         "day_from_video_file":{
+//             "hour_minute_start-hour_minute_end":{
+//                 "file_ts":{
+//                     "F": "",
+//                     "B": "",
+//                     "L": "",
+//                     "R": "",
+//                 },
+//                 "file_ts":{
+//                     "F": "",
+//                     "B": "",
+//                     "L": "",
+//                     "R": "",
+//                 }
+//             }
+//         }
+//     }
 // };
 
 
-// 解析文件名，获取时间戳和对应的位置
+// 帮助函数：解析文件名，返回时间戳和视频位置
 function parseFileName(fileName) {
-    const regex = /^(\d{4})-(\d{1,2})-(\d{1,2})_(\d{1,2})-(\d{1,2})-(\d{1,2})-(front|back|left_repeater|right_repeater)\.mp4$/;
+    const regex = /^(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})-(front|back|left_repeater|right_repeater)\.mp4$/;
     const match = fileName.match(regex);
-
     if (match) {
-        const [_, year, month, day, hour, minute, second, position] = match;
-        const ts = `${year}-${month}-${day} ${hour}:${minute}:${second}`; // 格式化时间
-
-        return { ts, position }; // 返回时间戳和位置
+        const file_ts = `${match[1]}-${match[2]}-${match[3]}_${match[4]}-${match[5]}-${match[6]}`;
+        const position = match[7];
+        return { file_ts, position };
     }
-
-    return null; // 如果不匹配，返回null
+    return null;
 }
 
-// 递归遍历文件夹，获取所有视频文件并整理结果
-function getAllVideoFiles(dir, includeSubfolders = true) {
-    let videoFiles = {};  // 用于存储最终结果
+// 帮助函数：将文件信息加入到对应的位置
+function addFileToDict(dict, file_ts, position, filePath) {
+    if (!dict[file_ts]) {
+        dict[file_ts] = { "F": "", "B": "", "L": "", "R": "" };
+    }
+    if (position === 'front') dict[file_ts].F = filePath;
+    if (position === 'back') dict[file_ts].B = filePath;
+    if (position === 'left_repeater') dict[file_ts].L = filePath;
+    if (position === 'right_repeater') dict[file_ts].R = filePath;
+}
 
-    const files = fs.readdirSync(dir);  // 读取目录内容
+// 帮助函数：按照时间戳分组
+function groupByTime(clips, maxIntervalMinutes = 3) {
+    const result = {};
+    let currentGroup = [];
+    let lastTimestamp = null;
 
-    files.forEach((file) => {
-        const filePath = path.join(dir, file);
-        const stat = fs.statSync(filePath);
+    for (const clip of clips) {
+        const currentTimestamp = new Date(clip.file_ts.replace('_', 'T')).getTime();
+        if (lastTimestamp && (currentTimestamp - lastTimestamp) / 60000 > maxIntervalMinutes) {
+            // 结束前一个组
+            addGroupToResult(result, currentGroup);
+            currentGroup = [];
+        }
+        currentGroup.push(clip);
+        lastTimestamp = currentTimestamp;
+    }
+    if (currentGroup.length > 0) {
+        addGroupToResult(result, currentGroup);
+    }
+    return result;
+}
 
-        if (stat.isDirectory()) {
-            // 如果是文件夹，递归调用
-            if (includeSubfolders) {
-                const nestedFiles = getAllVideoFiles(filePath);
-                videoFiles = { ...videoFiles, ...nestedFiles }; // 合并嵌套文件结果
-            }
-        } else {
-            const ext = path.extname(file).toLowerCase();  // 获取文件扩展名
-            if (allowedExtensions.includes(ext)) {
-                // 如果是视频文件，解析文件名并组织结果
+function addGroupToResult(result, group) {
+    const start = group[0].file_ts.split('_')[1];
+    const end = group[group.length - 1].file_ts.split('_')[1];
+    const groupKey = `${start}-${end}`;
+    result[groupKey] = {};
+    for (const clip of group) {
+        result[groupKey][clip.file_ts] = clip.files;
+    }
+}
+
+// 主函数：遍历文件夹并返回处理后的结果
+function scanDirectory(dir) {
+    const result = {
+        SavedClips: {},
+        SentryClips: {},
+        AllClips: {}
+    };
+
+    const allClips = [];
+
+    // 递归读取目录
+    function readDirRecursively(currentPath, parentFolder = '') {
+        const files = fs.readdirSync(currentPath);
+
+        files.forEach(file => {
+            const fullPath = path.join(currentPath, file);
+            const stats = fs.statSync(fullPath);
+
+            if (stats.isDirectory()) {
+                // 如果是SavedClips或SentryClips目录，递归处理子文件夹
+                if (file === 'SavedClips' || file === 'SentryClips') {
+                    const clipType = file;
+                    result[clipType] = {};
+                    const subfolders = fs.readdirSync(fullPath);
+                    subfolders.forEach(subfolder => {
+                        const subfolderPath = path.join(fullPath, subfolder);
+                        if (fs.statSync(subfolderPath).isDirectory()) {
+                            result[clipType][subfolder] = {};
+                            readDirRecursively(subfolderPath, subfolder);
+                        }
+                    });
+                } else {
+                    readDirRecursively(fullPath);
+                }
+            } else if (stats.isFile()) {
                 const parsed = parseFileName(file);
                 if (parsed) {
-                    const { ts, position } = parsed;
-
-                    // 确保时间戳作为键存在于结果中
-                    if (!videoFiles[ts]) {
-                        videoFiles[ts] = {
-                            F: "",
-                            B: "",
-                            L: "",
-                            R: ""
-                        };
+                    const { file_ts, position } = parsed;
+                    // 将文件加入相应的SavedClips/SentryClips字典
+                    if (parentFolder) {
+                        addFileToDict(result.SavedClips[parentFolder] || {}, file_ts, position, fullPath);
+                        addFileToDict(result.SentryClips[parentFolder] || {}, file_ts, position, fullPath);
                     }
-
-                    // 根据位置更新结果
-                    switch (position) {
-                        case 'front':
-                            videoFiles[ts].F = filePath;
-                            break;
-                        case 'back':
-                            videoFiles[ts].B = filePath;
-                            break;
-                        case 'left_repeater':
-                            videoFiles[ts].L = filePath;
-                            break;
-                        case 'right_repeater':
-                            videoFiles[ts].R = filePath;
-                            break;
-                    }
+                    // 加入AllClips临时数组
+                    allClips.push({ file_ts, files: { [position]: fullPath } });
                 }
             }
-        }
-    });
+        });
+    }
 
-    // // 将结果按时间戳排序
-    // const sortedVideoFiles = Object.entries(videoFiles)
-    // .sort(([tsA], [tsB]) => new Date(tsA) - new Date(tsB))  // 根据时间戳排序
-    // .reduce((acc, [ts, value]) => {
-    //     acc[ts] = value;  // 转换回对象
-    //     return acc;
-    // }, {});
+    readDirRecursively(dir);
 
-    // return sortedVideoFiles;  // 返回排序后的结果
+    // 处理AllClips，按照时间分组
+    const groupedClips = groupByTime(allClips);
+    result.AllClips = groupedClips;
 
-    return videoFiles;  // 返回包含时间戳和对应路径的结果
+    return result;
 }
-
 
 
 let mainWindow;
@@ -140,7 +223,8 @@ ipcMain.handle('select-folder', async () => {
         return [];
     } else {
         const folderPath = result.filePaths[0];
-        const videoFiles = getAllVideoFiles(folderPath);  // 递归获取所有视频文件
+        const videoFiles = scanDirectory(folderPath);  // 递归获取所有视频文件
+        console.log(JSON.stringify(videoFiles, null, 2));
         return videoFiles;
     }
 });
