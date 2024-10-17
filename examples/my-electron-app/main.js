@@ -49,8 +49,9 @@ function parseFileName(fileName) {
 }
 
 // 递归遍历文件夹，获取所有视频文件并整理结果
-function getAllVideoFiles(dir) {
+function getAllVideoFiles(dir, includeSubfolders = true) {
     let videoFiles = {};  // 用于存储最终结果
+
     const files = fs.readdirSync(dir);  // 读取目录内容
 
     files.forEach((file) => {
@@ -59,8 +60,10 @@ function getAllVideoFiles(dir) {
 
         if (stat.isDirectory()) {
             // 如果是文件夹，递归调用
-            const nestedFiles = getAllVideoFiles(filePath);
-            videoFiles = { ...videoFiles, ...nestedFiles }; // 合并嵌套文件结果
+            if (includeSubfolders) {
+                const nestedFiles = getAllVideoFiles(filePath);
+                videoFiles = { ...videoFiles, ...nestedFiles }; // 合并嵌套文件结果
+            }
         } else {
             const ext = path.extname(file).toLowerCase();  // 获取文件扩展名
             if (allowedExtensions.includes(ext)) {
