@@ -221,6 +221,72 @@ const allowedExtensions = ['.mp4'];
 // };
 
 
+function parseTeslaCamFolder(folderPath) {
+    const result = {
+        SavedClips: {},
+        SentryClips: {},
+        AllClips: {}
+    };
+
+
+    // 读取主目录
+    const mainDirs = ['SavedClips', 'SentryClips', 'RecentClips'];
+    mainDirs.forEach(dir => {
+        const dirPath = path.join(folderPath, dir);
+        if (fs.existsSync(dirPath)) {
+            if (dir === 'RecentClips') {
+                // processRecentClips(dirPath, result);
+            } else {
+                processSubClips(dirPath, dir, result);
+            }
+        }
+    });
+
+    // 处理AllClips来自RecentClips, SavedClips和SentryClips
+    // processAllClips(result);
+
+    return result;
+}
+
+function processSubClips(dirPath, dir, result) {
+    const subDirs = fs.readdirSync(dirPath).filter(subDir => fs.statSync(path.join(dirPath, subDir)).isDirectory());
+    subDirs.sort((a, b) => b.localeCompare(a));  // 倒序
+    subDirs.forEach(subDir => {
+        const subDirPath = path.join(dirPath, subDir);
+        const clips = fs.readdirSync(subDirPath).filter(file => file.endsWith('.mp4'));
+        const eventFile = clips.find(file => file === 'event.json') || '';
+        const thumbFile = clips.find(file => file === 'thumb.png') || '';
+
+        // 提取时间信息
+        const [date, time] = subDir.split('_');
+        const h = time.split('-').slice(0, 2).join('-'); // 提取小时和分钟
+
+        if (!result[dir][date]) {
+            result[dir][date] = {};
+        }
+        if (!result[dir][date][h]) {
+            result[dir][date][h] = {
+                clips: {},
+                event: eventFile ? path.join(subDirPath, eventFile) : '',
+                thumb: thumbFile ? path.join(subDirPath, thumbFile) : ''
+            };
+        }
+
+        // 将视频文件按时间添加
+        clips.forEach(file => {
+            if (file.endsWith('.mp4')) {
+                const timeFromFile = file.split('_')[0] + '_' + file.split('_')[1]; // Y-M-D_h-m
+                if (!result[dir][date][h].clips[timeFromFile]) {
+                    result[dir][date][h].clips[timeFromFile] = {};
+                }
+                const type = file.split('_')[2].split('.')[0]; // 提取F, B, L, R
+                result[dir][date][h].clips[timeFromFile][type] = path.join(subDirPath, file);
+            }
+        });
+    });
+}
+
+
 // 帮助函数：解析文件名，返回时间戳和视频位置
 function parseFileName(fileName) {
     const regex = /^(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})-(front|back|left_repeater|right_repeater)\.mp4$/;
@@ -359,7 +425,8 @@ ipcMain.handle('select-folder', async () => {
         return [];
     } else {
         const folderPath = result.filePaths[0];
-        const videoFiles = scanDirectory(folderPath);  // 递归获取所有视频文件
+        // const videoFiles = scanDirectory(folderPath);  // 递归获取所有视频文件
+        const videoFiles = parseTeslaCamFolder(folderPath);
         console.log(JSON.stringify(videoFiles, null, 2));
         return videoFiles;
     }
