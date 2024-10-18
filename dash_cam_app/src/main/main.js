@@ -223,67 +223,199 @@ const allowedExtensions = ['.mp4'];
 
 function parseTeslaCamFolder(folderPath) {
     const result = {
-        SavedClips: {},
-        SentryClips: {},
-        AllClips: {}
+        SavedClips: [],
+        SentryClips: [],
+        AllClips: []
     };
+
+    tmp_all_clips = [];
+
+    const saved_clips_path = path.join(folderPath, 'SavedClips');
+    if (fs.existsSync(saved_clips_path)) {
+        processSubClips(saved_clips_path, result.SavedClips, tmp_all_clips);
+    }
+
+    const sentry_clips_path = path.join(folderPath, 'SentryClips');
+    if (fs.existsSync(sentry_clips_path)) {
+        processSubClips(sentry_clips_path, result.SentryClips, tmp_all_clips);
+    }
+
+    const recent_clips_path = path.join(folderPath, 'RecentClips');
+    processAllClips(recent_clips_path, result.AllClips, tmp_all_clips);
 
 
     // 读取主目录
-    const mainDirs = ['SavedClips', 'SentryClips', 'RecentClips'];
-    mainDirs.forEach(dir => {
-        const dirPath = path.join(folderPath, dir);
-        if (fs.existsSync(dirPath)) {
-            if (dir === 'RecentClips') {
-                // processRecentClips(dirPath, result);
-            } else {
-                processSubClips(dirPath, dir, result);
-            }
-        }
-    });
+    // const mainDirs = ['SavedClips', 'SentryClips', 'RecentClips'];
+    // mainDirs.forEach(dir => {
+    //     const dirPath = path.join(folderPath, dir);
+    //     if (fs.existsSync(dirPath)) {
+    //         if (dir === 'RecentClips') {
+    //             // processRecentClips(dirPath, result);
+    //         } else {
+    //             processSubClips(dirPath, dir, result);
+    //         }
+    //     }
+    // });
 
     // 处理AllClips来自RecentClips, SavedClips和SentryClips
-    // processAllClips(result);
+    // 
 
     return result;
 }
 
-function processSubClips(dirPath, dir, result) {
+function addVideoToDict(dict, position, fullPath) {
+    if (position === 'front') dict.F = fullPath;
+    if (position === 'back') dict.B = fullPath;
+    if (position === 'left_repeater') dict.L = fullPath;
+    if (position === 'right_repeater') dict.R = fullPath;
+}
+
+// dirPath输入的文件路径，为SavedClips或SentryClips文件夹路径
+// result将结果填入对应的数据结构中
+// all_clips用于后续处理所有的视频片段做准备
+function processSubClips(dirPath, result, all_clips) {
     const subDirs = fs.readdirSync(dirPath).filter(subDir => fs.statSync(path.join(dirPath, subDir)).isDirectory());
-    subDirs.sort((a, b) => b.localeCompare(a));  // 倒序
+    subDirs.sort();  // 正序，倒序放到渲染端操作
     subDirs.forEach(subDir => {
+        let dataStructure = {
+            timestamp: subDir,  // 文件夹中的时间戳
+            clips: [],  // 视频列表
+            jsonPath: "",  // event.json路径
+            thumbPath: "",  // thumb.png路径
+            duration: 0  // 
+        };
+
+        let tmp_clips = [];
+
         const subDirPath = path.join(dirPath, subDir);
-        const clips = fs.readdirSync(subDirPath).filter(file => file.endsWith('.mp4'));
-        const eventFile = clips.find(file => file === 'event.json') || '';
-        const thumbFile = clips.find(file => file === 'thumb.png') || '';
-
-        // 提取时间信息
-        const [date, time] = subDir.split('_');
-        const h = time.split('-').slice(0, 2).join('-'); // 提取小时和分钟
-
-        if (!result[dir][date]) {
-            result[dir][date] = {};
-        }
-        if (!result[dir][date][h]) {
-            result[dir][date][h] = {
-                clips: {},
-                event: eventFile ? path.join(subDirPath, eventFile) : '',
-                thumb: thumbFile ? path.join(subDirPath, thumbFile) : ''
-            };
-        }
-
-        // 将视频文件按时间添加
-        clips.forEach(file => {
+        const files = fs.readdirSync(subDirPath);
+        files.forEach(file => {
             if (file.endsWith('.mp4')) {
-                const timeFromFile = file.split('_')[0] + '_' + file.split('_')[1]; // Y-M-D_h-m
-                if (!result[dir][date][h].clips[timeFromFile]) {
-                    result[dir][date][h].clips[timeFromFile] = {};
-                }
-                const type = file.split('_')[2].split('.')[0]; // 提取F, B, L, R
-                result[dir][date][h].clips[timeFromFile][type] = path.join(subDirPath, file);
+                tmp_clips.push(file);
+            } else if (file === 'event.json') {
+                dataStructure.jsonPath = path.join(subDirPath, file);
+            } else if (file === 'thumb.png') {
+                dataStructure.thumbPath = path.join(subDirPath, file);
             }
-        });
-    });
+        }       
+        );
+
+        // 处理文件夹中的视频文件
+        tmp_clips.sort();  // 正序，一组中的视频文件是正序的用于播放
+        previous_ts = "";
+        tmp_clips.forEach(clip_name => {
+            const parsed = parseFileName(clip_name);
+
+            // 只处理符合文件名规则的视频文件
+            if (parsed) {
+                const { file_ts, position } = parsed;
+
+                if(file_ts != previous_ts){
+                    // 新的时间戳，添加一组进结果中，因为不能保证一定有4路视频，所以通过文件名中的时间戳分组
+                    dataStructure.clips.push(
+                        {
+                            filename_ts: file_ts,
+                            videos: {
+                                F: "",
+                                B: "",
+                                L: "",
+                                R: ""
+                            }
+                        }
+                    );  
+                    previous_ts = file_ts;
+                }
+                
+                const video_file_path = path.join(subDirPath, clip_name);
+                
+                addVideoToDict(dataStructure.clips.at(dataStructure.clips.length-1).videos, position, video_file_path);
+
+                // 加入到all_clips中避免后续处理全部视频时重复遍历
+                all_clips.push({
+                    file_name: clip_name,
+                    full_path: video_file_path
+                });
+            }       
+        }
+        );
+
+        result.push(dataStructure);
+    }
+    );
+}
+
+// dirPath输入的文件路径，为SavedClips或SentryClips文件夹路径
+// result将结果填入对应的数据结构中
+// all_clips为前面Saved和Sentry中已经获取的视频
+function processAllClips(recent_clips_folder, result, all_clips) {
+    // 获取RecentClips文件夹下的视频文件
+    if (fs.existsSync(recent_clips_folder)) {
+        const files = fs.readdirSync(recent_clips_folder);
+
+        files.forEach(clip_name =>{
+            const parsed = parseFileName(clip_name);
+            if(parsed){
+                // tmp_all_clips全是符合命名规则的mp4文件
+                all_clips.push({
+                    file_name: clip_name,
+                    full_path: path.join(recent_clips_folder, clip_name)
+                });
+            }
+        }
+        );
+    }
+
+    // 通过文件名来排序
+    all_clips.sort((a, b)=>{a.file_name.localeCompare(b.file_name)});
+
+    let lastTimestamp = null;
+    let previous_ts = "";
+    // 将4路视频组在一起，小组，同时按照时间间隔分大组
+    const maxIntervalMinutes = 3;
+
+    all_clips.forEach(clip =>{
+        const parsed = parseFileName(clip.file_name);
+
+        if(parsed){
+            const { file_ts, position } = parsed;
+            const currentTimestamp = new Date(file_ts.replace('_', 'T')).getTime();
+
+            if (lastTimestamp===null || (currentTimestamp - lastTimestamp) / 60000 > maxIntervalMinutes) {
+                // 创建一个新组
+                result.push(
+                    {
+                        start_ts: "",
+                        clips: [],
+                        duration: 0
+                    }
+                );
+            }
+
+            if(file_ts != previous_ts) {
+                // 创建小组
+                result.at(result.length-1).clips.push(
+                    {
+                        filename_ts: file_ts,
+                        videos: {
+                            F: "",
+                            B: "",
+                            L: "",
+                            R: ""
+                        }
+                    }
+                );
+                previous_ts = file_ts;
+            }
+
+            let small_group = result.at(result.length-1).clips;
+
+            addVideoToDict(small_group.at(small_group.length-1).videos, position, clip.full_path);
+
+            lastTimestamp = currentTimestamp;
+        }
+    }
+    );
+
 }
 
 
