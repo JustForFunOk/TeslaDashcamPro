@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentry Dashcam</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>SENTRY DASHCAM</h1>
+            <div class="header-buttons">
+                <button class="btn-sentry" onclick="showPage('sentry')">Sentry</button>
+                <button class="btn-saved active" onclick="showPage('saved')">Saved</button>
+                <button class="btn-recent" onclick="showPage('recent')">Recent</button>
+            </div>
+            <div>
+                <button id="select-folder">选择文件夹</button>
+            </div>
+
+        </header>
+
+        <!-- Sentry Page -->
+        <section id="sentry" class="page">
+            <h2>Sentry Page</h2>
+            <!-- Add Sentry content here -->
+        </section>
+
+        <!-- Saved Page -->
+        <section id="saved" class="page active">
+            <h2>Saved Page</h2>
+            <div class="timeline">
+
+                <!-- Date Item 1 -->
+                <div class="date-item">
+                    <span class="date" onclick="toggleEntry('entry1')">09/04/24</span>
+                    <div id="entry1" class="entry-content">
+                        <div class="entry-date">Aug. 28, 2024</div>
+                        <div class="video-entry">
+                            <div class="time">9:14 AM</div>
+                            <div class="video-thumbnail">
+                                <img src="thumb1.jpg" alt="Video 1">
+                                <div class="video-duration">00:10:49</div>
+                            </div>
+                            <div class="time">8:33 AM</div>
+                            <div class="video-thumbnail">
+                                <img src="thumb2.jpg" alt="Video 2">
+                                <div class="video-duration">00:10:49</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date Item 2 -->
+                <div class="date-item">
+                    <span class="date" onclick="toggleEntry('entry2')">08/23/24</span>
+                    <div id="entry2" class="entry-content">
+                        <!-- Add entry details here for 08/23/24 -->
+                    </div>
+                </div>
+
+                <!-- Date Item 3 -->
+                <div class="date-item">
+                    <span class="date" onclick="toggleEntry('entry3')">08/11/24</span>
+                    <div id="entry3" class="entry-content">
+                        <!-- Add entry details here for 08/11/24 -->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="car-image">
+                <img src="car.png" alt="Car">
+            </div>
+        </section>
+
+        <!-- Recent Page -->
+        <section id="recent" class="page">
+            <h2>Recent Page</h2>
+            <!-- Add Recent content here -->
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

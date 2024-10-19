@@ -7,21 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>视频播放器</title>
-    <style>
-        /* 简单样式，让视频播放器排列在一起 */
-        .video-container {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-        }
-
-        video {
-            width: 300px;
-            /* 设置视频宽度 */
-            height: auto;
-            /* 自动高度 */
-        }
-    </style>
 </head>
 
 <body>
@@ -39,65 +24,23 @@
             </video>
         </div>
         <div>
-            <h2>Back</h2>
-            <video id="back-video" controls>
-                <source id="back-source" src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
         </div>
-        <div>
-            <h2>Left Repeater</h2>
-            <video id="left-video" controls>
-                <source id="left-source" src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-        <div>
-            <h2>Right Repeater</h2>
-            <video id="right-video" controls>
-                <source id="right-source" src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </div>
 
-    <script>
-        // 获取URL中的查询参数
-        const urlParams = new URLSearchParams(window.location.search);
-        const ts = urlParams.get('ts');
-        const frontFile = urlParams.get('F');
-        const backFile = urlParams.get('B');
-        const leftFile = urlParams.get('L');
-        const rightFile = urlParams.get('R');
+        <script>
+            // 获取URL中的查询参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type');
+            const index = urlParams.get('index');
+            console.log(type);
+            console.log(index);
 
 
-        // 函数：检查视频文件是否有效并设置视频源
-        function setupVideoPlayer(videoId, sourceId, filePath) {
-            const videoElement = document.getElementById(videoId);
-            const sourceElement = document.getElementById(sourceId);
-
-            if (filePath) {
-                sourceElement.src = filePath;  // 设置视频源
-                videoElement.load();  // 重新加载视频
-                videoElement.play();  // 播放视频
-            } else {
-                // 如果文件路径无效，显示错误信息
-                videoElement.innerHTML = "视频文件无效";
-            }
-        }
-
-        // 设置每个视频播放器
-        setupVideoPlayer('front-video', 'front-source', frontFile);
-        setupVideoPlayer('back-video', 'back-source', backFile);
-        setupVideoPlayer('left-video', 'left-source', leftFile);
-        setupVideoPlayer('right-video', 'right-source', rightFile);
-
-        // 返回按钮点击事件，跳转回主页面
-        const backButton = document.getElementById('back-button');
-        backButton.addEventListener('click', () => {
-            window.location.href = 'index.html';  // 跳转回主页面
-        });
-    </script>
+            // 返回按钮点击事件，跳转回主页面
+            const backButton = document.getElementById('back-button');
+            backButton.addEventListener('click', () => {
+                window.history.back();  // 这个可以跳转回之前的位置
+            });
+        </script>
 </body>
 
 </html>

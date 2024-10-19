@@ -20,49 +20,55 @@
 
         // 加载已保存的视频列表（如果存在）
         function loadSavedVideoList() {
-            const savedVideoFiles = JSON.parse(localStorage.getItem('videoFiles'));
+            const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
 
             if (savedVideoFiles) {
-                // 显示已保存的视频文件
-                for (const [ts, files] of Object.entries(savedVideoFiles)) {
-                    const li = document.createElement('li');
-                    const link = document.createElement('a');
-
-                    // 创建链接，点击时将时间戳对应的文件信息传递到下一个页面
-                    link.href = `video-player.html?ts=${encodeURIComponent(ts)}&F=${encodeURIComponent(files.F)}&B=${encodeURIComponent(files.B)}&L=${encodeURIComponent(files.L)}&R=${encodeURIComponent(files.R)}`;
-                    link.textContent = ts;  // 显示时间戳
-                    li.appendChild(link);
-                    videoList.appendChild(li);
-                }
+                showClipsGroups(savedVideoFiles);
             }
         }
 
-        // 初始加载时恢复状态
+        // 初始加载时恢复状态，这个需要，否则从视频播放页面退回时将是空白页面
         window.onload = loadSavedVideoList;
 
         selectFolderButton.addEventListener('click', async () => {
             // 调用 Electron API 选择文件夹
             const videoFiles = await window.electronAPI.selectFolder();
 
+            // 保存视频列表到sessionStorage本地应用运行期间都可以获取其中的内容
+            sessionStorage.setItem('videoFiles', JSON.stringify(videoFiles));
+
+            showClipsGroups(videoFiles);
+        });
+
+        function showClipsGroups(videoFiles) {
             // 清空视频列表
             videoList.innerHTML = '';
 
-            // 保存视频列表到localStorage
-            localStorage.setItem('videoFiles', JSON.stringify(videoFiles));
+            // SavedClips
+            if (videoFiles["SavedClips"].length > 0) {
+                console.log(videoFiles["SavedClips"].length);
+                // 倒序显示
+                for (let i = videoFiles["SavedClips"].length - 1; i >= 0; i--) {
+                    // 在列表中创建一个项目
+                    const li = document.createElement('li');
+                    // 创建一个可点击的链接
+                    const link = document.createElement('a');
 
-            // 显示视频文件
-            for (const [ts, files] of Object.entries(videoFiles)) {
-                const li = document.createElement('li');
-
-                // 创建一个可点击的链接
-                const link = document.createElement('a');
-                link.href = `video-player.html?ts=${encodeURIComponent(ts)}&F=${encodeURIComponent(files.F)}&B=${encodeURIComponent(files.B)}&L=${encodeURIComponent(files.L)}&R=${encodeURIComponent(files.R)}`;
-                link.textContent = ts;  // 显示时间戳
-                li.appendChild(link);
-
-                videoList.appendChild(li);
+                    link.href = `video-player.html?type=${encodeURIComponent("SavedClips")}&index=${encodeURIComponent(i)}`;
+                    link.textContent = videoFiles["SavedClips"][i].timestamp;  // 显示时间戳
+                    li.appendChild(link);
+                    videoList.appendChild(li);
+                }
             }
-        });
+
+            if (videoFiles.SentryClips.length > 0) {
+                console.log(videoFiles.SentryClips.length);
+            }
+
+            if (videoFiles.AllClips.length > 0) {
+                console.log(videoFiles.AllClips.length);
+            }
+        }
     </script>
 </body>
 
