@@ -20,7 +20,7 @@
 
         // 加载已保存的视频列表（如果存在）
         function loadSavedVideoList() {
-            const savedVideoFiles = JSON.parse(localStorage.getItem('videoFiles'));
+            const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
 
             if (savedVideoFiles) {
                 // 显示已保存的视频文件
@@ -48,7 +48,7 @@
             videoList.innerHTML = '';
 
             // 保存视频列表到localStorage
-            localStorage.setItem('videoFiles', JSON.stringify(videoFiles));
+            sessionStorage.setItem('videoFiles', JSON.stringify(videoFiles));
 
             // 显示视频文件
             for (const [ts, files] of Object.entries(videoFiles)) {

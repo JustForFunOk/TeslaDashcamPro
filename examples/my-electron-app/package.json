@@ -11,9 +11,5 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^32.2.0"
-  },
-  "dependencies": {
-    "three": "^0.169.0",
-    "three-obj-loader": "^1.1.3"
   }
 }

@@ -95,7 +95,8 @@
         // 返回按钮点击事件，跳转回主页面
         const backButton = document.getElementById('back-button');
         backButton.addEventListener('click', () => {
-            window.location.href = 'index.html';  // 跳转回主页面
+            // window.location.href = 'index.html';  // 跳转回主页面，这个只能回到页面初始位置
+            window.history.back();  // 这个可以跳转回之前的位置
         });
     </script>
 </body>
