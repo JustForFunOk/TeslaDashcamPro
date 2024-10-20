@@ -34,6 +34,18 @@
             console.log(type);
             console.log(index);
 
+            // 通过sessionStorage实现快页面的数据共享
+            const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
+
+            if (savedVideoFiles) {
+                if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
+                    console.log(savedVideoFiles[type].at(index));
+                }
+
+                // 通过ClipsGroup创建播放器
+
+            }
+
 
             // 返回按钮点击事件，跳转回主页面
             const backButton = document.getElementById('back-button');

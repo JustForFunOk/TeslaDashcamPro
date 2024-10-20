@@ -54,7 +54,7 @@
                     // 创建一个可点击的链接
                     const link = document.createElement('a');
 
-                    link.href = `video-player.html?type=${encodeURIComponent("SavedClips")}&index=${encodeURIComponent(i)}`;
+                    link.href = `../video_player/index.html?type=${encodeURIComponent("SavedClips")}&index=${encodeURIComponent(i)}`;
                     link.textContent = videoFiles["SavedClips"][i].timestamp;  // 显示时间戳
                     li.appendChild(link);
                     videoList.appendChild(li);
