@@ -12,11 +12,15 @@
 <body style="background-color: gray;">
     <h1>选择视频文件</h1>
     <button id="select-folder">选择文件夹</button>
-    <ul id="video-list"></ul>
+    <ul id="saved-video-list"></ul>
+    <ul id="sentry-video-list"></ul>
+    <ul id="all-video-list"></ul>
 
     <script>
         const selectFolderButton = document.getElementById('select-folder');
-        const videoList = document.getElementById('video-list');
+        const savedVideoList = document.getElementById('saved-video-list');
+        const sentryVideoList = document.getElementById('sentry-video-list');
+        const allVideoList = document.getElementById('all-video-list');
 
         // 加载已保存的视频列表（如果存在）
         function loadSavedVideoList() {
@@ -42,11 +46,12 @@
 
         function showClipsGroups(videoFiles) {
             // 清空视频列表
-            videoList.innerHTML = '';
+            savedVideoList.innerHTML = '';
+            sentryVideoList.innerHTML = '';
+            allVideoList.innerHTML = '';
 
             // SavedClips
             if (videoFiles["SavedClips"].length > 0) {
-                console.log(videoFiles["SavedClips"].length);
                 // 倒序显示
                 for (let i = videoFiles["SavedClips"].length - 1; i >= 0; i--) {
                     // 在列表中创建一个项目
@@ -57,16 +62,38 @@
                     link.href = `../video_player/index.html?type=${encodeURIComponent("SavedClips")}&index=${encodeURIComponent(i)}`;
                     link.textContent = videoFiles["SavedClips"][i].timestamp;  // 显示时间戳
                     li.appendChild(link);
-                    videoList.appendChild(li);
+                    savedVideoList.appendChild(li);
                 }
             }
 
-            if (videoFiles.SentryClips.length > 0) {
-                console.log(videoFiles.SentryClips.length);
+            if (videoFiles["SentryClips"].length > 0) {
+                // 倒序显示
+                for (let i = videoFiles["SentryClips"].length - 1; i >= 0; i--) {
+                    // 在列表中创建一个项目
+                    const li = document.createElement('li');
+                    // 创建一个可点击的链接
+                    const link = document.createElement('a');
+
+                    link.href = `../video_player/index.html?type=${encodeURIComponent("SentryClips")}&index=${encodeURIComponent(i)}`;
+                    link.textContent = videoFiles["SentryClips"][i].timestamp;  // 显示时间戳
+                    li.appendChild(link);
+                    savedVideoList.appendChild(li);
+                }
             }
 
-            if (videoFiles.AllClips.length > 0) {
-                console.log(videoFiles.AllClips.length);
+            if (videoFiles["AllClips"].length > 0) {
+                // 倒序显示
+                for (let i = videoFiles["AllClips"].length - 1; i >= 0; i--) {
+                    // 在列表中创建一个项目
+                    const li = document.createElement('li');
+                    // 创建一个可点击的链接
+                    const link = document.createElement('a');
+
+                    link.href = `../video_player/index.html?type=${encodeURIComponent("AllClips")}&index=${encodeURIComponent(i)}`;
+                    link.textContent = videoFiles["AllClips"][i].timestamp;  // 显示时间戳
+                    li.appendChild(link);
+                    savedVideoList.appendChild(li);
+                }
             }
         }
     </script>

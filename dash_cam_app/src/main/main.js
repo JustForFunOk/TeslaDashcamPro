@@ -369,9 +369,11 @@ function processAllClips(recent_clips_folder, result, all_clips) {
                 // 创建一个新组
                 result.push(
                     {
-                        start_ts: "",
-                        clips: [],
-                        duration: 0
+                        timestamp: file_ts,  // 第一段视频的时间戳
+                        clips: [],  // 视频列表
+                        jsonPath: "",  // event.json路径
+                        thumbPath: "",  // thumb.png路径
+                        duration: 0  // 暂时还未使用
                     }
                 );
             }
@@ -432,8 +434,8 @@ let mainWindow;
 
 app.whenReady().then(() => {
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1280,
+        height: 1200,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),  // 预加载文件
         }

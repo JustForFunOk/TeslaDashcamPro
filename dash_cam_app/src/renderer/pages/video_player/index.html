@@ -7,52 +7,55 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>视频播放器</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
     <h1>视频播放器</h1>
 
     <!-- 返回按钮 -->
-    <button id="back-button">返回主页</button>
+    <div>
+        <button id="back-button">返回主页</button>
+    </div>
 
     <div class="video-container">
-        <div>
-            <h2>Front</h2>
-            <video id="front-video" controls>
-                <source id="front-source" src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+        <!-- 半透明的灰色窗口 -->
+        <div id="overlay-1" class="overlay">
+            <div id="label-1" class="label">前</div>
         </div>
-        <div>
+        <div id="overlay-2" class="overlay">
+            <div id="label-2" class="label">后</div>
+        </div>
+        <div id="overlay-3" class="overlay">
+            <div id="label-3" class="label">左</div>
+        </div>
+        <div id="overlay-4" class="overlay">
+            <div id="label-4" class="label">右</div>
         </div>
 
-        <script>
-            // 获取URL中的查询参数
-            const urlParams = new URLSearchParams(window.location.search);
-            const type = urlParams.get('type');
-            const index = urlParams.get('index');
-            console.log(type);
-            console.log(index);
-
-            // 通过sessionStorage实现快页面的数据共享
-            const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
-
-            if (savedVideoFiles) {
-                if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
-                    console.log(savedVideoFiles[type].at(index));
-                }
-
-                // 通过ClipsGroup创建播放器
-
-            }
+        <!-- 缩略图视角视频 -->
+        <video id="video-1" class="video large" onclick="selectVideo(this)" muted>
+            <source src="" type="video/mp4">
+        </video>
+        <video id="video-2" class="video small" onclick="selectVideo(this)" muted>
+            <source src="" type="video/mp4">
+        </video>
+        <video id="video-3" class="video small" onclick="selectVideo(this)" muted>
+            <source src="" type="video/mp4">
+        </video>
+        <video id="video-4" class="video small" onclick="selectVideo(this)" muted>
+            <source src="" type="video/mp4">
+        </video>
 
 
-            // 返回按钮点击事件，跳转回主页面
-            const backButton = document.getElementById('back-button');
-            backButton.addEventListener('click', () => {
-                window.history.back();  // 这个可以跳转回之前的位置
-            });
-        </script>
+    </div>
+
+    <div class="controls">
+        <button id="play-pause-btn" onclick="togglePlayPause()">暂停</button>
+        <input type="range" id="progress-bar" value="0" onchange="setVideoTime(this.value)">
+    </div>
+
+    <script src="./multi_video_layout_manager.js"></script>
 </body>
 
 </html>

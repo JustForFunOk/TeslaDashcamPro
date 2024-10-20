@@ -1,0 +1,151 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #000;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    /* 容器宽度为 100% 的视口宽度 */
+    height: 80%;
+    /* 容器高度为 80% 的视口高度 */
+    overflow: hidden;
+    /* 隐藏溢出的部分 */
+}
+
+.video {
+    position: absolute;
+    object-fit: cover;
+    /* 保持视频的宽高比 */
+}
+
+.large {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.small {
+    width: 15%;
+    height: 15%;
+    z-index: 2;
+}
+
+
+#video-1 {
+    top: 2%;
+    left: 2%;
+}
+
+#video-2 {
+    top: 2%;
+    right: 2%;
+}
+
+#video-3 {
+    bottom: 2%;
+    left: 2%;
+}
+
+#video-4 {
+    bottom: 2%;
+    right: 2%;
+}
+
+/* 半透明灰色窗口 */
+.overlay {
+    position: absolute;
+    background-color: rgba(128, 128, 128, 0.5);
+    /* 半透明灰色 */
+    z-index: 1;
+    /* 位于小视频上，但在放大视频下 */
+    width: 15%;
+    height: 15%;
+    pointer-events: none;
+    /* 让鼠标穿过 overlay 不影响视频点击 */
+}
+
+/* 半透明窗口的位置 */
+#overlay-1 {
+    top: 2%;
+    left: 2%;
+}
+
+#overlay-2 {
+    top: 2%;
+    right: 2%;
+}
+
+#overlay-3 {
+    bottom: 2%;
+    left: 2%;
+}
+
+#overlay-4 {
+    bottom: 2%;
+    right: 2%;
+}
+
+/* 添加文字标签的位置和样式 */
+.label {
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 3;
+    /* 确保文字在所有内容上方 */
+    padding: 2px 5px;
+    background-color: rgba(128, 128, 128, 0.5);
+    /* 半透明黑色背景使文字清晰 */
+}
+
+/* 标签相对于 overlay 的位置 */
+#label-1 {
+    bottom: -23px;
+    /* 距离底部 */
+    left: 10px;
+    /* 距离左边 */
+}
+
+#label-2 {
+    bottom: -23px;
+    /* 距离底部 */
+    right: 10px;
+    /* 距离左边 */
+}
+
+#label-3 {
+    top: -23px;
+    /* 距离底部 */
+    left: 10px;
+    /* 距离左边 */
+}
+
+#label-4 {
+    top: -23px;
+    /* 距离底部 */
+    right: 10px;
+    /* 距离左边 */
+}
+
+
+.controls {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+input[type="range"] {
+    width: 300px;
+}
