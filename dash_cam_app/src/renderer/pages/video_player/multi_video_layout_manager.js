@@ -25,6 +25,8 @@ let selectedPlayer = players[0];
 
 let clipsDuration = 0;  // 整个视频段的时长，用来设置进度条的长度
 
+let clipsGroupStartTimestamp = [];
+
 // 返回按钮点击事件，跳转回主页面
 const backButton = document.getElementById('back-button');
 backButton.addEventListener('click', () => {
@@ -88,12 +90,13 @@ const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
 
 if (savedVideoFiles) {
     if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
-        console.log(savedVideoFiles[type].at(index));
-
-        // 设置进度条长度 
+        // 设置进度条长度
         progressBar.max = savedVideoFiles[type].at(index).duration;
 
-        console.log("progressBar.max %d", progressBar.max);
+        // 获取每段视频的起始时间
+        savedVideoFiles[type].at(index).clips.forEach(clip => {
+            clipsGroupStartTimestamp.push(formatTimestamp(clip.filename_ts));
+        });
 
         setVideosSrc(currentIndex);
     }
@@ -101,14 +104,9 @@ if (savedVideoFiles) {
 
 
 function setVideosSrc(clipsIndex) {
-    console.log("set video src");
-    console.log(clipsIndex);
     // 设置播放源
     if (clipsIndex < savedVideoFiles[type].at(index).clips.length) {
         const videos = savedVideoFiles[type].at(index).clips.at(clipsIndex).videos;
-
-        console.log(videos);
-
         players[0].src = videos.F;
         players[0].load();
         players[1].src = videos.B;
@@ -137,7 +135,6 @@ players.forEach(player => {
     // 当当前视频播放结束时，加载并播放下一个视频
     player.addEventListener('ended', () => {
         ended_videos_channel_cnt++;
-
         if (ended_videos_channel_cnt === players.length) {
             // 所有视频都播放完毕
             currentIndex++;
@@ -204,22 +201,52 @@ function setVideoTime(time) {
     });
 }
 
+function binarySearchDates(dates, targetDate) {
+    let left = 0;
+    let right = dates.length - 1;
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        if (dates[mid].getTime() === targetDate.getTime()) {
+            return mid; // 找到目标，返回索引
+        } else if (dates[mid] < targetDate) {
+            left = mid + 1; // 在右侧继续查找
+        } else {
+            right = mid - 1; // 在左侧继续查找
+        }
+    }
+
+    // 如果目标时间比最新的还要新，返回最大的索引
+    if (left === dates.length) {
+        return dates.length - 1; // 返回最后一个索引
+    }
+
+    return right; // 返回找到的最大索引
+}
+
 // 当用户拖动进度条时同步视频的播放时间
 function syncProgressWithVideo() {
     const progressBar = document.getElementById('progress-bar');
     progressBar.addEventListener('input', function () {
-        setVideoTime(progressBar.value); // 将所有视频同步到进度条的当前值
-
         // 第一个视频时间戳 + 进度条值 = 进度条绝对时间
+        let currentFrameTimestamp = new Date(clipsGroupStartTimestamp[0]);
+        currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(progressBar.value));
 
         // 通过绝对时间查找所属的视频段
+        let clips_index = binarySearchDates(clipsGroupStartTimestamp, currentFrameTimestamp);
 
         // 获取在视频段中的时间
+        const clip_time = (currentFrameTimestamp - clipsGroupStartTimestamp[clips_index]) / 1000;
 
         // 切换视频源
+        if (clips_index != currentIndex) {
+            setVideosSrc(clips_index);
+            currentIndex = clips_index;
+        }
 
         // 设置视频当前时间
-
+        setVideoTime(clip_time); // 将所有视频同步到进度条的当前值
     });
 }
 

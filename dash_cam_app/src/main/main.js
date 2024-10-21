@@ -263,7 +263,7 @@ async function processSubClips(dirPath, result, all_clips) {
     const subDirs = fs.readdirSync(dirPath).filter(subDir => fs.statSync(path.join(dirPath, subDir)).isDirectory());
     subDirs.sort();  // 正序，倒序放到渲染端操作
 
-    for(const subDir of subDirs){
+    for (const subDir of subDirs) {
         let dataStructure = {
             timestamp: subDir,  // 文件夹中的时间戳
             clips: [],  // 视频列表
@@ -328,7 +328,7 @@ async function processSubClips(dirPath, result, all_clips) {
 
         // 计算duration
         dataStructure.duration = await getClipsDuration(dataStructure.clips);
-        
+
         result.push(dataStructure);
     }
 
@@ -410,10 +410,10 @@ async function processAllClips(recent_clips_folder, result, all_clips) {
 
     // 最后计算每个group的时长
     // 计算duration
-    for(let clip_group of result) {
+    for (let clip_group of result) {
         clip_group.duration = await getClipsDuration(clip_group.clips);
     }
-       
+
 }
 
 
@@ -427,17 +427,6 @@ function parseFileName(fileName) {
         return { file_ts, position };
     }
     return null;
-}
-
-// 帮助函数：将文件信息加入到对应的位置
-function addFileToDict(dict, file_ts, position, filePath) {
-    if (!dict[file_ts]) {
-        dict[file_ts] = { "F": "", "B": "", "L": "", "R": "" };
-    }
-    if (position === 'front') dict[file_ts].F = filePath;
-    if (position === 'back') dict[file_ts].B = filePath;
-    if (position === 'left_repeater') dict[file_ts].L = filePath;
-    if (position === 'right_repeater') dict[file_ts].R = filePath;
 }
 
 // 帮助函数
@@ -471,10 +460,10 @@ async function getMaxVideoDuration(filePaths) {
 
 async function getClipDuration(clip) {
     videos = [];
-    if(clip.F != "") videos.push(clip.F);
-    if(clip.B != "") videos.push(clip.B);
-    if(clip.L != "") videos.push(clip.L);
-    if(clip.R != "") videos.push(clip.R);
+    if (clip.F != "") videos.push(clip.F);
+    if (clip.B != "") videos.push(clip.B);
+    if (clip.L != "") videos.push(clip.L);
+    if (clip.R != "") videos.push(clip.R);
 
     const max_duration = await getMaxVideoDuration(videos);
 
@@ -495,13 +484,13 @@ async function getClipsDuration(sorted_clips) {
 
     const clips_num = sorted_clips.length;
 
-    if(clips_num === 0) {
+    if (clips_num === 0) {
         return duration_s;
     }
 
-    if(clips_num > 1) {
+    if (clips_num > 1) {
         // 最后一个视频的时间戳
-        const last_ts = sorted_clips.at(clips_num-1).filename_ts;
+        const last_ts = sorted_clips.at(clips_num - 1).filename_ts;
         const lastTimestamp = formatTimestamp(last_ts);
 
         // 第一个视频的时间戳
@@ -514,7 +503,7 @@ async function getClipsDuration(sorted_clips) {
     }
 
     // 加上最后一个视频的时间戳 通过ffmpeg获取视频时长
-    const last_video_duration  = await getClipDuration(sorted_clips.at(clips_num-1).videos);
+    const last_video_duration = await getClipDuration(sorted_clips.at(clips_num - 1).videos);
 
     // console.log("clip last_video_duration: %f", last_video_duration);
 
