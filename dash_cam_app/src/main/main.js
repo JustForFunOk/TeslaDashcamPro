@@ -1,6 +1,7 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const ffmpeg = require('fluent-ffmpeg');
 
 // 定义允许的视频文件扩展名
 const allowedExtensions = ['.mp4'];
@@ -221,7 +222,7 @@ const allowedExtensions = ['.mp4'];
 // };
 
 
-function parseTeslaCamFolder(folderPath) {
+async function parseTeslaCamFolder(folderPath) {
     const result = {
         // 使用字符串以便放到URL中传递给视频播放页面
         "SavedClips": [],
@@ -233,17 +234,17 @@ function parseTeslaCamFolder(folderPath) {
 
     const saved_clips_path = path.join(folderPath, 'SavedClips');
     if (fs.existsSync(saved_clips_path)) {
-        processSubClips(saved_clips_path, result["SavedClips"], tmp_all_clips);
+        await processSubClips(saved_clips_path, result["SavedClips"], tmp_all_clips);
     }
 
     const sentry_clips_path = path.join(folderPath, 'SentryClips');
     if (fs.existsSync(sentry_clips_path)) {
-        processSubClips(sentry_clips_path, result["SentryClips"], tmp_all_clips);
+        await processSubClips(sentry_clips_path, result["SentryClips"], tmp_all_clips);
     }
 
     // 处理AllClips来自RecentClips, SavedClips和SentryClips
     const recent_clips_path = path.join(folderPath, 'RecentClips');
-    processAllClips(recent_clips_path, result["AllClips"], tmp_all_clips);
+    await processAllClips(recent_clips_path, result["AllClips"], tmp_all_clips);
 
     return result;
 }
@@ -258,10 +259,11 @@ function addVideoToDict(dict, position, fullPath) {
 // dirPath输入的文件路径，为SavedClips或SentryClips文件夹路径
 // result将结果填入对应的数据结构中
 // all_clips用于后续处理所有的视频片段做准备
-function processSubClips(dirPath, result, all_clips) {
+async function processSubClips(dirPath, result, all_clips) {
     const subDirs = fs.readdirSync(dirPath).filter(subDir => fs.statSync(path.join(dirPath, subDir)).isDirectory());
     subDirs.sort();  // 正序，倒序放到渲染端操作
-    subDirs.forEach(subDir => {
+
+    for(const subDir of subDirs){
         let dataStructure = {
             timestamp: subDir,  // 文件夹中的时间戳
             clips: [],  // 视频列表
@@ -324,15 +326,18 @@ function processSubClips(dirPath, result, all_clips) {
         }
         );
 
+        // 计算duration
+        dataStructure.duration = await getClipsDuration(dataStructure.clips);
+        
         result.push(dataStructure);
     }
-    );
+
 }
 
 // dirPath输入的文件路径，为SavedClips或SentryClips文件夹路径
 // result将结果填入对应的数据结构中
 // all_clips为前面Saved和Sentry中已经获取的视频
-function processAllClips(recent_clips_folder, result, all_clips) {
+async function processAllClips(recent_clips_folder, result, all_clips) {
     // 获取RecentClips文件夹下的视频文件
     if (fs.existsSync(recent_clips_folder)) {
         const files = fs.readdirSync(recent_clips_folder);
@@ -351,7 +356,7 @@ function processAllClips(recent_clips_folder, result, all_clips) {
     }
 
     // 通过文件名来排序
-    all_clips.sort((a, b) => { a.file_name.localeCompare(b.file_name) });
+    all_clips.sort((a, b) => { return a.file_name.localeCompare(b.file_name); });
 
     let lastTimestamp = null;
     let previous_ts = "";
@@ -363,7 +368,7 @@ function processAllClips(recent_clips_folder, result, all_clips) {
 
         if (parsed) {
             const { file_ts, position } = parsed;
-            const currentTimestamp = new Date(file_ts.replace('_', 'T')).getTime();
+            const currentTimestamp = formatTimestamp(file_ts);
 
             if (lastTimestamp === null || (currentTimestamp - lastTimestamp) / 60000 > maxIntervalMinutes) {
                 // 创建一个新组
@@ -403,6 +408,12 @@ function processAllClips(recent_clips_folder, result, all_clips) {
     }
     );
 
+    // 最后计算每个group的时长
+    // 计算duration
+    for(let clip_group of result) {
+        clip_group.duration = await getClipsDuration(clip_group.clips);
+    }
+       
 }
 
 
@@ -427,6 +438,91 @@ function addFileToDict(dict, file_ts, position, filePath) {
     if (position === 'back') dict[file_ts].B = filePath;
     if (position === 'left_repeater') dict[file_ts].L = filePath;
     if (position === 'right_repeater') dict[file_ts].R = filePath;
+}
+
+// 帮助函数
+function getVideoDuration(filePath, timeout = 5000) {
+    return new Promise((resolve) => {
+        const timeoutId = setTimeout(() => {
+            resolve(0); // 超时返回0
+        }, timeout);
+
+        ffmpeg.ffprobe(filePath, (err, metadata) => {
+            clearTimeout(timeoutId); // 清除超时
+            if (err) {
+                resolve(0); // 获取失败，返回0
+            } else {
+                resolve(metadata.format.duration); // 获取成功，返回时长
+            }
+        });
+    });
+}
+
+async function getMaxVideoDuration(filePaths) {
+    if (filePaths.length === 0) {
+        return 0; // 如果数组为空，直接返回0
+    }
+
+    const durationPromises = filePaths.map(filePath => getVideoDuration(filePath));
+    const durations = await Promise.all(durationPromises);
+    return Math.max(...durations); // 返回最大时长
+}
+
+
+async function getClipDuration(clip) {
+    videos = [];
+    if(clip.F != "") videos.push(clip.F);
+    if(clip.B != "") videos.push(clip.B);
+    if(clip.L != "") videos.push(clip.L);
+    if(clip.R != "") videos.push(clip.R);
+
+    const max_duration = await getMaxVideoDuration(videos);
+
+    return max_duration;
+}
+
+// YYYY-MM-DD_HH-MM-SS
+function formatTimestamp(timestamp_str) {
+    const [datePart, timePart] = timestamp_str.split('_');
+    const [year, month, day] = datePart.split('-').map(Number);
+    const [hours, minutes, seconds] = timePart.split('-').map(Number);
+    return new Date(year, month - 1, day, hours, minutes, seconds); // 月份从0开始
+};
+
+async function getClipsDuration(sorted_clips) {
+    // 假设视频是连续的，除最后一个视频其他视频使用文件中的时间戳计算时长
+    let duration_s = 0;
+
+    const clips_num = sorted_clips.length;
+
+    if(clips_num === 0) {
+        return duration_s;
+    }
+
+    if(clips_num > 1) {
+        // 最后一个视频的时间戳
+        const last_ts = sorted_clips.at(clips_num-1).filename_ts;
+        const lastTimestamp = formatTimestamp(last_ts);
+
+        // 第一个视频的时间戳
+        const first_ts = sorted_clips.at(0).filename_ts;
+        const firstTimestamp = formatTimestamp(first_ts);
+
+        // 相减
+        duration_s = (lastTimestamp - firstTimestamp) / 1000;
+        // console.log("clip minus: %f", duration_s);
+    }
+
+    // 加上最后一个视频的时间戳 通过ffmpeg获取视频时长
+    const last_video_duration  = await getClipDuration(sorted_clips.at(clips_num-1).videos);
+
+    // console.log("clip last_video_duration: %f", last_video_duration);
+
+    duration_s += Math.ceil(last_video_duration);  // 保留到s
+
+    // console.log("clip duration: %f", duration_s);
+
+    return duration_s;
 }
 
 
@@ -454,7 +550,7 @@ ipcMain.handle('select-folder', async () => {
     } else {
         const folderPath = result.filePaths[0];
         // const videoFiles = scanDirectory(folderPath);  // 递归获取所有视频文件
-        const videoFiles = parseTeslaCamFolder(folderPath);
+        const videoFiles = await parseTeslaCamFolder(folderPath);
         // console.log(JSON.stringify(videoFiles, null, 2));
         return videoFiles;
     }

@@ -6,6 +6,8 @@ const players = [
 ];
 
 const play_pause_button = document.getElementById('play-pause-btn');
+const progressBar = document.getElementById('progress-bar');
+const timeDisplay = document.getElementById('timestamp');
 
 // 当前播放的clips group中的视频索引
 let currentIndex = 0;
@@ -21,10 +23,39 @@ play_pause_button.textContent = '播放';
 
 let selectedPlayer = players[0];
 
+let clipsDuration = 0;  // 整个视频段的时长，用来设置进度条的长度
+
 // 返回按钮点击事件，跳转回主页面
 const backButton = document.getElementById('back-button');
 backButton.addEventListener('click', () => {
     window.history.back();  // 这个可以跳转回之前的位置
+});
+
+
+// YYYY-MM-DD_HH-MM-SS
+function formatTimestamp(timestamp_str) {
+    const [datePart, timePart] = timestamp_str.split('_');
+    const [year, month, day] = datePart.split('-').map(Number);
+    const [hours, minutes, seconds] = timePart.split('-').map(Number);
+    return new Date(year, month - 1, day, hours, minutes, seconds); // 月份从0开始
+};
+
+
+players[0].addEventListener('timeupdate', () => {
+    // 通过目前播放的视频 计算出进度条的进度
+    const first_ts = savedVideoFiles[type].at(index).clips.at(0).filename_ts;
+    const firstTimestamp = formatTimestamp(first_ts);
+
+    const current_clip_ts = savedVideoFiles[type].at(index).clips.at(currentIndex).filename_ts;
+    const currentClipStartTimestamp = formatTimestamp(current_clip_ts);
+
+    progressBar.value = players[0].currentTime + (currentClipStartTimestamp - firstTimestamp) / 1000;
+
+    const currentFrameTimestamp = currentClipStartTimestamp;
+    currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(players[0].currentTime));
+
+    // 更新时间戳
+    timeDisplay.value = currentFrameTimestamp.toString();
 });
 
 // 播放暂停按钮
@@ -59,9 +90,15 @@ if (savedVideoFiles) {
     if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
         console.log(savedVideoFiles[type].at(index));
 
+        // 设置进度条长度 
+        progressBar.max = savedVideoFiles[type].at(index).duration;
+
+        console.log("progressBar.max %d", progressBar.max);
+
         setVideosSrc(currentIndex);
     }
 }
+
 
 function setVideosSrc(clipsIndex) {
     console.log("set video src");
@@ -100,17 +137,14 @@ players.forEach(player => {
     // 当当前视频播放结束时，加载并播放下一个视频
     player.addEventListener('ended', () => {
         ended_videos_channel_cnt++;
-        console.log("end cnt: %d", ended_videos_channel_cnt);
+
         if (ended_videos_channel_cnt === players.length) {
             // 所有视频都播放完毕
-            console.log("change to next clip");
             currentIndex++;
             setVideosSrc(currentIndex);
         }
     });
 });
-
-
 
 function playAllVideos() {
     players.forEach(player => {
@@ -126,29 +160,6 @@ function pauseAllVideos() {
     });
     play_pause_button.textContent = '播放';
     is_playing = false;
-}
-
-
-// 更新进度条
-function updateProgress() {
-    const largeVideo = document.querySelector('.video.large'); // 获取被放大的视频
-    const progressBar = document.getElementById('progress-bar');
-
-    // 如果有放大的视频，则用它的当前时间更新进度条
-    if (largeVideo) {
-        progressBar.max = largeVideo.duration;
-        progressBar.value = largeVideo.currentTime;
-    }
-
-    // 通过 requestAnimationFrame 实现循环更新进度条
-    requestAnimationFrame(updateProgress);
-}
-
-// 设置视频的播放时间
-function setVideoTime(time) {
-    players.forEach(player => {
-        player.currentTime = time;
-    });
 }
 
 function selectVideo(selectedVideo) {
@@ -180,11 +191,35 @@ function selectVideo(selectedVideo) {
     });
 }
 
+// 更新进度条
+// function updateProgress() {
+//     // 通过 requestAnimationFrame 实现循环更新进度条
+//     requestAnimationFrame(updateProgress);
+// }
+
+// 设置视频的播放时间
+function setVideoTime(time) {
+    players.forEach(player => {
+        player.currentTime = time;
+    });
+}
+
 // 当用户拖动进度条时同步视频的播放时间
 function syncProgressWithVideo() {
     const progressBar = document.getElementById('progress-bar');
     progressBar.addEventListener('input', function () {
         setVideoTime(progressBar.value); // 将所有视频同步到进度条的当前值
+
+        // 第一个视频时间戳 + 进度条值 = 进度条绝对时间
+
+        // 通过绝对时间查找所属的视频段
+
+        // 获取在视频段中的时间
+
+        // 切换视频源
+
+        // 设置视频当前时间
+
     });
 }
 
@@ -196,4 +231,4 @@ window.onload = function () {
 };
 
 // 开始时更新进度条
-updateProgress();
+// updateProgress();
