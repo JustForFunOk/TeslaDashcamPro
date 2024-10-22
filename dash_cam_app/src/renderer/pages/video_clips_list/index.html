@@ -1,102 +1,86 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>选择视频文件</title>
+    <title>Sentry Dashcam</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
-<body style="background-color: gray;">
-    <h1>选择视频文件</h1>
-    <button id="select-folder">选择文件夹</button>
-    <ul id="saved-video-list"></ul>
-    <ul id="sentry-video-list"></ul>
-    <ul id="all-video-list"></ul>
+<body>
+    <div class="container">
+        <header>
+            <h1>SENTRY DASHCAM</h1>
+            <div class="header-buttons">
+                <button class="btn-sentry" onclick="showPage('sentry')">Sentry</button>
+                <button class="btn-saved active" onclick="showPage('saved')">Saved</button>
+                <button class="btn-recent" onclick="showPage('recent')">Recent</button>
+            </div>
+            <div>
+                <button id="select-folder">选择文件夹</button>
+            </div>
 
-    <script>
-        const selectFolderButton = document.getElementById('select-folder');
-        const savedVideoList = document.getElementById('saved-video-list');
-        const sentryVideoList = document.getElementById('sentry-video-list');
-        const allVideoList = document.getElementById('all-video-list');
+        </header>
 
-        // 加载已保存的视频列表（如果存在）
-        function loadSavedVideoList() {
-            const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
+        <!-- Sentry Page -->
+        <section id="sentry" class="page">
+            <h2>Sentry Page</h2>
+            <!-- Add Sentry content here -->
+        </section>
 
-            if (savedVideoFiles) {
-                showClipsGroups(savedVideoFiles);
-            }
-        }
+        <!-- Saved Page -->
+        <section id="saved" class="page active">
+            <h2>Saved Page</h2>
+            <div class="timeline">
 
-        // 初始加载时恢复状态，这个需要，否则从视频播放页面退回时将是空白页面
-        window.onload = loadSavedVideoList;
+                <!-- Date Item 1 -->
+                <div class="date-item">
+                    <span class="date" onclick="toggleEntry('entry1')">09/04/24</span>
+                    <div id="entry1" class="entry-content">
+                        <div class="entry-date">Aug. 28, 2024</div>
+                        <div class="video-entry">
+                            <div class="time">9:14 AM</div>
+                            <div class="video-thumbnail">
+                                <img src="thumb1.jpg" alt="Video 1">
+                                <div class="video-duration">00:10:49</div>
+                            </div>
+                            <div class="time">8:33 AM</div>
+                            <div class="video-thumbnail">
+                                <img src="thumb2.jpg" alt="Video 2">
+                                <div class="video-duration">00:10:49</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        selectFolderButton.addEventListener('click', async () => {
-            // 调用 Electron API 选择文件夹
-            const videoFiles = await window.electronAPI.selectFolder();
+                <!-- Date Item 2 -->
+                <div class="date-item">
+                    <span class="date" onclick="toggleEntry('entry2')">08/23/24</span>
+                    <div id="entry2" class="entry-content">
+                        <!-- Add entry details here for 08/23/24 -->
+                    </div>
+                </div>
 
-            // 保存视频列表到sessionStorage本地应用运行期间都可以获取其中的内容
-            sessionStorage.setItem('videoFiles', JSON.stringify(videoFiles));
+                <!-- Date Item 3 -->
+                <div class="date-item">
+                    <span class="date" onclick="toggleEntry('entry3')">08/11/24</span>
+                    <div id="entry3" class="entry-content">
+                        <!-- Add entry details here for 08/11/24 -->
+                    </div>
+                </div>
 
-            showClipsGroups(videoFiles);
-        });
+            </div>
+        </section>
 
-        function showClipsGroups(videoFiles) {
-            // 清空视频列表
-            savedVideoList.innerHTML = '';
-            sentryVideoList.innerHTML = '';
-            allVideoList.innerHTML = '';
+        <!-- Recent Page -->
+        <section id="recent" class="page">
+            <h2>Recent Page</h2>
+            <!-- Add Recent content here -->
+        </section>
+    </div>
 
-            // SavedClips
-            if (videoFiles["SavedClips"].length > 0) {
-                // 倒序显示
-                for (let i = videoFiles["SavedClips"].length - 1; i >= 0; i--) {
-                    // 在列表中创建一个项目
-                    const li = document.createElement('li');
-                    // 创建一个可点击的链接
-                    const link = document.createElement('a');
-
-                    link.href = `../video_player/index.html?type=${encodeURIComponent("SavedClips")}&index=${encodeURIComponent(i)}`;
-                    link.textContent = videoFiles["SavedClips"][i].timestamp;  // 显示时间戳
-                    li.appendChild(link);
-                    savedVideoList.appendChild(li);
-                }
-            }
-
-            if (videoFiles["SentryClips"].length > 0) {
-                // 倒序显示
-                for (let i = videoFiles["SentryClips"].length - 1; i >= 0; i--) {
-                    // 在列表中创建一个项目
-                    const li = document.createElement('li');
-                    // 创建一个可点击的链接
-                    const link = document.createElement('a');
-
-                    link.href = `../video_player/index.html?type=${encodeURIComponent("SentryClips")}&index=${encodeURIComponent(i)}`;
-                    link.textContent = videoFiles["SentryClips"][i].timestamp;  // 显示时间戳
-                    li.appendChild(link);
-                    savedVideoList.appendChild(li);
-                }
-            }
-
-            if (videoFiles["AllClips"].length > 0) {
-                // 倒序显示
-                for (let i = videoFiles["AllClips"].length - 1; i >= 0; i--) {
-                    // 在列表中创建一个项目
-                    const li = document.createElement('li');
-                    // 创建一个可点击的链接
-                    const link = document.createElement('a');
-
-                    link.href = `../video_player/index.html?type=${encodeURIComponent("AllClips")}&index=${encodeURIComponent(i)}`;
-                    link.textContent = videoFiles["AllClips"][i].timestamp;  // 显示时间戳
-                    li.appendChild(link);
-                    savedVideoList.appendChild(li);
-                }
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
