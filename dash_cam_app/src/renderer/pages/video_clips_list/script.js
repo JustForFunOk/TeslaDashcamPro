@@ -1,14 +1,16 @@
 const selectFolderButton = document.getElementById('select-folder');
-const savedVideoList = document.getElementById('saved-video-list');
-const sentryVideoList = document.getElementById('sentry-video-list');
-const allVideoList = document.getElementById('all-video-list');
+const savedPage = document.getElementById("saved").querySelector(".timeline");
+const sentryPage = document.getElementById("sentry").querySelector(".timeline");
+const recentPage = document.getElementById("recent").querySelector(".timeline");
 
 // 加载已保存的视频列表（如果存在）
 function loadSavedVideoList() {
     const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
 
     if (savedVideoFiles) {
-        showClipsGroups(savedVideoFiles);
+        loadEntries(videoFiles["SavedClips"], savedPage);
+        loadEntries(videoFiles["SentryClips"], sentryPage);
+        loadEntries(videoFiles["AllClips"], recentPage);
     }
 }
 
@@ -22,69 +24,72 @@ selectFolderButton.addEventListener('click', async () => {
     // 保存视频列表到sessionStorage本地应用运行期间都可以获取其中的内容
     sessionStorage.setItem('videoFiles', JSON.stringify(videoFiles));
 
-    showClipsGroups(videoFiles);
+    loadEntries(videoFiles["SavedClips"], savedPage);
+    loadEntries(videoFiles["SentryClips"], sentryPage);
+    loadEntries(videoFiles["AllClips"], recentPage);
 });
 
-function showClipsGroups(videoFiles) {
-    // 清空视频列表
-    savedVideoList.innerHTML = '';
-    sentryVideoList.innerHTML = '';
-    allVideoList.innerHTML = '';
+function loadEntries(entries, page) {
+    let currentDate = ""; // To track the current date
+    let entryContent = null; // To hold the entry content div
 
-    // SavedClips
-    if (videoFiles["SavedClips"].length > 0) {
-        // 倒序显示
-        for (let i = videoFiles["SavedClips"].length - 1; i >= 0; i--) {
-            // 在列表中创建一个项目
-            const li = document.createElement('li');
-            // 创建一个可点击的链接
-            const link = document.createElement('a');
+    entries.forEach(entry => {
+        const entryDate = entry.timestamp.split("_")[0]; // Extract date part (e.g., "2024-09-04")
 
-            link.href = `../video_player/index.html?type=${encodeURIComponent("SavedClips")}&index=${encodeURIComponent(i)}`;
-            link.textContent = videoFiles["SavedClips"][i].timestamp;  // 显示时间戳
-            li.appendChild(link);
-            savedVideoList.appendChild(li);
+        // If the date has changed, create a new date item
+        if (entryDate !== currentDate) {
+            currentDate = entryDate; // Update current date
+
+            const dateItem = document.createElement("div");
+            dateItem.classList.add("date-item");
+
+            const dateSpan = document.createElement("span");
+            dateSpan.classList.add("date");
+            dateSpan.textContent = currentDate; // Use just the date
+            dateSpan.onclick = () => toggleEntry(entryContent); 
+
+            entryContent = document.createElement("div");
+            // entryContent.id = currentDate;
+            entryContent.classList.add("entry-content");
+            entryContent.style.display = "none"; // Initially hidden
+
+            dateItem.appendChild(dateSpan);
+            dateItem.appendChild(entryContent);
+            page.appendChild(dateItem);
         }
-    }
 
-    if (videoFiles["SentryClips"].length > 0) {
-        // 倒序显示
-        for (let i = videoFiles["SentryClips"].length - 1; i >= 0; i--) {
-            // 在列表中创建一个项目
-            const li = document.createElement('li');
-            // 创建一个可点击的链接
-            const link = document.createElement('a');
+        // Create video entry for the current entry
+        const videoEntry = document.createElement("div");
+        videoEntry.classList.add("video-entry");
 
-            link.href = `../video_player/index.html?type=${encodeURIComponent("SentryClips")}&index=${encodeURIComponent(i)}`;
-            link.textContent = videoFiles["SentryClips"][i].timestamp;  // 显示时间戳
-            li.appendChild(link);
-            savedVideoList.appendChild(li);
-        }
-    }
+        // Create a clickable link
+        const link = document.createElement("a");
+        link.href = `videoPage.html?time=${entry.timestamp}`; // Change this URL as needed
+        link.target = "_blank"; // Opens in a new tab
 
-    if (videoFiles["AllClips"].length > 0) {
-        // 倒序显示
-        for (let i = videoFiles["AllClips"].length - 1; i >= 0; i--) {
-            // 在列表中创建一个项目
-            const li = document.createElement('li');
-            // 创建一个可点击的链接
-            const link = document.createElement('a');
+        const timeDiv = document.createElement("div");
+        timeDiv.classList.add("time");
+        timeDiv.textContent = entry.timestamp.split("_")[1]; // Use time part
 
-            link.href = `../video_player/index.html?type=${encodeURIComponent("AllClips")}&index=${encodeURIComponent(i)}`;
-            link.textContent = videoFiles["AllClips"][i].timestamp;  // 显示时间戳
-            li.appendChild(link);
-            savedVideoList.appendChild(li);
-        }
-    }
+        const videoThumbnail = document.createElement("div");
+        videoThumbnail.classList.add("video-thumbnail");
+
+        const img = document.createElement("img");
+        img.src = entry.thumbPath;
+        img.alt = "Video Thumbnail";
+
+        const durationDiv = document.createElement("div");
+        durationDiv.classList.add("video-duration");
+        durationDiv.textContent = entry.duration;
+
+        videoThumbnail.appendChild(img);
+        videoThumbnail.appendChild(durationDiv);
+        link.appendChild(timeDiv);
+        link.appendChild(videoThumbnail);
+        videoEntry.appendChild(link); // Add the link to videoEntry
+        entryContent.appendChild(videoEntry); // Add video entry to current entry content
+    });
 }
-
-selectFolderButton.addEventListener('click', async () => {
-    // 调用 Electron API 选择文件夹
-    const videoFiles = await window.electronAPI.selectFolder();
-
-    // 通过
-
-});
 
 function showPage(page) {
     // Hide all pages
@@ -103,9 +108,21 @@ function showPage(page) {
     clickedButton.classList.add('active');
 }
 
-function toggleEntry(entryId) {
-    const entry = document.getElementById(entryId);
-    entry.classList.toggle('active');
+function toggleEntry(entryContent) {
+    const allEntryContents = document.querySelectorAll(".entry-content");
+    
+    allEntryContents.forEach(content => {
+        if (content !== entryContent) {
+            content.style.display = "none"; // Hide other entries
+        }
+    });
+
+    // Toggle the clicked entry
+    if (entryContent.style.display === "none") {
+        entryContent.style.display = "block"; // Show if hidden
+    } else {
+        entryContent.style.display = "none"; // Hide if already shown
+    }
 }
 
 // Default to showing the "Saved" page on load
