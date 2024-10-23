@@ -65,8 +65,8 @@ function loadEntries() {
 
             videoThumbnail.appendChild(img);
             videoThumbnail.appendChild(durationDiv);
-            videoEntry.appendChild(timeDiv);
-            videoEntry.appendChild(videoThumbnail);
+            link.appendChild(timeDiv);
+            link.appendChild(videoThumbnail);
             videoEntry.appendChild(link); // Add the link to videoEntry
             entryContent.appendChild(videoEntry);
         });
