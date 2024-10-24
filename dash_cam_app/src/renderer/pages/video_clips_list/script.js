@@ -52,16 +52,27 @@ function loadEntries(videoType) {
             const dateItem = document.createElement("div");
             dateItem.classList.add("date-item");
 
+            const dateHeader = document.createElement("div");
+            dateHeader.classList.add("date-header");
+            dateHeader.onclick = () => toggleEntry(dateHeader);  // Pass the header itself
+
+            const dateIcon = document.createElement("span");
+            dateIcon.classList.add("date-icon");
+            dateIcon.textContent = "●"; // Default icon
+
             const dateSpan = document.createElement("span");
             dateSpan.classList.add("date");
-            dateSpan.textContent = entryDate; // 1 这三处一定要用entryDate而不是currentDate，currentDate是引用
-            dateSpan.onclick = () => toggleEntry(entryDate);  // 2
+            dateSpan.textContent = entryDate; // 1 这2处一定要用entryDate而不是currentDate，currentDate是引用
+
 
             entryContent = document.createElement("div");
-            entryContent.id = videoType + entryDate;  // 3 使用“type+时间戳”作为id避免不同section中id的重复
+            entryContent.id = videoType + entryDate;  // 2 Use “type+时间戳”作为id避免不同section中id的重复
             entryContent.classList.add("entry-content");
+            entryContent.style.display = 'none'; // Start hidden
 
-            dateItem.appendChild(dateSpan);
+            dateHeader.appendChild(dateIcon);
+            dateHeader.appendChild(dateSpan);
+            dateItem.appendChild(dateHeader);
             dateItem.appendChild(entryContent);
             pageSection.appendChild(dateItem);
         }
@@ -122,20 +133,39 @@ function showSection(sectionId) {
 /// 效果
 // 1. 翻转折叠/展开状态
 // 2. 最多只展开一个
-function toggleEntry(clickedDate) {
-    const activeSection = document.querySelector('section.active');  // 只在当前选中的section中查找
-    const allEntries = activeSection.querySelectorAll('.entry-content');
+function toggleEntry(header) {
+    const content = header.nextElementSibling;  // Get the corresponding content
+    const icon = header.querySelector('.date-icon');  // Get the icon in the header
 
-    allEntries.forEach(entry => {
-        // If the entry's ID matches the clicked date, toggle it
-        if (entry.id.includes(clickedDate)) {  // entry id的形式是类型加日期，如：SavedClips2024-11-11
-            entry.style.display = entry.style.display === 'block' ? 'none' : 'block';
-        } else {
-            // Otherwise, collapse it
-            entry.style.display = 'none';
-        }
+    // Check if the content is currently displayed
+    const isExpanded = content.style.display === 'block';
+
+    // 如果想取消最多只能展开一个日期的功能，把下面这段代码注释掉即可
+    // Collapse all other entries in the same section
+    const allHeaders = header.parentNode.parentNode.querySelectorAll('.date-header');
+    allHeaders.forEach(otherHeader => {
+        const otherContent = otherHeader.nextElementSibling; // Get the content for each header
+        otherContent.style.display = 'none'; // Collapse it
+        const otherIcon = otherHeader.querySelector('.date-icon');
+        otherIcon.textContent = '●'; // Reset icon to collapsed state
+        otherHeader.classList.remove('highlight'); // Remove highlight from other headers
     });
+    // 如果想取消最多只能展开一个日期的功能，把上面这段代码注释掉即可
+
+    // Toggle the clicked entry
+    if (isExpanded) {
+        // If it's currently expanded, collapse it
+        content.style.display = 'none';
+        icon.textContent = '●'; // Collapsed state
+        header.classList.remove('highlight'); // Remove highlight if collapsing
+    } else {
+        // If it's collapsed, expand it
+        content.style.display = 'block';
+        icon.textContent = '►'; // Expanded state
+        header.classList.add('highlight'); // Add highlight to the header
+    }
 }
+
 
 
 window.onload = () => {

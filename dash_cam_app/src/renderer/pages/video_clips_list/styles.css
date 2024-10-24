@@ -115,8 +115,62 @@ h1 {
     flex-direction: column;
     margin-bottom: 20px;
     position: relative;
-    border-left: 2px solid #ccc;
     padding-left: 20px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25.5px;
+    /* 确保时间线与图标中心对齐 */
+    width: 1px;
+    height: 100%;
+    background-color: #8A8A8A;
+    z-index: -1;
+    /* 让时间线显示在背景 */
+}
+
+.date-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.date-header.highlight {
+    color: #f3f3f3;
+    font-weight: bold;
+}
+
+.date-header.highlight .date-icon {
+    color: #f3f3f3;
+    font-size: 1.2em;
+    /* Slightly larger icon */
+}
+
+.date-header.highlight .date {
+    font-size: 18px;
+    color: #f3f3f3;
+}
+
+.date-icon {
+    font-size: 20px;
+    margin-right: 10px;
+    position: relative;
+    z-index: 1;
+    /* 让符号显示在时间线之上 */
+}
+
+.date {
+    cursor: pointer;
+    font-size: 16px;
+    color: #8A8A8A;
+}
+
+.date:hover {
+    text-decoration: underline;
 }
 
 .date-item {
@@ -190,15 +244,4 @@ h1 {
 
 .entry-content.active {
     display: block;
-}
-
-.date {
-    cursor: pointer;
-    font-size: 16px;
-    color: #007BFF;
-    margin-bottom: 10px;
-}
-
-.date:hover {
-    text-decoration: underline;
 }
