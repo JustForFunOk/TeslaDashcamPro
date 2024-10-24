@@ -6,8 +6,8 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #171717;
+    color: #8a8a8a;
 }
 
 .container {
@@ -51,7 +51,7 @@ h1 {
     /* 去掉边框 */
     border-radius: 50%;
     /* 使按钮圆形 */
-    background-color: #000;
+    background-color: #8a8a8a;
     /* 按钮背景颜色 */
     color: white;
     /* 图标颜色 */
@@ -71,7 +71,7 @@ h1 {
 .icon {
     width: 30px;
     height: 30px;
-    filter: invert(1);
+    /* filter: invert(1); */
     /* 反转颜色，svg是黑色的，反转为白色 */
 }
 
@@ -87,9 +87,10 @@ h1 {
 }
 
 .header-buttons button {
-    padding: 10px 15px;
+    padding: 10px 20px;
     border: none;
-    background-color: #f1f1f1;
+    background-color: #8a8a8a;
+    color: #171717;
     border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
@@ -97,8 +98,8 @@ h1 {
 }
 
 .header-buttons button.active {
-    background-color: #000;
-    color: #fff;
+    background-color: #f3f3f3;
+    color: #171717;
 }
 
 .page {
