@@ -11,14 +11,16 @@
 <body>
     <div class="container">
         <header>
-            <h1>SENTRY DASHCAM</h1>
+            <div class="header-title-container">
+                <h1>SENTRY DASHCAM</h1>
+                <button id="select-folder" class="icon-button">
+                    <img src="folder-icon.svg" alt="Folder Icon" class="icon" />
+                </button>
+            </div>
             <div class="header-buttons">
                 <button class="btn-sentry" onclick="showSection('sentry')">Sentry</button>
                 <button class="btn-saved active" onclick="showSection('saved')">Saved</button>
                 <button class="btn-recent" onclick="showSection('recent')">Recent</button>
-            </div>
-            <div>
-                <button id="select-folder">选择文件夹</button>
             </div>
         </header>
 

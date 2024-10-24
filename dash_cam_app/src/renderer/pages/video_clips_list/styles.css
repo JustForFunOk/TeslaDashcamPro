@@ -19,18 +19,71 @@ body {
 
 header {
     display: flex;
+    flex-direction: column;
+    /* 使按钮组在新的一行 */
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.header-title-container {
+    display: flex;
+    /* 使用 Flexbox */
+    justify-content: space-between;
+    /* 在两端对齐 */
+    align-items: center;
+    /* 垂直居中对齐 */
+    width: 100%;
+    /* 使其占满可用宽度 */
+    margin: 10px;
 }
 
 h1 {
     font-size: 24px;
 }
 
+#select-folder {
+    width: 50px;
+    /* 根据需要设置宽度 */
+    height: 50px;
+    /* 根据需要设置高度 */
+    border: none;
+    /* 去掉边框 */
+    border-radius: 50%;
+    /* 使按钮圆形 */
+    background-color: #000;
+    /* 按钮背景颜色 */
+    color: white;
+    /* 图标颜色 */
+    display: flex;
+    /* 使用 Flexbox 进行居中 */
+    align-items: center;
+    /* 垂直居中 */
+    justify-content: center;
+    /* 水平居中 */
+    cursor: pointer;
+    /* 鼠标悬停时显示手形 */
+    transition: background-color 0.3s;
+    /* 增加过渡效果 */
+}
+
+
+.icon {
+    width: 30px;
+    height: 30px;
+    filter: invert(1);
+    /* 反转颜色，svg是黑色的，反转为白色 */
+}
+
 .header-buttons {
     display: flex;
-    gap: 10px;
+    /* 使用 Flexbox */
+    justify-content: space-around;
+    /* 按钮均匀分布 */
+    width: 100%;
+    /* 使按钮容器占满宽度 */
+    margin-top: 10px;
+    /* 可选：调整上边距 */
 }
 
 .header-buttons button {
@@ -39,7 +92,8 @@ h1 {
     background-color: #f1f1f1;
     border-radius: 20px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .header-buttons button.active {

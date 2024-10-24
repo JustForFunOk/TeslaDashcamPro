@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
@@ -525,6 +525,9 @@ app.whenReady().then(() => {
             preload: path.join(__dirname, 'preload.js'),  // 预加载文件
         }
     });
+
+    // 隐藏菜单栏
+    Menu.setApplicationMenu(null);
 
     mainWindow.loadFile('src/renderer/pages/video_clips_list/index.html');
 });
