@@ -8,7 +8,7 @@ const sections = {
 let videoFiles = {};
 
 // 加载已保存的视频列表（如果存在）
-function loadSavedVideoList() {
+function restoreVideoList() {
     videoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
 
     if (videoFiles) {
@@ -18,8 +18,6 @@ function loadSavedVideoList() {
     }
 }
 
-// 初始加载时恢复状态，这个需要，否则从视频播放页面退回时将是空白页面
-window.onload = loadSavedVideoList;
 
 selectFolderButton.addEventListener('click', async () => {
     // 调用 Electron API 选择文件夹
@@ -56,11 +54,11 @@ function loadEntries(videoType) {
 
             const dateSpan = document.createElement("span");
             dateSpan.classList.add("date");
-            dateSpan.textContent = entryDate; // 1
+            dateSpan.textContent = entryDate; // 1 这三处一定要用entryDate而不是currentDate，currentDate是引用
             dateSpan.onclick = () => toggleEntry(entryDate);  // 2
 
             entryContent = document.createElement("div");
-            entryContent.id = entryDate;  // 3 这三处一定要用entryDate而不是currentDate，currentDate是引用
+            entryContent.id = videoType + entryDate;  // 3 使用“type+时间戳”作为id避免不同section中id的重复
             entryContent.classList.add("entry-content");
 
             dateItem.appendChild(dateSpan);
@@ -100,20 +98,24 @@ function loadEntries(videoType) {
     }
 }
 
-function showPage(page) {
+function showSection(sectionId) {
     // Hide all pages
     const pages = document.querySelectorAll('.page');
     pages.forEach(p => p.classList.remove('active'));
 
     // Show the selected page
-    document.getElementById(page).classList.add('active');
+    document.getElementById(sectionId).classList.add('active');
 
+    // 保存状态以便恢复页面
+    sessionStorage.setItem('activeSection', sectionId);
+
+    // 修改按钮的状态
     // Remove active class from all buttons
     const buttons = document.querySelectorAll('.header-buttons button');
     buttons.forEach(btn => btn.classList.remove('active'));
 
     // Add active class to the clicked button
-    const clickedButton = document.querySelector(`.btn-${page}`);
+    const clickedButton = document.querySelector(`.btn-${sectionId}`);
     clickedButton.classList.add('active');
 }
 
@@ -126,7 +128,7 @@ function toggleEntry(clickedDate) {
 
     allEntries.forEach(entry => {
         // If the entry's ID matches the clicked date, toggle it
-        if (entry.id === clickedDate) {
+        if (entry.id.includes(clickedDate)) {  // entry id的形式是类型加日期，如：SavedClips2024-11-11
             entry.style.display = entry.style.display === 'block' ? 'none' : 'block';
         } else {
             // Otherwise, collapse it
@@ -134,7 +136,34 @@ function toggleEntry(clickedDate) {
         }
     });
 }
-// Default to showing the "Saved" page on load
-document.addEventListener('DOMContentLoaded', () => {
-    showPage('saved');
-});
+
+
+window.onload = () => {
+    // 初始加载时恢复状态，这个需要，否则从视频播放页面退回时将是空白页面
+    restoreVideoList();
+
+    // 恢复页面状态，初始状态显示save页面
+    const activeSection = sessionStorage.getItem('activeSection') || 'saved';
+    showSection(activeSection);
+
+    // 恢复折叠状态
+    const entries = document.querySelectorAll('.entry-content');
+    entries.forEach(entry => {
+        const isVisible = sessionStorage.getItem(entry.id) === 'true';
+        entry.style.display = isVisible ? 'block' : 'none';
+    });
+
+    // 恢复滚动位置
+    const scrollPosition = sessionStorage.getItem('scrollPosition') || 0;
+    window.scrollTo(0, scrollPosition);
+};
+
+window.onbeforeunload = () => {
+    // 在离开页面前保存滚动位置
+    sessionStorage.setItem('scrollPosition', window.scrollY);
+    // 保存每个条目的显示状态
+    const entries = document.querySelectorAll('.entry-content');
+    entries.forEach(entry => {
+        sessionStorage.setItem(entry.id, entry.style.display === 'block');
+    });
+};
