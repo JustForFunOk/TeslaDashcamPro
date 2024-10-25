@@ -6,6 +6,7 @@ const sections = {
 };
 
 let videoFiles = {};
+let readSuccess = false;
 
 // 加载已保存的视频列表（如果存在）
 function restoreVideoList() {
@@ -21,34 +22,30 @@ function restoreVideoList() {
 
 selectFolderButton.addEventListener('click', async () => {
     // 调用 Electron API 选择文件夹
-    videoFiles = await window.electronAPI.selectFolder();
+    [readSuccess, videoFiles] = await window.electronAPI.selectFolder();
 
-    // 保存视频列表到sessionStorage本地应用运行期间都可以获取其中的内容
-    sessionStorage.setItem('videoFiles', JSON.stringify(videoFiles));
+    if (readSuccess) {
+        // 保存视频列表到sessionStorage本地应用运行期间都可以获取其中的内容
+        sessionStorage.setItem('videoFiles', JSON.stringify(videoFiles));
 
-    loadEntries("SavedClips");
-    loadEntries("SentryClips");
-    loadEntries("AllClips");
+        loadEntries("SavedClips");
+        loadEntries("SentryClips");
+        loadEntries("AllClips");
+    }
 });
 
 // 将输入的时长（以秒为单位）转换为小时:分钟:秒 的格式
-// 并且在不足1小时的情况下省略小时部分
 function formatDuration(seconds) {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
 
     // 格式化为两位数
+    const formattedHours = String(hours).padStart(2, '0');
     const formattedMinutes = String(minutes).padStart(2, '0');
     const formattedSeconds = String(remainingSeconds).padStart(2, '0');
 
-    // 根据小时数判断格式
-    if (hours > 0) {
-        const formattedHours = String(hours).padStart(2, '0');
-        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-    } else {
-        return `${formattedMinutes}:${formattedSeconds}`;
-    }
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
 
 function loadEntries(videoType) {

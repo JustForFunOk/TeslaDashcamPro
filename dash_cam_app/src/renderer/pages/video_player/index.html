@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>视频播放器</title>
+    <title>特斯拉行车记录仪增强版</title>
     <link rel="stylesheet" href="./styles.css">
 </head>
 
@@ -27,30 +27,28 @@
 
     <div class="video-container">
         <!-- 半透明的灰色窗口 -->
-        <div id="overlay-1" class="overlay">
-            <div id="label-1" class="label">前</div>
-        </div>
-        <div id="overlay-2" class="overlay">
-            <div id="label-2" class="label">后</div>
-        </div>
-        <div id="overlay-3" class="overlay">
-            <div id="label-3" class="label">左</div>
-        </div>
-        <div id="overlay-4" class="overlay">
-            <div id="label-4" class="label">右</div>
-        </div>
+        <div id="overlay-f" class="overlay"></div>
+        <div id="overlay-b" class="overlay"></div>
+        <div id="overlay-l" class="overlay"></div>
+        <div id="overlay-r" class="overlay"></div>
+
+        <!-- 视角文本  这里不能作为overlay的子类 因为z层级不一样-->
+        <div id="label-f" class="label">前</div>
+        <div id="label-b" class="label">后</div>
+        <div id="label-l" class="label">左</div>
+        <div id="label-r" class="label">右</div>
 
         <!-- 缩略图视角视频 -->
-        <video id="video-1" class="video large" onclick="selectVideo(this)" muted>
+        <video id="video-f" class="video large" onclick="selectVideo(this)" muted>
             <source src="" type="video/mp4">
         </video>
-        <video id="video-2" class="video small" onclick="selectVideo(this)" muted>
+        <video id="video-b" class="video small" onclick="selectVideo(this)" muted>
             <source src="" type="video/mp4">
         </video>
-        <video id="video-3" class="video small" onclick="selectVideo(this)" muted>
+        <video id="video-l" class="video small" onclick="selectVideo(this)" muted>
             <source src="" type="video/mp4">
         </video>
-        <video id="video-4" class="video small" onclick="selectVideo(this)" muted>
+        <video id="video-r" class="video small" onclick="selectVideo(this)" muted>
             <source src="" type="video/mp4">
         </video>
 

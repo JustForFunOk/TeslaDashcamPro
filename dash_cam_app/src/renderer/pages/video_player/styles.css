@@ -2,6 +2,8 @@
     --background-color: #171717;
     --foreground-color: #8a8a8a;
     --selected-item-color: #f3f3f3;
+    --small-window-radius: 10px;
+    /* 不设置为%比 否则显示区域为矩形时圆角会很怪 */
 }
 
 body {
@@ -32,37 +34,30 @@ button {
     font-size: 16px;
 }
 
+/* 使用方形按钮 参考app中的按钮 */
 .tool-bar-button {
     width: 50px;
-    /* 根据需要设置宽度 */
     height: 50px;
-    /* 根据需要设置高度 */
     border: none;
     border-radius: 10%;
-    /* 使用方形按钮 参考app中的按钮 */
-    background-color: var(--foreground-color);
-    color: var(--background-color);
-    /* 图标颜色 */
+    background: transparent;
+    color: var(--foreground-color);
     display: flex;
-    /* 使用 Flexbox 进行居中 */
     align-items: center;
-    /* 垂直居中 */
     justify-content: center;
-    /* 水平居中 */
     cursor: pointer;
-    /* 鼠标悬停时显示手形 */
     transition: background-color 0.3s;
-    /* 增加过渡效果 */
     font-size: 30px;
 }
 
 .tool-bar-button:hover {
-    background-color: var(--selected-item-color);
+    background-color: var(--foreground-color);
 }
 
 #back-button {
     font-weight: bold;
     margin-left: 20px;
+    color: var(--selected-item-color);
 }
 
 .icon {
@@ -101,25 +96,28 @@ button {
     width: 15%;
     height: 15%;
     z-index: 2;
+    cursor: pointer;
+    border-radius: var(--small-window-radius);
+
 }
 
 
-#video-1 {
+#video-f {
     top: 2%;
     left: 2%;
 }
 
-#video-2 {
+#video-b {
     top: 2%;
     right: 2%;
 }
 
-#video-3 {
+#video-l {
     bottom: 2%;
     left: 2%;
 }
 
-#video-4 {
+#video-r {
     bottom: 2%;
     right: 2%;
 }
@@ -128,32 +126,32 @@ button {
 .overlay {
     position: absolute;
     background-color: rgba(128, 128, 128, 0.5);
-    /* 半透明灰色 */
     z-index: 1;
     /* 位于小视频上，但在放大视频下 */
     width: 15%;
     height: 15%;
     pointer-events: none;
     /* 让鼠标穿过 overlay 不影响视频点击 */
+    border-radius: var(--small-window-radius);
 }
 
 /* 半透明窗口的位置 */
-#overlay-1 {
+#overlay-f {
     top: 2%;
     left: 2%;
 }
 
-#overlay-2 {
+#overlay-b {
     top: 2%;
     right: 2%;
 }
 
-#overlay-3 {
+#overlay-l {
     bottom: 2%;
     left: 2%;
 }
 
-#overlay-4 {
+#overlay-r {
     bottom: 2%;
     right: 2%;
 }
@@ -163,43 +161,32 @@ button {
     position: absolute;
     color: white;
     font-size: 14px;
-    font-weight: bold;
     z-index: 3;
     /* 确保文字在所有内容上方 */
     padding: 2px 5px;
-    background-color: rgba(128, 128, 128, 0.5);
-    /* 半透明黑色背景使文字清晰 */
+    /* 显示中文将上下padding调小一点 这样看起来居中些 */
 }
 
-/* 标签相对于 overlay 的位置 */
-#label-1 {
-    bottom: -23px;
-    /* 距离底部 */
-    left: 10px;
-    /* 距离左边 */
+/* 标签相对于 video-container 的位置, 根据 overlay 位置和长宽来换算 */
+#label-f {
+    top: 2%;
+    left: 2%;
 }
 
-#label-2 {
-    bottom: -23px;
-    /* 距离底部 */
-    right: 10px;
-    /* 距离左边 */
+#label-b {
+    top: 2%;
+    right: 2%;
 }
 
-#label-3 {
-    top: -23px;
-    /* 距离底部 */
-    left: 10px;
-    /* 距离左边 */
+#label-l {
+    bottom: 2%;
+    left: 2%;
 }
 
-#label-4 {
-    top: -23px;
-    /* 距离底部 */
-    right: 10px;
-    /* 距离左边 */
+#label-r {
+    bottom: 2%;
+    right: 2%;
 }
-
 
 .controls {
     display: flex;

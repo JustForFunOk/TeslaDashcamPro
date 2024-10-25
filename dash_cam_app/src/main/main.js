@@ -538,12 +538,12 @@ ipcMain.handle('select-folder', async () => {
     });
 
     if (result.canceled) {
-        return [];
+        return [false, []];
     } else {
         const folderPath = result.filePaths[0];
         // const videoFiles = scanDirectory(folderPath);  // 递归获取所有视频文件
         const videoFiles = await parseTeslaCamFolder(folderPath);
         // console.log(JSON.stringify(videoFiles, null, 2));
-        return videoFiles;
+        return [true, videoFiles];
     }
 });

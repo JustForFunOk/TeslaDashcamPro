@@ -1,8 +1,8 @@
 const players = [
-    document.getElementById('video-1'),  // F
-    document.getElementById('video-2'),  // B
-    document.getElementById('video-3'),  // L
-    document.getElementById('video-4')   // R
+    document.getElementById('video-f'),  // F
+    document.getElementById('video-b'),  // B
+    document.getElementById('video-l'),  // L
+    document.getElementById('video-r')   // R
 ];
 
 const play_pause_button = document.getElementById('play-pause-btn');
@@ -251,9 +251,9 @@ function syncProgressWithVideo() {
 }
 
 
-// 在页面加载后调用 selectVideo，选择 video-1
+// 在页面加载后调用 selectVideo，选择 video-f
 window.onload = function () {
-    selectVideo(players[0]); // 主动选择 video-1
+    selectVideo(players[0]); // 主动选择 video-f
     syncProgressWithVideo(); // 启用拖动进度条同步功能
 };
 
