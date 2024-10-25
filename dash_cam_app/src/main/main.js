@@ -519,15 +519,15 @@ let mainWindow;
 
 app.whenReady().then(() => {
     mainWindow = new BrowserWindow({
-        width: 1280,
-        height: 1200,
+        width: 800,
+        height: 600,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),  // 预加载文件
         }
     });
 
-    // 隐藏菜单栏
-    Menu.setApplicationMenu(null);
+    // 隐藏菜单栏  隐藏之后前端调试页面就无法用了 先不隐藏
+    // Menu.setApplicationMenu(null);
 
     mainWindow.loadFile('src/renderer/pages/video_clips_list/index.html');
 });

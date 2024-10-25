@@ -140,7 +140,7 @@ h1 {
     /* 确保时间线与图标中心对齐 */
     width: 1px;
     height: 100%;
-    background-color: #8A8A8A;
+    background-color: var(--foreground-color);
     z-index: -1;
     /* 让时间线显示在背景 */
 }
@@ -154,19 +154,19 @@ h1 {
 }
 
 .date-header.highlight {
-    color: #f3f3f3;
+    color: var(--selected-item-color);
     font-weight: bold;
 }
 
 .date-header.highlight .date-icon {
-    color: #f3f3f3;
+    color: var(--selected-item-color);
     font-size: 1.2em;
     /* Slightly larger icon */
 }
 
 .date-header.highlight .date {
     font-size: 18px;
-    color: #f3f3f3;
+    color: var(--selected-item-color);
 }
 
 .date-icon {
@@ -180,7 +180,7 @@ h1 {
 .date {
     cursor: pointer;
     font-size: 16px;
-    color: #8A8A8A;
+    color: var(--foreground-color);
 }
 
 .date:hover {
@@ -200,15 +200,25 @@ h1 {
     margin-bottom: 10px;
 }
 
+.entry-content {
+    display: none;
+}
+
+.entry-content.active {
+    display: block;
+}
+
 .video-entry {
     cursor: pointer;
     /* Indicate that this is clickable */
     margin-bottom: 10px;
     /* Space between entries */
-    border: 1px solid #ccc;
-    /* Optional: styling */
     padding: 10px;
     /* Optional: styling */
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    /* 移除下划线 */
 }
 
 .video-entry:hover {
@@ -217,14 +227,16 @@ h1 {
 }
 
 .time {
-    font-size: 12px;
-    color: #333;
-    margin-bottom: 5px;
+    font-size: 14px;
+    color: var(--background-color);
+    margin-right: 10px;
+    background-color: var(--foreground-color);
+    padding: 4px;
+    border-radius: 12px;
 }
 
 .video-thumbnail {
     position: relative;
-    margin-bottom: 10px;
 }
 
 .video-thumbnail img {
@@ -237,7 +249,7 @@ h1 {
     position: absolute;
     bottom: 5px;
     right: 10px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(23, 23, 23, 0.6);
     color: #fff;
     padding: 2px 5px;
     border-radius: 5px;
@@ -249,13 +261,4 @@ h1 {
     max-width: 200px;
     display: block;
     margin: 0 auto;
-}
-
-.entry-content {
-    display: none;
-    padding-left: 20px;
-}
-
-.entry-content.active {
-    display: block;
 }

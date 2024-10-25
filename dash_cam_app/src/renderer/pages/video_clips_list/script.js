@@ -31,6 +31,26 @@ selectFolderButton.addEventListener('click', async () => {
     loadEntries("AllClips");
 });
 
+// 将输入的时长（以秒为单位）转换为小时:分钟:秒 的格式
+// 并且在不足1小时的情况下省略小时部分
+function formatDuration(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    // 格式化为两位数
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+
+    // 根据小时数判断格式
+    if (hours > 0) {
+        const formattedHours = String(hours).padStart(2, '0');
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    } else {
+        return `${formattedMinutes}:${formattedSeconds}`;
+    }
+}
+
 function loadEntries(videoType) {
     const pageSection = sections[videoType];
     const entries = videoFiles[videoType];
@@ -77,17 +97,15 @@ function loadEntries(videoType) {
             pageSection.appendChild(dateItem);
         }
 
-        // Create video entry for the current entry
-        const videoEntry = document.createElement("div");
-        videoEntry.classList.add("video-entry");
-
         // Create a clickable link
-        const link = document.createElement("a");
-        link.href = `../video_player/index.html?type=${encodeURIComponent(videoType)}&index=${encodeURIComponent(i)}`;
+        const videoEntry = document.createElement("a");
+        videoEntry.href = `../video_player/index.html?type=${encodeURIComponent(videoType)}&index=${encodeURIComponent(i)}`;
+        videoEntry.classList.add("video-entry");
 
         const timeDiv = document.createElement("div");
         timeDiv.classList.add("time");
-        timeDiv.textContent = entry.timestamp.split("_")[1]; // Use time part
+        const hmsParts = entry.timestamp.split("_")[1].split('-');
+        timeDiv.textContent = `${hmsParts[0]}:${hmsParts[1]}`;  // 只显示时分
 
         const videoThumbnail = document.createElement("div");
         videoThumbnail.classList.add("video-thumbnail");
@@ -98,13 +116,12 @@ function loadEntries(videoType) {
 
         const durationDiv = document.createElement("div");
         durationDiv.classList.add("video-duration");
-        durationDiv.textContent = entry.duration;
+        durationDiv.textContent = formatDuration(entry.duration);
 
         videoThumbnail.appendChild(img);
         videoThumbnail.appendChild(durationDiv);
-        link.appendChild(timeDiv);
-        link.appendChild(videoThumbnail);
-        videoEntry.appendChild(link); // Add the link to videoEntry
+        videoEntry.appendChild(timeDiv);
+        videoEntry.appendChild(videoThumbnail);
         entryContent.appendChild(videoEntry); // Add video entry to current entry content
     }
 }
