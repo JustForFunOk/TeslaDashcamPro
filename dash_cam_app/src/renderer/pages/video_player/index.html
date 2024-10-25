@@ -11,12 +11,19 @@
 </head>
 
 <body>
-    <h1>视频播放器</h1>
-
     <!-- 返回按钮 -->
-    <div>
-        <button id="back-button">返回主页</button>
+    <div class="header-title-container">
+        <div>
+            <button id="back-button" class="tool-bar-button">&#5176;</button>
+        </div>
+
+        <div>
+            <button id="delete-button" class="tool-bar-button">
+                <img src="delete-icon.svg" alt="delete video" class="icon" />
+            </button>
+        </div>
     </div>
+
 
     <div class="video-container">
         <!-- 半透明的灰色窗口 -->
@@ -46,7 +53,6 @@
         <video id="video-4" class="video small" onclick="selectVideo(this)" muted>
             <source src="" type="video/mp4">
         </video>
-
 
     </div>
 

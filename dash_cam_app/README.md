@@ -1,15 +1,12 @@
 #  Dash Cam App
 
 ## TODO
-* 视频播放页返回主页时恢复展开已经位置状态
-
-* 视频列表布局
-
-* 视频时长位置
 
 * 添加一个绝对时间戳
 
-* 视频列表界面集成
+* 显示长度超过一屏 右边会有滚动条 影响美观
+
+* 切换section时 之前展开的不会自动折叠
 
 * 目前存在在连续播放时，上下两个视频交界处会有闪屏到问题。 SentryDashCam App上也有这个现象
 
@@ -22,6 +19,27 @@
 * 未选中组件 138,138,138  #8A8A8A
 
 * 选中的高亮组件 243,243,243  #F3F3F3
+
+* 返回按钮，箭头是255,255,255，背景是上述背景色
+
+
+## 图标
+
+### svg
+
+* [垃圾桶](https://fontawesome.com/v5/icons/trash-alt?f=classic&s=solid)
+
+### unicode table
+
+* [箭头unicode table](https://symbl.cc/en/collections/arrow-symbols/)
+
+* 返回箭头使用 &#8249; 这个更好看 但是不能上下居中，目前使用的是&#5176;
+
+* 左转向箭头 U+1F844
+
+* 右转向箭头 U+1F846
+
+
 
 ## Deps
 
