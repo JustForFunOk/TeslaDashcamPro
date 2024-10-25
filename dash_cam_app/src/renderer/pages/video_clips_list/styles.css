@@ -1,3 +1,9 @@
+:root {
+    --background-color: #171717;
+    --foreground-color: #8a8a8a;
+    --selected-item-color: #f3f3f3;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,8 +12,8 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #171717;
-    color: #8a8a8a;
+    background-color: var(--background-color);
+    color: var(--foreground-color);
 }
 
 .container {
@@ -51,7 +57,7 @@ h1 {
     /* 去掉边框 */
     border-radius: 50%;
     /* 使按钮圆形 */
-    background-color: #8a8a8a;
+    background-color: var(--foreground-color);
     /* 按钮背景颜色 */
     color: white;
     /* 图标颜色 */
@@ -67,6 +73,9 @@ h1 {
     /* 增加过渡效果 */
 }
 
+#select-folder:hover {
+    background-color: var(--selected-item-color);
+}
 
 .icon {
     width: 30px;
@@ -89,17 +98,22 @@ h1 {
 .header-buttons button {
     padding: 10px 20px;
     border: none;
-    background-color: #8a8a8a;
-    color: #171717;
+    background-color: var(--foreground-color);
+    color: var(--background-color);
     border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
 }
 
+.header-buttons button:hover {
+    background-color: var(--selected-item-color);
+
+}
+
 .header-buttons button.active {
-    background-color: #f3f3f3;
-    color: #171717;
+    background-color: var(--selected-item-color);
+    color: var(--background-color);
 }
 
 .page {
