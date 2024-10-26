@@ -8,6 +8,8 @@ const players = [
 const play_pause_button = document.getElementById('play-pause-btn');
 const progressBar = document.getElementById('progress-bar');
 const timeDisplay = document.getElementById('timestamp');
+const currentTime = document.getElementById('current-time');
+const totalDuration = document.getElementById('total-duration');
 
 // 当前播放的clips group中的视频索引
 let currentIndex = 0;
@@ -17,7 +19,7 @@ let loaded_videos_channel_cnt = 0;  // 已经准备好播放的路数
 let ended_videos_channel_cnt = 0;  // 当前视频源已播放完毕的路数
 
 // 4路都加载完毕自动播放
-let is_playing = false;
+let is_playing = true;
 
 let selectedPlayer = players[0];
 
@@ -57,6 +59,25 @@ function formatDate(date) {
     return `${weekDay} ${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
 }
 
+// 将输入的时长（以秒为单位）转换为小时:分钟:秒 的格式
+function formatDuration(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    // 格式化为两位数
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+
+    // 根据小时数判断格式
+    if (hours > 0) {
+        const formattedHours = String(hours).padStart(2, '0');
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    } else {
+        return `${formattedMinutes}:${formattedSeconds}`;
+    }
+}
+
 
 players[0].addEventListener('timeupdate', () => {
     // 通过目前播放的视频 计算出进度条的进度
@@ -72,6 +93,7 @@ players[0].addEventListener('timeupdate', () => {
     currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(players[0].currentTime));
 
     // 更新时间戳
+    currentTime.innerHTML = formatDuration(progressBar.value);
     timeDisplay.innerHTML = formatDate(currentFrameTimestamp);
 });
 
@@ -97,6 +119,7 @@ if (savedVideoFiles) {
     if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
         // 设置进度条长度
         progressBar.max = savedVideoFiles[type].at(index).duration;
+        totalDuration.innerHTML = formatDuration(progressBar.max);
 
         // 获取每段视频的起始时间
         savedVideoFiles[type].at(index).clips.forEach(clip => {
@@ -131,7 +154,9 @@ players.forEach(player => {
     // 4个视频都加载第一帧完毕后再同步播放
     player.addEventListener('loadeddata', () => {
         loaded_videos_channel_cnt++;
-        if (loaded_videos_channel_cnt === players.length) {
+        // 如果用户暂停播放，拖动进度条视频跨越了视频，加载完成之后，不自动播放
+        // 最开始的时候，加载完成之后，自动播放
+        if (loaded_videos_channel_cnt === players.length && is_playing) {
             playAllVideos();
         }
     });

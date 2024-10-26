@@ -57,20 +57,17 @@
 
 
     <div class="bottom-container">
-
         <div class="controls">
-            <button id="play-pause-btn" class="tool-bar-button" onclick="togglePlayPause()">
-                ⏸︎
-            </button>
+            <button id="play-pause-btn" class="tool-bar-button" onclick="togglePlayPause()">⏵︎</button>
+            <div id="current-time" class="bar-time">mm:ss</div>
             <input type="range" id="progress-bar" value="0">
+            <div id="total-duration" class="bar-time">mm:ss</div>
         </div>
-
         <div>
             <button id="delete-button" class="tool-bar-button">
-                <img src="delete-icon.svg" alt="delete video" class="icon" />
+                <img src="delete_icon_regular.svg" alt="delete video" class="icon" />
             </button>
         </div>
-
     </div>
 
 

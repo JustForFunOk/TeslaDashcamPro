@@ -9,7 +9,7 @@
 body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100vh;
     margin: 0;
@@ -25,7 +25,7 @@ body {
     /* 垂直居中对齐 */
     width: 100%;
     /* 使其占满可用宽度 */
-    margin: 10px;
+    margin: 10px 0px;
 }
 
 .header-left {
@@ -62,8 +62,8 @@ button {
 
 /* 使用方形按钮 参考app中的按钮 */
 .tool-bar-button {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border: none;
     border-radius: 10%;
     background: transparent;
@@ -74,6 +74,7 @@ button {
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 30px;
+    margin: 0 10px;
 }
 
 .tool-bar-button:hover {
@@ -97,16 +98,28 @@ button {
     position: relative;
     width: 100%;
     /* 容器宽度为 100% 的视口宽度 */
-    height: 80%;
-    /* 容器高度为 80% 的视口高度 */
+    flex-grow: 1;
+    /* 高度上自动填充剩余的空间 */
     overflow: hidden;
     /* 隐藏溢出的部分 */
+    margin: 10px 0px;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    /* height: 80%; */
+    flex-grow: 1;
+    /* display: flex; */
+    overflow: hidden;
+    margin: 10px 0px;
 }
 
 .video {
     position: absolute;
-    object-fit: cover;
-    /* 保持视频的宽高比 */
+    object-fit: contain;
+    /* contain确保不会有隐藏区域 但是周围可能会补充空白 */
+    /* conver能填满显示区域 但是会有被隐藏的区域 */
 }
 
 .large {
@@ -220,7 +233,7 @@ button {
     /* 垂直居中对齐 */
     width: 100%;
     /* 使其占满可用宽度 */
-    margin: 10px;
+    margin: 10px 0px;
 }
 
 #play-pause-btn {
@@ -232,10 +245,20 @@ button {
 .controls {
     display: flex;
     align-items: center;
+    flex-grow: 1;
+    /* 填满剩余空间 */
 }
 
-input[type="range"] {
-    width: 300px;
+.bar-time {
+    color: white;
+    margin: 0 10px;
+}
+
+#progress-bar {
+    flex-grow: 1;
+    /* 让进度条填满剩余空间 */
+    margin: 0 10px;
+    /* 进度条两侧留点空隙 */
 }
 
 #delete-button .icon {
