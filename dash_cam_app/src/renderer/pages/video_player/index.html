@@ -13,15 +13,16 @@
 <body>
     <!-- 返回按钮 -->
     <div class="header-title-container">
-        <div>
+        <div class="header-left">
             <button id="back-button" class="tool-bar-button">&#5176;</button>
         </div>
 
-        <div>
-            <button id="delete-button" class="tool-bar-button">
-                <img src="delete-icon.svg" alt="delete video" class="icon" />
-            </button>
+        <div id="timestamp" class="header-center"></div>
+
+        <div class="header-right">
+            <!-- can data reversed -->
         </div>
+
     </div>
 
 
@@ -54,14 +55,24 @@
 
     </div>
 
-    <div class="info">
-        <input type="text" id="timestamp" readonly>
+
+    <div class="bottom-container">
+
+        <div class="controls">
+            <button id="play-pause-btn" class="tool-bar-button" onclick="togglePlayPause()">
+                ⏸︎
+            </button>
+            <input type="range" id="progress-bar" value="0">
+        </div>
+
+        <div>
+            <button id="delete-button" class="tool-bar-button">
+                <img src="delete-icon.svg" alt="delete video" class="icon" />
+            </button>
+        </div>
+
     </div>
 
-    <div class="controls">
-        <button id="play-pause-btn" onclick="togglePlayPause()">暂停</button>
-        <input type="range" id="progress-bar" value="0">
-    </div>
 
     <script src="./multi_video_layout_manager.js"></script>
 </body>

@@ -19,8 +19,6 @@ let ended_videos_channel_cnt = 0;  // 当前视频源已播放完毕的路数
 // 4路都加载完毕自动播放
 let is_playing = false;
 
-play_pause_button.textContent = '播放';
-
 let selectedPlayer = players[0];
 
 let clipsDuration = 0;  // 整个视频段的时长，用来设置进度条的长度
@@ -42,6 +40,23 @@ function formatTimestamp(timestamp_str) {
     return new Date(year, month - 1, day, hours, minutes, seconds); // 月份从0开始
 };
 
+function getWeekdayName(date) {
+    const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    return weekdays[date.getDay()];
+}
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份从0开始
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const weekDay = getWeekdayName(date);
+
+    return `${weekDay} ${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+}
+
 
 players[0].addEventListener('timeupdate', () => {
     // 通过目前播放的视频 计算出进度条的进度
@@ -57,25 +72,15 @@ players[0].addEventListener('timeupdate', () => {
     currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(players[0].currentTime));
 
     // 更新时间戳
-    timeDisplay.value = currentFrameTimestamp.toString();
+    timeDisplay.innerHTML = formatDate(currentFrameTimestamp);
 });
 
 // 播放暂停按钮
 function togglePlayPause() {
     if (is_playing) {
         pauseAllVideos();
-        play_pause_button.textContent = '播放';
-        is_playing = false;
     } else {
         playAllVideos();
-
-        // 当暂停时，将所有视频同步到被放大视频的当前时间，防止4路播放不同步
-        players.forEach(player => {
-            player.currentTime = selectedPlayer.currentTime;
-        });
-
-        play_pause_button.textContent = '暂停';
-        is_playing = true;
     }
 }
 
@@ -147,7 +152,7 @@ function playAllVideos() {
     players.forEach(player => {
         player.play();
     });
-    play_pause_button.textContent = '暂停';
+    play_pause_button.textContent = '⏸︎';
     is_playing = true;
 }
 
@@ -155,7 +160,13 @@ function pauseAllVideos() {
     players.forEach(player => {
         player.pause();
     });
-    play_pause_button.textContent = '播放';
+
+    // 当暂停时，将所有视频同步到被放大视频的当前时间，防止4路播放不同步
+    players.forEach(player => {
+        player.currentTime = selectedPlayer.currentTime;
+    });
+
+    play_pause_button.textContent = '⏵︎';
     is_playing = false;
 }
 

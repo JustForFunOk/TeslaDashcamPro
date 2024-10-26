@@ -28,10 +28,36 @@ body {
     margin: 10px;
 }
 
+.header-left {
+    flex: 1;
+    /* 左右部分占据相同的空间 */
+    text-align: left;
+    /* 左对齐 */
+}
+
+.header-right {
+    flex: 1;
+    /* 左右部分占据相同的空间 */
+    text-align: right;
+    /* 左对齐 */
+}
+
+.header-center {
+    text-align: left;
+    /* 中间部分居中 */
+    white-space: nowrap;
+    /* 防止中间部分换行 */
+}
+
 button {
     margin-right: 10px;
     padding: 10px 20px;
     font-size: 16px;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
 }
 
 /* 使用方形按钮 参考app中的按钮 */
@@ -60,15 +86,12 @@ button {
     color: var(--selected-item-color);
 }
 
-.icon {
-    width: 30px;
-    height: 30px;
+#timestamp {
+    background: transparent;
+    color: var(--selected-item-color);
 }
 
-#delete-button .icon {
-    /* 删除图标设置为红色 */
-    filter: brightness(0) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(353deg) brightness(96%) contrast(111%)
-}
+
 
 .video-container {
     position: relative;
@@ -188,12 +211,34 @@ button {
     right: 2%;
 }
 
+.bottom-container {
+    display: flex;
+    /* 使用 Flexbox */
+    justify-content: space-between;
+    /* 在两端对齐 */
+    align-items: center;
+    /* 垂直居中对齐 */
+    width: 100%;
+    /* 使其占满可用宽度 */
+    margin: 10px;
+}
+
+#play-pause-btn {
+    font-weight: bold;
+    margin-left: 20px;
+    color: var(--selected-item-color);
+}
+
 .controls {
     display: flex;
     align-items: center;
-    margin-top: 10px;
 }
 
 input[type="range"] {
     width: 300px;
+}
+
+#delete-button .icon {
+    /* 删除图标设置为红色 */
+    filter: brightness(0) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(353deg) brightness(96%) contrast(111%)
 }
