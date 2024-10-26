@@ -119,7 +119,7 @@ button {
     position: absolute;
     object-fit: contain;
     /* contain确保不会有隐藏区域 但是周围可能会补充空白 */
-    /* conver能填满显示区域 但是会有被隐藏的区域 */
+    /* cover能填满显示区域 但是会有被隐藏的区域 */
 }
 
 .large {
