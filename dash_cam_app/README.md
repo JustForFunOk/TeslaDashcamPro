@@ -7,6 +7,24 @@
 
 * 哨兵和保存视频 在进度条的上面显示触发时间点
 
+* 哨兵视频片段 根据json文件切换到对应的视角
+
+    * "camera":"6" 右后
+
+    * "camera":"5" 左后
+
+    * "camera":"？？" 前
+
+    * "camera":"？？" 后
+
+* 根据json文件识别文件类别类型（适用于选择单个子文件夹）
+
+    * 文件夹中包含event.json且视频总数量少于4x12=48个 即为哨兵或手动点击保存
+
+    * "reason":"sentry_aware_object_detection",  reason中包含sentry字样为sentry，其他均为saved
+
+* 根据event.json显示位置，触发原因
+
 * 20230617 1622 时长显示不对 结果验证是因为mac本地没有安装ffmpeg 安装之后成功 但是使用ffprobe获取时长不靠谱 太慢了
 
 * 行车时前视黄色 不好看 添加转换

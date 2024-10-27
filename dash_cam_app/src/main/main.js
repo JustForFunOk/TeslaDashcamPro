@@ -26,9 +26,17 @@ async function parseTeslaCamFolder(folderPath) {
         await processSubClips(sentry_clips_path, result["SentryClips"], tmp_all_clips);
     }
 
-    // 处理AllClips来自RecentClips, SavedClips和SentryClips
     const recent_clips_path = path.join(folderPath, 'RecentClips');
-    await processAllClips(recent_clips_path, result["AllClips"], tmp_all_clips);
+    if (fs.existsSync(recent_clips_path)) {
+        processSingleFolderClips(folderPath, tmp_all_clips);
+    }
+
+    // 处理单文件夹下的视频文件 用于选择单一文件夹的场景
+    processSingleFolderClips(folderPath, tmp_all_clips);
+
+
+    // 处理AllClips来自RecentClips, SavedClips和SentryClips或当前文件夹下的视频文件
+    await processAllClips(tmp_all_clips, result["AllClips"]);
 
     return result;
 }
@@ -38,6 +46,23 @@ function addVideoToDict(dict, position, fullPath) {
     if (position === 'back') dict.B = fullPath;
     if (position === 'left_repeater') dict.L = fullPath;
     if (position === 'right_repeater') dict.R = fullPath;
+}
+
+async function processSingleFolderClips(dirPath, all_clips) {
+    // 获取RecentClips文件夹下的视频文件
+    const files = fs.readdirSync(dirPath);
+
+    files.forEach(clip_name => {
+        const parsed = parseFileName(clip_name);
+        if (parsed) {
+            // tmp_all_clips全是符合命名规则的mp4文件
+            all_clips.push({
+                file_name: clip_name,
+                full_path: path.join(dirPath, clip_name)
+            });
+        }
+    }
+    );
 }
 
 // dirPath输入的文件路径，为SavedClips或SentryClips文件夹路径
@@ -118,27 +143,9 @@ async function processSubClips(dirPath, result, all_clips) {
 
 }
 
-// dirPath输入的文件路径，为SavedClips或SentryClips文件夹路径
 // result将结果填入对应的数据结构中
 // all_clips为前面Saved和Sentry中已经获取的视频
-async function processAllClips(recent_clips_folder, result, all_clips) {
-    // 获取RecentClips文件夹下的视频文件
-    if (fs.existsSync(recent_clips_folder)) {
-        const files = fs.readdirSync(recent_clips_folder);
-
-        files.forEach(clip_name => {
-            const parsed = parseFileName(clip_name);
-            if (parsed) {
-                // tmp_all_clips全是符合命名规则的mp4文件
-                all_clips.push({
-                    file_name: clip_name,
-                    full_path: path.join(recent_clips_folder, clip_name)
-                });
-            }
-        }
-        );
-    }
-
+async function processAllClips(all_clips, result) {
     // 通过文件名来排序
     all_clips.sort((a, b) => { return a.file_name.localeCompare(b.file_name); });
 
@@ -197,7 +204,6 @@ async function processAllClips(recent_clips_folder, result, all_clips) {
     for (let clip_group of result) {
         clip_group.duration = await getClipsDuration(clip_group.clips);
     }
-
 }
 
 
