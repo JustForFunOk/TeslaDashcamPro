@@ -14,6 +14,9 @@ const totalDuration = document.getElementById('total-duration');
 // 当前播放的clips group中的视频索引
 let currentIndex = 0;
 
+// 所有视频段的总长度，如10分多钟就是11个视频
+let totalClipsNumber = 0;
+
 // 这个变量不会有data race的情况，标准的浏览器环境中的 JavaScript 是单线程的
 let loaded_videos_channel_cnt = 0;  // 已经准备好播放的路数
 let ended_videos_channel_cnt = 0;  // 当前视频源已播放完毕的路数
@@ -21,10 +24,13 @@ let ended_videos_channel_cnt = 0;  // 当前视频源已播放完毕的路数
 // 4路都加载完毕自动播放
 let is_playing = true;
 
+// 默认选择前视最大化显示
 let selectedPlayer = players[0];
 
-let clipsDuration = 0;  // 整个视频段的时长，用来设置进度条的长度
+// 整个视频段的时长，用来设置进度条的长度
+let clipsDuration = 0;
 
+// 每段视频开始的时间戳 用于视频切换
 let clipsGroupStartTimestamp = [];
 
 // 返回按钮点击事件，跳转回主页面
@@ -102,7 +108,14 @@ function togglePlayPause() {
     if (is_playing) {
         pauseAllVideos();
     } else {
-        playAllVideos();
+        if (currentIndex < totalClipsNumber) {
+            playAllVideos();
+        } else {
+            // 播放完毕 再次点击播放按钮 从头开始播放
+            currentIndex = 0;
+            setVideosSrc(currentIndex);
+            is_playing = true;
+        }
     }
 }
 
@@ -120,6 +133,8 @@ if (savedVideoFiles) {
         // 设置进度条长度
         progressBar.max = savedVideoFiles[type].at(index).duration;
         totalDuration.innerHTML = formatDuration(progressBar.max);
+
+        totalClipsNumber = savedVideoFiles[type].at(index).clips.length;
 
         // 获取每段视频的起始时间
         savedVideoFiles[type].at(index).clips.forEach(clip => {
@@ -147,6 +162,7 @@ function setVideosSrc(clipsIndex) {
         loaded_videos_channel_cnt = 0;  // 清零等待加载完毕
         ended_videos_channel_cnt = 0;
     }
+    // 接下来会触发loadeddata事件
 }
 
 
@@ -166,9 +182,16 @@ players.forEach(player => {
     player.addEventListener('ended', () => {
         ended_videos_channel_cnt++;
         if (ended_videos_channel_cnt === players.length) {
-            // 所有视频都播放完毕
+            // 4路视频都播放完毕
             currentIndex++;
-            setVideosSrc(currentIndex);
+
+            if (currentIndex < totalClipsNumber) {
+                setVideosSrc(currentIndex);
+            } else {
+                // 播放到进度条结束
+                play_pause_button.textContent = '⏵︎';
+                is_playing = false;
+            }
         }
     });
 });
