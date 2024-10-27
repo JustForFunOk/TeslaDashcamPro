@@ -519,8 +519,8 @@ let mainWindow;
 
 app.whenReady().then(() => {
     mainWindow = new BrowserWindow({
-        width: 1280,
-        height: 1100,
+        width: 960,
+        height: 720 + 140,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),  // 预加载文件
         }
@@ -529,7 +529,7 @@ app.whenReady().then(() => {
     // 隐藏菜单栏  隐藏之后前端调试页面就无法用了 先不隐藏
     // Menu.setApplicationMenu(null);
 
-    mainWindow.setAspectRatio(1280 / 960, { width: 0, height: 140 });
+    mainWindow.setAspectRatio(4 / 3, { width: 0, height: 140 });
 
     mainWindow.loadFile('src/renderer/pages/video_clips_list/index.html');
 });
