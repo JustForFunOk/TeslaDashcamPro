@@ -84,9 +84,7 @@ button {
 }
 
 #back-button {
-    font-weight: bold;
     margin-left: 20px;
-    color: var(--selected-item-color);
 }
 
 #timestamp {
