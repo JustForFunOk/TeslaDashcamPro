@@ -195,6 +195,23 @@ window.onload = () => {
     entries.forEach(entry => {
         const isVisible = sessionStorage.getItem(entry.id) === 'true';
         entry.style.display = isVisible ? 'block' : 'none';
+
+        // 恢复展示折叠的样式
+        // Get the corresponding header
+        const dateItem = entry.parentElement; // Get the parent date item
+        const header = dateItem.querySelector('.date-header'); // Find the header within the date item
+
+        if (header) { // Check if header is not null
+            const icon = header.querySelector('.date-icon'); // Get the icon in the header
+
+            if (isVisible) {
+                icon.textContent = '►'; // Set icon to expanded state
+                header.classList.add('highlight'); // Add highlight to the header
+            } else {
+                icon.textContent = '●'; // Set icon to collapsed state
+                header.classList.remove('highlight'); // Remove highlight if collapsing
+            }
+        }
     });
 
     // 恢复滚动位置
