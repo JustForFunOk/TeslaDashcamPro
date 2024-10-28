@@ -58,7 +58,9 @@
 
     <div class="bottom-container">
         <div class="controls">
-            <button id="play-pause-btn" class="tool-bar-button" onclick="togglePlayPause()">⏵︎</button>
+            <button id="play-pause-btn" class="tool-bar-button" onclick="togglePlayPause()">
+                <img id="play-pause-icon" src="play.svg" alt="play/pause icon" class="icon" />
+            </button>
             <div id="current-time" class="bar-time">mm:ss</div>
             <input type="range" id="progress-bar" value="0">
             <div id="total-duration" class="bar-time">mm:ss</div>

@@ -5,7 +5,7 @@ const players = [
     document.getElementById('video-r')   // R
 ];
 
-const play_pause_button = document.getElementById('play-pause-btn');
+const play_pause_icon = document.getElementById('play-pause-icon');
 const progressBar = document.getElementById('progress-bar');
 const timeDisplay = document.getElementById('timestamp');
 const currentTime = document.getElementById('current-time');
@@ -189,7 +189,7 @@ players.forEach(player => {
                 setVideosSrc(currentIndex);
             } else {
                 // 播放到进度条结束
-                play_pause_button.textContent = '⏵︎';
+                play_pause_icon.src = "play.svg";
                 is_playing = false;
             }
         }
@@ -200,7 +200,7 @@ function playAllVideos() {
     players.forEach(player => {
         player.play();
     });
-    play_pause_button.textContent = '⏸︎';
+    play_pause_icon.src = "pause.svg";
     is_playing = true;
 }
 
@@ -214,7 +214,7 @@ function pauseAllVideos() {
         player.currentTime = selectedPlayer.currentTime;
     });
 
-    play_pause_button.textContent = '⏵︎';
+    play_pause_icon.src = "play.svg";
     is_playing = false;
 }
 

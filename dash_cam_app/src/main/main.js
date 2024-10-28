@@ -294,9 +294,10 @@ async function getClipsDuration(sorted_clips) {
     }
 
     // 加上最后一个视频的时间戳 通过ffmpeg获取视频时长
-    const last_video_duration = await getClipDuration(sorted_clips.at(clips_num - 1).videos);
+    // const last_video_duration = await getClipDuration(sorted_clips.at(clips_num - 1).videos);
+    const last_video_duration = 60;
 
-    console.log("clip last_video_duration: %f", last_video_duration);
+    // console.log("clip last_video_duration: %f", last_video_duration);
 
     duration_s += Math.ceil(last_video_duration);  // 保留到s
 

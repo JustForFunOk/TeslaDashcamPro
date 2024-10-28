@@ -58,6 +58,8 @@ button {
 .icon {
     width: 30px;
     height: 30px;
+    filter: invert(100%);
+    /* 反转svg颜色 */
 }
 
 /* 使用方形按钮 参考app中的按钮 */
