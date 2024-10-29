@@ -1,5 +1,8 @@
 #  Dash Cam App
 
+## Bug
+
+* 播放2024-09-04_19-59-43短视频只播放了1s就结束了 2024-09-04_19-47-35也是不满1min的好像都有问题
 
 ## TODO
 
@@ -60,6 +63,8 @@
 ## 图标
 
 ### svg
+
+* [svg库](https://www.svgrepo.com/)
 
 * [垃圾桶](https://fontawesome.com/v5/icons/trash-alt?f=classic&s=solid)
 

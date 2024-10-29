@@ -108,8 +108,14 @@ function loadEntries(videoType) {
         videoThumbnail.classList.add("video-thumbnail");
 
         const img = document.createElement("img");
-        img.src = entry.thumbPath;
+
         img.alt = "Video Thumbnail";
+        if (!entry.thumbPath || entry.thumbPath.trim() === '') {
+            img.src = "default_thumbnail.svg";  // 设置默认缩略图
+        } else {
+            img.src = entry.thumbPath; // 使用实际的缩略图路径
+        }
+        console.log(img.src);
 
         const durationDiv = document.createElement("div");
         durationDiv.classList.add("video-duration");
