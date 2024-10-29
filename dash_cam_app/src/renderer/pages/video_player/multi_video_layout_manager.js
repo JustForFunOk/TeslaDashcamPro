@@ -8,6 +8,7 @@ const players = [
 const play_pause_icon = document.getElementById('play-pause-icon');
 const progressBar = document.getElementById('progress-bar');
 const timeDisplay = document.getElementById('timestamp');
+const vehicleSpeed = document.getElementById('speed');
 const currentTime = document.getElementById('current-time');
 const totalDuration = document.getElementById('total-duration');
 
@@ -53,7 +54,7 @@ function getWeekdayName(date) {
     return weekdays[date.getDay()];
 }
 
-function formatDate(date) {
+function formatDate(date, decimalPart) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份从0开始
     const day = String(date.getDate()).padStart(2, '0');
@@ -61,9 +62,25 @@ function formatDate(date) {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const seconds = String(date.getSeconds()).padStart(2, '0');
     const weekDay = getWeekdayName(date);
-
     return `${weekDay} ${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
 }
+
+function formatUTCDate(date, decimalPart) {
+    const utcDate = new Date(date);
+    utcDate.setHours(utcDate.getHours()-8)
+
+    utcDate.setSeconds(utcDate.getSeconds()-5)  // hack代码
+
+    const year = utcDate.getFullYear();
+    const month = String(utcDate.getMonth() + 1).padStart(2, '0'); // 月份从0开始
+    const day = String(utcDate.getDate()).padStart(2, '0');
+    const hours = String(utcDate.getHours()).padStart(2, '0');
+    const minutes = String(utcDate.getMinutes()).padStart(2, '0');
+    const seconds = String(utcDate.getSeconds()).padStart(2, '0');
+
+    return `${year%100}${month}${day}${hours}${minutes}${seconds}.${decimalPart}`;
+}
+
 
 // 将输入的时长（以秒为单位）转换为小时:分钟:秒 的格式
 function formatDuration(seconds) {
@@ -93,14 +110,26 @@ players[0].addEventListener('timeupdate', () => {
     const current_clip_ts = savedVideoFiles[type].at(index).clips.at(currentIndex).filename_ts;
     const currentClipStartTimestamp = formatTimestamp(current_clip_ts);
 
-    progressBar.value = players[0].currentTime + (currentClipStartTimestamp - firstTimestamp) / 1000;
+    const playTimeInClip = players[0].currentTime;
+
+    progressBar.value = playTimeInClip + (currentClipStartTimestamp - firstTimestamp) / 1000;
 
     const currentFrameTimestamp = currentClipStartTimestamp;
-    currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(players[0].currentTime));
+    currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(playTimeInClip));
+
+    const decimalPart = Math.floor((playTimeInClip % 1) * 10);
+
+    const currentDate = formatDate(currentFrameTimestamp);
+
+    const currentUtcDate = formatUTCDate(currentFrameTimestamp, decimalPart);
+
+    const v = getValueByTs(currentUtcDate);
+    console.log(v);
 
     // 更新时间戳
     currentTime.innerHTML = formatDuration(progressBar.value);
-    timeDisplay.innerHTML = formatDate(currentFrameTimestamp);
+    timeDisplay.innerHTML = currentDate;
+    vehicleSpeed.innerHTML = v + ' km/h';
 });
 
 // 播放暂停按钮
@@ -116,6 +145,31 @@ function togglePlayPause() {
             setVideosSrc(currentIndex);
             is_playing = true;
         }
+    }
+}
+
+// 加载json文件
+// 假设你的 JSON 文件名为 data.json
+let jsonData = []
+fetch('20241002BD_id_318_257_decode.json')
+  .then(response => response.json())
+  .then(data => {
+    jsonData = data;
+    console.log('JSON data loaded successfully., data len:%d', jsonData.length);
+  })
+  .catch(error => console.error('Error loading JSON:', error));
+
+
+  // 创建一个函数来根据 ts 查找 v 值
+function getValueByTs(newTs) {
+    const result = jsonData.find(item => item.ts === newTs);
+  
+    if (result) {
+        console.log(`The value of v for ts ${newTs} is: ${result.v}`);
+        return result.v;
+    } else {
+        console.log(`No entry found for ts: ${newTs}`);
+        return -1;
     }
 }
 
