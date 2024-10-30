@@ -1,5 +1,11 @@
 #  Dash Cam App
 
+## 常用命令
+
+* 本地运行 npm start
+
+* [打包应用](https://www.electronjs.org/zh/docs/latest/tutorial/%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B)
+
 ## Bug
 
 * 播放2024-09-04_19-59-43短视频只播放了1s就结束了 2024-09-04_19-47-35也是不满1min的好像都有问题
