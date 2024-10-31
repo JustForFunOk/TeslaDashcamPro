@@ -72,6 +72,8 @@
 
 * [svg库](https://www.svgrepo.com/)
 
+* [编辑svg，优化svg文件](https://www.svgviewer.dev/)
+
 * [垃圾桶](https://fontawesome.com/v5/icons/trash-alt?f=classic&s=solid)
 
 ### unicode table
