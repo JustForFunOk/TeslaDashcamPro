@@ -108,6 +108,8 @@ button {
 }
 
 .vehicle-info-icon {
+    position: relative;
+    /* 为 tooltip 定位提供参考 */
     width: 40px;
     height: 40px;
     border: none;
@@ -297,4 +299,28 @@ button {
 #delete-button .icon {
     /* 删除图标设置为红色 */
     filter: brightness(0) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(353deg) brightness(96%) contrast(111%)
+}
+
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    /* 在SVG上方显示 */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.vehicle-info-icon:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }
