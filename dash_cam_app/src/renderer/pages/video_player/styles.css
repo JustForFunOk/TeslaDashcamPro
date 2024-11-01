@@ -37,18 +37,12 @@ body {
 
 .header-right {
     flex: 1;
-    /* 左右部分占据相同的空间 */
-    text-align: right;
-    /* 左对齐 */
-}
-
-.header-right {
-    flex: 1;
     justify-content: flex-end;
     /* 靠右排列 */
     display: flex;
     align-items: center;
     /* 水平排列 */
+    margin-right: 20px;
 }
 
 .header-center {
@@ -67,6 +61,12 @@ button {
 .icon {
     width: 30px;
     height: 30px;
+}
+
+.icon:hover {
+    width: 30px;
+    height: 30px;
+    filter: invert(100%);
 }
 
 .invert-color-icon {
@@ -115,11 +115,11 @@ button {
     border: none;
     border-radius: 10%;
     background: transparent;
-    color: var(--foreground-color);
+    color: var(--selected-item-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 #speed {

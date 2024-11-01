@@ -76,6 +76,8 @@
 
 * [垃圾桶](https://fontawesome.com/v5/icons/trash-alt?f=classic&s=solid)
 
+* [左转箭头](https://www.svgrepo.com/svg/50827/left-arrow)
+
 ### unicode table
 
 * [箭头unicode table](https://symbl.cc/en/collections/arrow-symbols/)

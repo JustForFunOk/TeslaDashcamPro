@@ -62,14 +62,14 @@ function formatDate(date, decimalPart) {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const seconds = String(date.getSeconds()).padStart(2, '0');
     const weekDay = getWeekdayName(date);
-    return `${weekDay} ${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+    return `${weekDay}  ${year}-${month}-${day}  ${hours}:${minutes}:${seconds}`;
 }
 
 function formatUTCDate(date, decimalPart) {
     const utcDate = new Date(date);
-    utcDate.setHours(utcDate.getHours()-8)
+    utcDate.setHours(utcDate.getHours() - 8)
 
-    utcDate.setSeconds(utcDate.getSeconds()-5)  // hack代码
+    utcDate.setSeconds(utcDate.getSeconds() - 5)  // hack代码
 
     const year = utcDate.getFullYear();
     const month = String(utcDate.getMonth() + 1).padStart(2, '0'); // 月份从0开始
@@ -78,7 +78,7 @@ function formatUTCDate(date, decimalPart) {
     const minutes = String(utcDate.getMinutes()).padStart(2, '0');
     const seconds = String(utcDate.getSeconds()).padStart(2, '0');
 
-    return `${year%100}${month}${day}${hours}${minutes}${seconds}.${decimalPart}`;
+    return `${year % 100}${month}${day}${hours}${minutes}${seconds}.${decimalPart}`;
 }
 
 
@@ -152,18 +152,18 @@ function togglePlayPause() {
 // 假设你的 JSON 文件名为 data.json
 let jsonData = []
 fetch('20241002BD_id_318_257_decode.json')
-  .then(response => response.json())
-  .then(data => {
-    jsonData = data;
-    console.log('JSON data loaded successfully., data len:%d', jsonData.length);
-  })
-  .catch(error => console.error('Error loading JSON:', error));
+    .then(response => response.json())
+    .then(data => {
+        jsonData = data;
+        console.log('JSON data loaded successfully., data len:%d', jsonData.length);
+    })
+    .catch(error => console.error('Error loading JSON:', error));
 
 
-  // 创建一个函数来根据 ts 查找 v 值
+// 创建一个函数来根据 ts 查找 v 值
 function getValueByTs(newTs) {
     const result = jsonData.find(item => item.ts === newTs);
-  
+
     if (result) {
         console.log(`The value of v for ts ${newTs} is: ${result.v}`);
         return result.v;
