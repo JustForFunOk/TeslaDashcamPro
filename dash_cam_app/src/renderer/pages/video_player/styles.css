@@ -42,6 +42,15 @@ body {
     /* 左对齐 */
 }
 
+.header-right {
+    flex: 1;
+    justify-content: flex-end;
+    /* 靠右排列 */
+    display: flex;
+    align-items: center;
+    /* 水平排列 */
+}
+
 .header-center {
     text-align: left;
     /* 中间部分居中 */
@@ -56,6 +65,11 @@ button {
 }
 
 .icon {
+    width: 30px;
+    height: 30px;
+}
+
+.invert-color-icon {
     width: 30px;
     height: 30px;
     filter: invert(100%);
@@ -90,11 +104,26 @@ button {
 #timestamp {
     background: transparent;
     color: var(--selected-item-color);
+    margin: 0px 20px;
+}
+
+.vehicle-info-icon {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 10%;
+    background: transparent;
+    color: var(--foreground-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
 }
 
 #speed {
     background: transparent;
     color: var(--selected-item-color);
+    margin: 0 10px;
 }
 
 

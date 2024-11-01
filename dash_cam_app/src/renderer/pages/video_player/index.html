@@ -15,7 +15,7 @@
     <div class="header-title-container">
         <div class="header-left">
             <button id="back-button" class="tool-bar-button">
-                <img id="back-icon" src="back_bold.svg" alt="back to home" class="icon" />
+                <img id="back-icon" src="back_bold.svg" alt="back to home" class="invert-color-icon" />
             </button>
         </div>
 
@@ -23,6 +23,13 @@
 
         <div class="header-right">
             <div id="speed"></div>
+            <div id="brake-pedal" class="vehicle-info-icon">
+                <img id="brake-pedal-icon" src="brake_pedal_min.svg" alt="brake pedal status" class="icon" />
+            </div>
+            <div id="accelerator-pedal" class="vehicle-info-icon">
+                <img id="accelerator-pedal-icon" src="accelerator_pedal_min.svg" alt="accelerator pedal status"
+                    class="icon" />
+            </div>
         </div>
 
     </div>
@@ -61,7 +68,7 @@
     <div class="bottom-container">
         <div class="controls">
             <button id="play-pause-btn" class="tool-bar-button" onclick="togglePlayPause()">
-                <img id="play-pause-icon" src="play.svg" alt="play/pause icon" class="icon" />
+                <img id="play-pause-icon" src="play.svg" alt="play/pause icon" class="invert-color-icon" />
             </button>
             <div id="current-time" class="bar-time">mm:ss</div>
             <input type="range" id="progress-bar" value="0">
