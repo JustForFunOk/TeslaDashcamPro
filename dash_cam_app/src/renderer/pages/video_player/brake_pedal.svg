@@ -1,0 +1,26 @@
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义一个遮罩 -->
+  <defs>
+    <mask id="hole">
+      <!-- 矩形部分可见 -->
+      <rect x="60" y="0" width="680" height="720" rx="200" ry="100" fill="white" />
+
+      <!-- 中间透明的六条竖线 -->
+      <rect x="110" y="375" width="40" height="240" rx="15" fill="black" />
+      <rect x="200" y="375" width="40" height="280" rx="15" fill="black" />
+      <rect x="290" y="375" width="40" height="280" rx="15" fill="black" />
+      <rect x="380" y="375" width="40" height="280" rx="15" fill="black" />
+      <rect x="470" y="375" width="40" height="280" rx="15" fill="black" />
+      <rect x="560" y="375" width="40" height="280" rx="15" fill="black" />
+      <rect x="650" y="375" width="40" height="240" rx="15" fill="black" />
+    </mask>
+  </defs>
+  
+  <!-- 顶部细长矩形作为连接线 -->
+  <rect x="380" y="80" width="40" height="260" rx="15" fill="gray" />
+
+  <!-- 刹车踏板主体 -->
+  <rect x="60" y="320" width="680" height="400" rx="60" fill="gray" mask="url(#hole)" />
+
+
+</svg>

@@ -1,11 +1,19 @@
 <svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义一个遮罩 -->
+  <defs>
+    <mask id="hole">
+      <!-- 矩形部分可见 -->
+      <rect x="0" y="0" width="800" height="800" fill="white" />
+      <!-- 中间透明的两条黑色竖线 -->
+      <rect x="334" y="230" width="40" height="480" rx="15" fill="black" />
+      <rect x="426" y="230" width="40" height="480" rx="15" fill="black" />
+    </mask>
+  </defs>
+  
   <!-- 灰色主体部分 -->
-  <rect x="260" y="170" width="280" height="600" rx="60" fill="gray" />
+  <rect x="260" y="170" width="280" height="600" rx="60" fill="gray" mask="url(#hole)" />
 
   <!-- 顶部小矩形，作为踏板延伸部分 -->
-  <rect x="380" y="30" width="40" height="160" rx="20" fill="gray" />
+  <rect x="380" y="30" width="40" height="160" rx="15" fill="gray" />
 
-  <!-- 中间透明的两条黑色竖线 -->
-  <rect x="336" y="230" width="40" height="480" rx="20" fill="black" />
-  <rect x="424" y="230" width="40" height="480" rx="20" fill="black" />
 </svg>
