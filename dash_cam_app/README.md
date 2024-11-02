@@ -78,6 +78,10 @@
 
 * [左转箭头](https://www.svgrepo.com/svg/50827/left-arrow)
 
+* [近光灯](https://www.svgrepo.com/svg/49801/low-beam)
+
+* [远光灯](https://www.svgrepo.com/svg/58616/high-beam)
+
 ### unicode table
 
 * [箭头unicode table](https://symbl.cc/en/collections/arrow-symbols/)

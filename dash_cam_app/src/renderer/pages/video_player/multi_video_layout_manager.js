@@ -254,7 +254,7 @@ function playAllVideos() {
     players.forEach(player => {
         player.play();
     });
-    play_pause_icon.src = "pause.svg";
+    play_pause_icon.src = "pause_min.svg";
     is_playing = true;
 }
 
