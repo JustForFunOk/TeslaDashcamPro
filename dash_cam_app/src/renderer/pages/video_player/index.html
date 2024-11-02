@@ -13,12 +13,6 @@
 <body>
     <!-- 返回按钮 -->
     <div class="header-title-container">
-        <div class="header-left">
-            <button id="back-button" class="tool-bar-button">
-                <img id="back-icon" src="back_bold.svg" alt="back to home" class="invert-color-icon" />
-            </button>
-        </div>
-
         <div id="timestamp" class="header-center"></div>
 
         <div class="header-right">
@@ -37,6 +31,10 @@
             </div>
             <div id="right-turn-light" class="vehicle-info-icon">
                 <img id="right-arrow-icon" src="right_arrow.svg" alt="turn right light status" class="icon" />
+            </div>
+            <div id="side-marker-light" class="vehicle-info-icon">
+                <img id="side-marker-icon" src="side_marker_light_min.svg" alt="side marker light status"
+                    class="icon" />
             </div>
             <div id="low-beam-headlight" class="vehicle-info-icon">
                 <img id="low-beam-icon" src="low_beam_headlight_min.svg" alt="low beam headlight status" class="icon" />
@@ -84,6 +82,11 @@
 
 
     <div class="bottom-container">
+        <div class="header-left">
+            <button id="back-button" class="tool-bar-button">
+                <img id="back-icon" src="back_bold.svg" alt="back to home" class="invert-color-icon" />
+            </button>
+        </div>
         <div class="controls">
             <button id="play-pause-btn" class="tool-bar-button" onclick="togglePlayPause()">
                 <img id="play-pause-icon" src="play.svg" alt="play/pause icon" class="invert-color-icon" />

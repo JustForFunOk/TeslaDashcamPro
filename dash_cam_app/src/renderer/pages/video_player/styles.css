@@ -28,13 +28,6 @@ body {
     margin: 10px 0px;
 }
 
-.header-left {
-    flex: 1;
-    /* 左右部分占据相同的空间 */
-    text-align: left;
-    /* 左对齐 */
-}
-
 .header-right {
     flex: 1;
     justify-content: flex-end;
@@ -266,6 +259,11 @@ button {
     width: 100%;
     /* 使其占满可用宽度 */
     margin: 10px 0px;
+}
+
+.header-left {
+    text-align: left;
+    /* 左对齐 */
 }
 
 #play-pause-btn {
