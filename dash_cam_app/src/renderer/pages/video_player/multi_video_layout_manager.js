@@ -9,6 +9,7 @@ const play_pause_icon = document.getElementById('play-pause-icon');
 const progressBar = document.getElementById('progress-bar');
 const timeDisplay = document.getElementById('timestamp');
 const vehicleSpeed = document.getElementById('speed');
+const turnLeftIndicator = document.getElementById('left-turn-light');
 const currentTime = document.getElementById('current-time');
 const totalDuration = document.getElementById('total-duration');
 
@@ -69,7 +70,7 @@ function formatUTCDate(date, decimalPart) {
     const utcDate = new Date(date);
     utcDate.setHours(utcDate.getHours() - 8)
 
-    utcDate.setSeconds(utcDate.getSeconds() - 5)  // hack代码
+    // utcDate.setSeconds(utcDate.getSeconds() - 5)  // hack代码
 
     const year = utcDate.getFullYear();
     const month = String(utcDate.getMonth() + 1).padStart(2, '0'); // 月份从0开始
@@ -123,13 +124,24 @@ players[0].addEventListener('timeupdate', () => {
 
     const currentUtcDate = formatUTCDate(currentFrameTimestamp, decimalPart);
 
-    const v = getValueByTs(currentUtcDate);
-    console.log(v);
+    const can_data = jsonData.find(item => item.ts === currentUtcDate);
 
     // 更新时间戳
     currentTime.innerHTML = formatDuration(progressBar.value);
     timeDisplay.innerHTML = currentDate;
-    vehicleSpeed.innerHTML = v + ' km/h';
+
+    if (can_data) {
+        vehicleSpeed.innerHTML = can_data.v + ' km/h';
+
+        if(can_data.turn_left == "TURN_SIGNAL_ACTIVE_HIGH") {
+            // addGreenFilter();
+            turnLeftIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+        } else {
+            // removeGreenFilter();
+            turnLeftIndicator.style.filter = "";
+        }
+    }
+ 
 });
 
 // 播放暂停按钮
@@ -151,7 +163,7 @@ function togglePlayPause() {
 // 加载json文件
 // 假设你的 JSON 文件名为 data.json
 let jsonData = []
-fetch('20241002BD_id_318_257_decode.json')
+fetch('can_dump_2024-10-03_16-50-09_id_318_257_118_3F5_decode.json')
     .then(response => response.json())
     .then(data => {
         jsonData = data;
@@ -165,10 +177,10 @@ function getValueByTs(newTs) {
     const result = jsonData.find(item => item.ts === newTs);
 
     if (result) {
-        console.log(`The value of v for ts ${newTs} is: ${result.v}`);
+        // console.log(`The value of v for ts ${newTs} is: ${result.v}`);
         return result.v;
     } else {
-        console.log(`No entry found for ts: ${newTs}`);
+        // console.log(`No entry found for ts: ${newTs}`);
         return -1;
     }
 }

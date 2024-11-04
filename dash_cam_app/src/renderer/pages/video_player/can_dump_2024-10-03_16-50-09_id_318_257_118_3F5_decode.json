@@ -1,0 +1,5384 @@
+[
+  {
+    "ts": "241003085010.0",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085010.1",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085010.2",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085010.3",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085010.4",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085010.5",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085010.6",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085010.7",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085010.8",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 3.6,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085010.9",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 3.6,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085011.0",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.8,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085011.1",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085011.2",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085011.3",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085011.4",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085011.5",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085011.6",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085011.7",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085011.8",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085011.9",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085012.0",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085012.1",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085012.2",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085012.3",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085012.4",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085012.5",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085012.6",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085012.7",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085012.8",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085012.9",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085013.0",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085013.1",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085013.2",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085013.3",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085013.4",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085013.5",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085013.6",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085013.7",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085013.8",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085013.9",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085014.0",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085014.1",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085014.2",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085014.3",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085014.4",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085014.5",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085014.6",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085014.7",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085014.8",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085014.9",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085015.0",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085015.1",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085015.2",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085015.3",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085015.4",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085015.5",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085015.6",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085015.7",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085015.8",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085015.9",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085016.0",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085016.1",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085016.2",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085016.3",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085016.4",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085016.5",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085016.6",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085016.7",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085016.8",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085016.9",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085017.0",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085017.1",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085017.2",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085017.3",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085017.4",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085017.5",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085017.6",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085017.7",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085017.8",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085017.9",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085018.0",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085018.1",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085018.2",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085018.3",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085018.4",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085018.5",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085018.6",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085018.7",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085018.8",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085018.9",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085019.0",
+    "v": 69,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085019.1",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085019.2",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085019.3",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_LOW",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085019.4",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085019.5",
+    "v": 70,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085019.6",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085019.7",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_ACTIVE_HIGH",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085019.8",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085019.9",
+    "v": 71,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085020.0",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085020.1",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085020.2",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085020.3",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085020.4",
+    "v": 72,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085020.5",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085020.6",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085020.7",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085020.8",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085020.9",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085021.0",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085021.1",
+    "v": 73,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085021.2",
+    "v": 74,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085021.3",
+    "v": 74,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085021.4",
+    "v": 74,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085021.5",
+    "v": 74,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085021.6",
+    "v": 74,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085021.7",
+    "v": 74,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085021.8",
+    "v": 74,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085021.9",
+    "v": 74,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085022.0",
+    "v": 74,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085022.1",
+    "v": 74,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085022.2",
+    "v": 75,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085022.3",
+    "v": 75,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085022.4",
+    "v": 75,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085022.5",
+    "v": 75,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085022.6",
+    "v": 75,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085022.7",
+    "v": 75,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085022.8",
+    "v": 75,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085022.9",
+    "v": 75,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085023.0",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085023.1",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085023.2",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085023.3",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085023.4",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085023.5",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085023.6",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085023.7",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085023.8",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085023.9",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085024.0",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085024.1",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085024.2",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085024.3",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085024.4",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085024.5",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085024.6",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085024.7",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085024.8",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085024.9",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085025.0",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085025.1",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085025.2",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085025.3",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085025.4",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085025.5",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085025.6",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085025.7",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085025.8",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085025.9",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085026.0",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085026.1",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085026.2",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085026.3",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085026.4",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085026.5",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085026.6",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085026.7",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085026.8",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085026.9",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085027.0",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085027.1",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085027.2",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085027.3",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085027.4",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085027.5",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085027.6",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085027.7",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085027.8",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085027.9",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085028.0",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085028.1",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085028.2",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085028.3",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085028.4",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085028.5",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085028.6",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085028.7",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085028.8",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085028.9",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085029.0",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085029.1",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085029.2",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085029.3",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085029.4",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085029.5",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085029.6",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085029.7",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085029.8",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085029.9",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085030.0",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085030.1",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085030.2",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085030.3",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085030.4",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085030.5",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085030.6",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085030.7",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085030.8",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085030.9",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085031.0",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085031.1",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085031.2",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085031.3",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085031.4",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085031.5",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085031.6",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085031.7",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085031.8",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085031.9",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085032.0",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085032.1",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085032.2",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085032.3",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085032.4",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085032.5",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085032.6",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085032.7",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085032.8",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085032.9",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085033.0",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085033.1",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085033.2",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085033.3",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085033.4",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085033.5",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085033.6",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085033.7",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085033.8",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085033.9",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085034.0",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085034.1",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085034.2",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085034.3",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085034.4",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085034.5",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085034.6",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085034.7",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085034.8",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085034.9",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085035.0",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085035.1",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085035.2",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085035.3",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085035.4",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085035.5",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085035.6",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085035.7",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085035.8",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085035.9",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085036.0",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085036.1",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085036.2",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085036.3",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085036.4",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085036.5",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085036.6",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085036.7",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085036.8",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085036.9",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085037.0",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085037.1",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085037.2",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085037.3",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085037.4",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085037.5",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085037.6",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085037.7",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085037.8",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085037.9",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085038.0",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085038.1",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085038.2",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085038.3",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085038.4",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085038.5",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085038.6",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085038.7",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085038.8",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085038.9",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085039.0",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085039.1",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085039.2",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085039.3",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085039.4",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085039.5",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085039.6",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085039.7",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085039.8",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085039.9",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085040.0",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085040.1",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085040.2",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085040.3",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085040.4",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085040.5",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085040.6",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085040.7",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085040.8",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085040.9",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085041.0",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085041.1",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085041.2",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085041.3",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085041.4",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085041.5",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085041.6",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085041.7",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085041.8",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085041.9",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085042.0",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085042.1",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085042.2",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085042.3",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085042.4",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085042.5",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085042.6",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085042.7",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085042.8",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085042.9",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085043.0",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085043.1",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085043.2",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085043.3",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085043.4",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085043.5",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085043.6",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085043.7",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085043.8",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085043.9",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085044.0",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085044.1",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085044.2",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085044.3",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085044.4",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085044.5",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085044.6",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085044.7",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085044.8",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085044.9",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085045.0",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085045.1",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085045.2",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085045.3",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085045.4",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085045.5",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085045.6",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085045.7",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085045.8",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085045.9",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085046.0",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085046.1",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085046.2",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085046.3",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085046.4",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085046.5",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085046.6",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085046.7",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085046.8",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085046.9",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085047.0",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085047.1",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085047.2",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085047.3",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085047.4",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085047.5",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085047.6",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085047.7",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085047.8",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085047.9",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085048.0",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085048.1",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085048.2",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085048.3",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085048.4",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085048.5",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085048.6",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085048.7",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085048.8",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085048.9",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085049.0",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085049.1",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085049.2",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085049.3",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085049.4",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085049.5",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085049.6",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085049.7",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085049.8",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085049.9",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085050.0",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085050.1",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085050.2",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085050.3",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085050.4",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085050.5",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085050.6",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085050.7",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085050.8",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085050.9",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085051.0",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085051.1",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085051.2",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085051.3",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085051.4",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085051.5",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085051.6",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085051.7",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085051.8",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085051.9",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085052.0",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085052.1",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085052.2",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085052.3",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085052.4",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085052.5",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085052.6",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085052.7",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085052.8",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085052.9",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085053.0",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085053.1",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085053.2",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085053.3",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085053.4",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085053.5",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085053.6",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085053.7",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085053.8",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085053.9",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085054.0",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085054.1",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085054.2",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085054.3",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085054.4",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085054.5",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085054.6",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085054.7",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085054.8",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085054.9",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085055.0",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085055.1",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085055.2",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085055.3",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085055.4",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085055.5",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085055.6",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085055.7",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085055.8",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085055.9",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085056.0",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085056.1",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085056.2",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085056.3",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085056.4",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085056.5",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085056.6",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085056.7",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085056.8",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085056.9",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085057.0",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085057.1",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085057.2",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085057.3",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085057.4",
+    "v": 86,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085057.5",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085057.6",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085057.7",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085057.8",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085057.9",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085058.0",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085058.1",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085058.2",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085058.3",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085058.4",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085058.5",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085058.6",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085058.7",
+    "v": 85,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085058.8",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085058.9",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085059.0",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085059.1",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085059.2",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085059.3",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085059.4",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085059.5",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085059.6",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085059.7",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085059.8",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085059.9",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085100.0",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085100.1",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085100.2",
+    "v": 84,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085100.3",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085100.4",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085100.5",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085100.6",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085100.7",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085100.8",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085100.9",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085101.0",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085101.1",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085101.2",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085101.3",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085101.4",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085101.5",
+    "v": 83,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085101.6",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085101.7",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085101.8",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085101.9",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085102.0",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085102.1",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085102.2",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085102.3",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085102.4",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085102.5",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085102.6",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085102.7",
+    "v": 82,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085102.8",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085102.9",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085103.0",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085103.1",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085103.2",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085103.3",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085103.4",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085103.5",
+    "v": 81,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085103.6",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085103.7",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085103.8",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085103.9",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085104.0",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085104.1",
+    "v": 80,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085104.2",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085104.3",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085104.4",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085104.5",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085104.6",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085104.7",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085104.8",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085104.9",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085105.0",
+    "v": 79,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085105.1",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085105.2",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085105.3",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085105.4",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085105.5",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085105.6",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085105.7",
+    "v": 78,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085105.8",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085105.9",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085106.0",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085106.1",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085106.2",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085106.3",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085106.4",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085106.5",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085106.6",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085106.7",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085106.8",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085106.9",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085107.0",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085107.1",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085107.2",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085107.3",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085107.4",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085107.5",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085107.6",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085107.7",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085107.8",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085107.9",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085108.0",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085108.1",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085108.2",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085108.3",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085108.4",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085108.5",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085108.6",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085108.7",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085108.8",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085108.9",
+    "v": 77,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085109.0",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085109.1",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085109.2",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085109.3",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085109.4",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085109.5",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085109.6",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": "TURN_SIGNAL_OFF",
+    "turn_right": "TURN_SIGNAL_OFF",
+    "hazard_light": "HAZARD_REQUEST_NONE"
+  },
+  {
+    "ts": "241003085109.7",
+    "v": 76,
+    "gear": "DI_GEAR_D",
+    "accel_pos": 0.0,
+    "turn_left": null,
+    "turn_right": null,
+    "hazard_light": null
+  }
+]
