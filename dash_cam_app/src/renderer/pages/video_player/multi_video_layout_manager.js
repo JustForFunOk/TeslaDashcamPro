@@ -22,6 +22,7 @@ let totalClipsNumber = 0;
 // 这个变量不会有data race的情况，标准的浏览器环境中的 JavaScript 是单线程的
 let loaded_videos_channel_cnt = 0;  // 已经准备好播放的路数
 let ended_videos_channel_cnt = 0;  // 当前视频源已播放完毕的路数
+let valid_videos_channel_cnt = 0; // 有数据的路数 最多是4路
 
 // 4路都加载完毕自动播放
 let is_playing = true;
@@ -133,7 +134,7 @@ players[0].addEventListener('timeupdate', () => {
     if (can_data) {
         vehicleSpeed.innerHTML = can_data.v + ' km/h';
 
-        if(can_data.turn_left == "TURN_SIGNAL_ACTIVE_HIGH") {
+        if (can_data.turn_left == "TURN_SIGNAL_ACTIVE_HIGH") {
             // addGreenFilter();
             turnLeftIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
         } else {
@@ -141,7 +142,7 @@ players[0].addEventListener('timeupdate', () => {
             turnLeftIndicator.style.filter = "";
         }
     }
- 
+
 });
 
 // 播放暂停按钮
@@ -216,14 +217,32 @@ function setVideosSrc(clipsIndex) {
     // 设置播放源
     if (clipsIndex < savedVideoFiles[type].at(index).clips.length) {
         const videos = savedVideoFiles[type].at(index).clips.at(clipsIndex).videos;
+
+        valid_videos_channel_cnt = 0;
+
         players[0].src = videos.F;
         players[0].load();
+        if (videos.F != "") {
+            valid_videos_channel_cnt++;
+        }
         players[1].src = videos.B;
         players[1].load();
+        if (videos.B != "") {
+
+            valid_videos_channel_cnt++;
+        }
         players[2].src = videos.L;
         players[2].load();
+        if (videos.L != "") {
+
+            valid_videos_channel_cnt++;
+        }
         players[3].src = videos.R;
         players[3].load();
+        if (videos.R != "") {
+
+            valid_videos_channel_cnt++;
+        }
 
         loaded_videos_channel_cnt = 0;  // 清零等待加载完毕
         ended_videos_channel_cnt = 0;
@@ -238,7 +257,7 @@ players.forEach(player => {
         loaded_videos_channel_cnt++;
         // 如果用户暂停播放，拖动进度条视频跨越了视频，加载完成之后，不自动播放
         // 最开始的时候，加载完成之后，自动播放
-        if (loaded_videos_channel_cnt === players.length && is_playing) {
+        if (loaded_videos_channel_cnt === valid_videos_channel_cnt && is_playing) {
             playAllVideos();
         }
     });
@@ -247,7 +266,7 @@ players.forEach(player => {
     // 当当前视频播放结束时，加载并播放下一个视频
     player.addEventListener('ended', () => {
         ended_videos_channel_cnt++;
-        if (ended_videos_channel_cnt === players.length) {
+        if (ended_videos_channel_cnt === valid_videos_channel_cnt) {
             // 4路视频都播放完毕
             currentIndex++;
 
@@ -264,7 +283,11 @@ players.forEach(player => {
 
 function playAllVideos() {
     players.forEach(player => {
-        player.play();
+        const hasValidSource = player.src && player.src !== 'file:///' && player.querySelector('source').src;  // TODO
+
+        if (hasValidSource) {
+            player.play();
+        }
     });
     play_pause_icon.src = "pause_min.svg";
     is_playing = true;
@@ -272,7 +295,11 @@ function playAllVideos() {
 
 function pauseAllVideos() {
     players.forEach(player => {
-        player.pause();
+        const hasValidSource = player.src && player.src !== 'file:///' && player.querySelector('source').src;  // TODO
+
+        if (hasValidSource) {
+            player.pause();
+        }
     });
 
     // 当暂停时，将所有视频同步到被放大视频的当前时间，防止4路播放不同步
