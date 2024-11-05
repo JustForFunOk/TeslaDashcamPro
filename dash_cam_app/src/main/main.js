@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, dialog, ipcMain, screen } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
@@ -341,3 +341,21 @@ ipcMain.handle('select-folder', async () => {
         return [true, videoFiles];
     }
 });
+
+ipcMain.handle('resize-window', (event, width, height) => {
+    // 获取主显示器的分辨率
+    const { width: displayWidth, height: displayHeight } = screen.getPrimaryDisplay().workAreaSize;
+
+    console.log(displayWidth);
+    console.log(displayHeight);
+    console.log(width);
+    console.log(height);
+
+    // 限制窗口最大尺寸为显示器分辨率
+    const maxWidth = Math.min(width, displayWidth);
+    const maxHeight = Math.min(height, displayHeight);
+
+    // TODO: keep ratio
+
+    mainWindow.setSize(maxWidth, maxHeight);
+})

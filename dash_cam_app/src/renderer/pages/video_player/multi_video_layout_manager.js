@@ -22,6 +22,8 @@ let totalClipsNumber = 0;
 // 这个变量不会有data race的情况，标准的浏览器环境中的 JavaScript 是单线程的
 let loaded_videos_channel_cnt = 0;  // 已经准备好播放的路数
 let ended_videos_channel_cnt = 0;  // 当前视频源已播放完毕的路数
+
+let valid_video_channels = [];
 let valid_videos_channel_cnt = 0; // 有数据的路数 最多是4路
 
 // 4路都加载完毕自动播放
@@ -35,6 +37,9 @@ let clipsDuration = 0;
 
 // 每段视频开始的时间戳 用于视频切换
 let clipsGroupStartTimestamp = [];
+
+let hasResizeWindow = false;
+
 
 // 返回按钮点击事件，跳转回主页面
 const backButton = document.getElementById('back-button');
@@ -219,8 +224,9 @@ function setVideosSrc(clipsIndex) {
         const videos = savedVideoFiles[type].at(index).clips.at(clipsIndex).videos;
 
         valid_videos_channel_cnt = 0;
+        valid_video_channels = [];
 
-        if(videos.F === ''){
+        if (videos.F === '') {
             players[0].removeAttribute("src");
             players[0].poster = "no_video_min.svg";
             players[0].classList.add("not-allowed-click");
@@ -228,11 +234,12 @@ function setVideosSrc(clipsIndex) {
             players[0].src = videos.F;
             players[0].removeAttribute("poster");
             players[0].classList.remove("not-allowed-click");
+            valid_video_channels.push("F");
             valid_videos_channel_cnt++;
         }
         players[0].load();
 
-        if(videos.B === ''){
+        if (videos.B === '') {
             players[1].removeAttribute("src");
             players[1].poster = "no_video_min.svg";
             players[1].classList.add("not-allowed-click");
@@ -240,11 +247,12 @@ function setVideosSrc(clipsIndex) {
             players[1].src = videos.B;
             players[1].removeAttribute("poster");
             players[1].classList.remove("not-allowed-click");
+            valid_video_channels.push("B");
             valid_videos_channel_cnt++;
         }
         players[1].load();
 
-        if(videos.L === ''){
+        if (videos.L === '') {
             players[2].removeAttribute("src");
             players[2].poster = "no_video_min.svg";
             players[2].classList.add("not-allowed-click");
@@ -252,11 +260,12 @@ function setVideosSrc(clipsIndex) {
             players[2].src = videos.L;
             players[2].removeAttribute("poster");
             players[2].classList.remove("not-allowed-click");
+            valid_video_channels.push("L");
             valid_videos_channel_cnt++;
         }
         players[2].load();
 
-        if(videos.R === ''){
+        if (videos.R === '') {
             players[3].removeAttribute("src");
             players[3].poster = "no_video_min.svg";
             players[3].classList.add("not-allowed-click");
@@ -264,6 +273,7 @@ function setVideosSrc(clipsIndex) {
             players[3].src = videos.R;
             players[3].removeAttribute("poster");
             players[3].classList.remove("not-allowed-click");
+            valid_video_channels.push("R");
             valid_videos_channel_cnt++;
         }
         players[3].load();
@@ -279,10 +289,18 @@ players.forEach(player => {
     // 4个视频都加载第一帧完毕后再同步播放
     player.addEventListener('loadeddata', () => {
         loaded_videos_channel_cnt++;
-        // 如果用户暂停播放，拖动进度条视频跨越了视频，加载完成之后，不自动播放
-        // 最开始的时候，加载完成之后，自动播放
-        if (loaded_videos_channel_cnt === valid_videos_channel_cnt && is_playing) {
-            playAllVideos();
+
+        if (loaded_videos_channel_cnt === valid_videos_channel_cnt) {
+            if (!hasResizeWindow) {
+                resizeWindow();
+                hasResizeWindow = true;
+            }
+
+            // 如果用户暂停播放，拖动进度条视频跨越了视频，加载完成之后，不自动播放
+            // 最开始的时候，加载完成之后，自动播放
+            if (is_playing) {
+                playAllVideos();
+            }
         }
     });
 
@@ -420,6 +438,12 @@ function syncProgressWithVideo() {
     });
 }
 
+function resizeWindow() {
+    // 获取分辨率
+    const width = selectedPlayer.videoWidth;
+    const height = selectedPlayer.videoHeight;
+    window.electronAPI.resizeWindow(width, height + 140);
+}
 
 // 在页面加载后调用 selectVideo，选择 video-f
 window.onload = function () {
