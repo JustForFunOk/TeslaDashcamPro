@@ -157,7 +157,12 @@ button {
     z-index: 2;
     cursor: pointer;
     border-radius: var(--small-window-radius);
+}
 
+.small.not-allowed-click {
+    pointer-events: none;
+    cursor: not-allowed;
+    /* 显示禁止点击的光标 */
 }
 
 

@@ -220,29 +220,53 @@ function setVideosSrc(clipsIndex) {
 
         valid_videos_channel_cnt = 0;
 
-        players[0].src = videos.F;
+        if(videos.F === ''){
+            players[0].removeAttribute("src");
+            players[0].poster = "no_video_min.svg";
+            players[0].classList.add("not-allowed-click");
+        } else {
+            players[0].src = videos.F;
+            players[0].removeAttribute("poster");
+            players[0].classList.remove("not-allowed-click");
+            valid_videos_channel_cnt++;
+        }
         players[0].load();
-        if (videos.F != "") {
+
+        if(videos.B === ''){
+            players[1].removeAttribute("src");
+            players[1].poster = "no_video_min.svg";
+            players[1].classList.add("not-allowed-click");
+        } else {
+            players[1].src = videos.B;
+            players[1].removeAttribute("poster");
+            players[1].classList.remove("not-allowed-click");
             valid_videos_channel_cnt++;
         }
-        players[1].src = videos.B;
         players[1].load();
-        if (videos.B != "") {
 
+        if(videos.L === ''){
+            players[2].removeAttribute("src");
+            players[2].poster = "no_video_min.svg";
+            players[2].classList.add("not-allowed-click");
+        } else {
+            players[2].src = videos.L;
+            players[2].removeAttribute("poster");
+            players[2].classList.remove("not-allowed-click");
             valid_videos_channel_cnt++;
         }
-        players[2].src = videos.L;
         players[2].load();
-        if (videos.L != "") {
 
+        if(videos.R === ''){
+            players[3].removeAttribute("src");
+            players[3].poster = "no_video_min.svg";
+            players[3].classList.add("not-allowed-click");
+        } else {
+            players[3].src = videos.R;
+            players[3].removeAttribute("poster");
+            players[3].classList.remove("not-allowed-click");
             valid_videos_channel_cnt++;
         }
-        players[3].src = videos.R;
         players[3].load();
-        if (videos.R != "") {
-
-            valid_videos_channel_cnt++;
-        }
 
         loaded_videos_channel_cnt = 0;  // 清零等待加载完毕
         ended_videos_channel_cnt = 0;
@@ -283,9 +307,7 @@ players.forEach(player => {
 
 function playAllVideos() {
     players.forEach(player => {
-        const hasValidSource = player.src && player.src !== 'file:///' && player.querySelector('source').src;  // TODO
-
-        if (hasValidSource) {
+        if (player.hasAttribute("src")) {
             player.play();
         }
     });
@@ -295,16 +317,12 @@ function playAllVideos() {
 
 function pauseAllVideos() {
     players.forEach(player => {
-        const hasValidSource = player.src && player.src !== 'file:///' && player.querySelector('source').src;  // TODO
-
-        if (hasValidSource) {
+        if (player.hasAttribute("src")) {
             player.pause();
-        }
-    });
 
-    // 当暂停时，将所有视频同步到被放大视频的当前时间，防止4路播放不同步
-    players.forEach(player => {
-        player.currentTime = selectedPlayer.currentTime;
+            // 当暂停时，将所有视频同步到被放大视频的当前时间，防止4路播放不同步
+            player.currentTime = selectedPlayer.currentTime;
+        }
     });
 
     play_pause_icon.src = "play.svg";
