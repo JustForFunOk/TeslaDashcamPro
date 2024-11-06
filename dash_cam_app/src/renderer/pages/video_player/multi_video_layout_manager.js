@@ -440,9 +440,11 @@ function syncProgressWithVideo() {
 
 function resizeWindow() {
     // 获取分辨率
-    const width = selectedPlayer.videoWidth;
-    const height = selectedPlayer.videoHeight;
-    window.electronAPI.resizeWindow(width, height + 140);
+    const videoW = selectedPlayer.videoWidth;
+    const videoH = selectedPlayer.videoHeight;
+    const extraWidth = 0;  // 若左边显示3D渲染结果则需要设置这个值
+    const extraHeight = 120;  // 这个根据实际情况手动调节，TODO可以自动 
+    window.electronAPI.resizeWindow(videoW, videoH, extraWidth, extraHeight);
 }
 
 // 在页面加载后调用 selectVideo，选择 video-f
