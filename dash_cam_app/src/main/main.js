@@ -361,6 +361,7 @@ ipcMain.handle('resize-window', (event, videoWidth, videoHeight, extraWidth, ext
     // workAreaSize会去除显示器窗口上已有的系统导航栏等
     const { width: maxDisplayWidth, height: maxDisplayHeight } = display.workAreaSize;
 
+    // 不占满整个空间，只使用80%的区域显示
     const displayWidth = Math.floor(0.8 * maxDisplayWidth);
     const displayHeight = Math.floor(0.8 * maxDisplayHeight);
 
