@@ -20,6 +20,8 @@
 
 * 如果存在报警 则在最前面显示报警图标否则不显示
 
+* 加载到最后一段视频时 更新总时长度
+
 * 哨兵和保存视频 在进度条的上面显示触发时间点
 
 * 哨兵视频片段 根据json文件切换到对应的视角
@@ -91,6 +93,10 @@
 * [近光灯](https://www.svgrepo.com/svg/49801/low-beam)
 
 * [远光灯](https://www.svgrepo.com/svg/58616/high-beam)
+
+* [回退5s](https://www.svgrepo.com/svg/496824/backward-5-seconds)
+
+* [快进5s]()
 
 ### unicode table
 

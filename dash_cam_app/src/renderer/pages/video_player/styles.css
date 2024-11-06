@@ -271,7 +271,6 @@ button {
 
 #play-pause-btn {
     font-weight: bold;
-    margin-left: 20px;
     color: var(--selected-item-color);
 }
 

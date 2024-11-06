@@ -83,8 +83,16 @@
             </button>
         </div>
         <div class="controls">
+            <button id="backward-btn" class="tool-bar-button" onclick="backward5Seconds()">
+                <img id="backward-icon" src="backward_5seconds_min.svg" alt="backward 5 seconds"
+                    class="invert-color-icon" />
+            </button>
             <button id="play-pause-btn" class="tool-bar-button" onclick="togglePlayPause()">
                 <img id="play-pause-icon" src="play.svg" alt="play/pause icon" class="invert-color-icon" />
+            </button>
+            <button id="forward-btn" class="tool-bar-button" onclick="forward5Seconds()">
+                <img id="forward-icon" src="forward_5seconds_min.svg" alt="forward 5 seconds"
+                    class="invert-color-icon" />
             </button>
             <div id="current-time" class="bar-time">mm:ss</div>
             <input type="range" id="progress-bar" value="0">

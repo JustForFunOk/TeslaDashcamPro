@@ -166,6 +166,21 @@ function togglePlayPause() {
     }
 }
 
+// 回退5s
+function backward5Seconds() {
+    const newValue = Number(progressBar.value) - 5;
+    progressBar.value = newValue;
+    changeProgressBarValue();
+}
+
+// 前进5s
+function forward5Seconds() {
+    // progressBar.value类型是string，运算前需要转换为数字
+    const newValue = Number(progressBar.value) + 5;
+    progressBar.value = newValue;
+    changeProgressBarValue();
+}
+
 // 加载json文件
 // 假设你的 JSON 文件名为 data.json
 let jsonData = []
@@ -376,11 +391,6 @@ function selectVideo(selectedVideo) {
     });
 }
 
-// 更新进度条
-// function updateProgress() {
-//     // 通过 requestAnimationFrame 实现循环更新进度条
-//     requestAnimationFrame(updateProgress);
-// }
 
 // 设置视频的播放时间
 function setVideoTime(time) {
@@ -416,26 +426,28 @@ function binarySearchDates(dates, targetDate) {
 // 当用户拖动进度条时同步视频的播放时间
 function syncProgressWithVideo() {
     const progressBar = document.getElementById('progress-bar');
-    progressBar.addEventListener('input', function () {
-        // 第一个视频时间戳 + 进度条值 = 进度条绝对时间
-        let currentFrameTimestamp = new Date(clipsGroupStartTimestamp[0]);
-        currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(progressBar.value));
+    progressBar.addEventListener('input', changeProgressBarValue);
+}
 
-        // 通过绝对时间查找所属的视频段
-        let clips_index = binarySearchDates(clipsGroupStartTimestamp, currentFrameTimestamp);
+function changeProgressBarValue() {
+    // 第一个视频时间戳 + 进度条值 = 进度条绝对时间
+    let currentFrameTimestamp = new Date(clipsGroupStartTimestamp[0]);
+    currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(progressBar.value));
 
-        // 获取在视频段中的时间
-        const clip_time = (currentFrameTimestamp - clipsGroupStartTimestamp[clips_index]) / 1000;
+    // 通过绝对时间查找所属的视频段
+    let clips_index = binarySearchDates(clipsGroupStartTimestamp, currentFrameTimestamp);
 
-        // 切换视频源
-        if (clips_index != currentIndex) {
-            setVideosSrc(clips_index);
-            currentIndex = clips_index;
-        }
+    // 获取在视频段中的时间
+    const clip_time = (currentFrameTimestamp - clipsGroupStartTimestamp[clips_index]) / 1000;
 
-        // 设置视频当前时间
-        setVideoTime(clip_time); // 将所有视频同步到进度条的当前值
-    });
+    // 切换视频源
+    if (clips_index != currentIndex) {
+        setVideosSrc(clips_index);
+        currentIndex = clips_index;
+    }
+
+    // 设置视频当前时间
+    setVideoTime(clip_time); // 将所有视频同步到进度条的当前值
 }
 
 function resizeWindow() {
