@@ -12,6 +12,8 @@ const vehicleSpeed = document.getElementById('speed');
 const turnLeftIndicator = document.getElementById('left-turn-light');
 const currentTime = document.getElementById('current-time');
 const totalDuration = document.getElementById('total-duration');
+const xSpeedText = document.getElementById('x-speed-text');
+const xSpeedButton = document.getElementById('x-speed-btn');
 
 // 当前播放的clips group中的视频索引
 let currentIndex = 0;
@@ -40,6 +42,8 @@ let clipsGroupStartTimestamp = [];
 
 let hasResizeWindow = false;
 
+let currentPlaybackRate = 1;
+const maxPlaybackRate = 8;
 
 // 返回按钮点击事件，跳转回主页面
 const backButton = document.getElementById('back-button');
@@ -173,12 +177,23 @@ function backward5Seconds() {
     changeProgressBarValue();
 }
 
-// 前进5s
-function forward5Seconds() {
-    // progressBar.value类型是string，运算前需要转换为数字
-    const newValue = Number(progressBar.value) + 5;
-    progressBar.value = newValue;
-    changeProgressBarValue();
+// 倍速播放
+function forwardXSpeed() {
+    currentPlaybackRate = currentPlaybackRate * 2;
+    if(currentPlaybackRate > maxPlaybackRate) {
+        currentPlaybackRate = 1;
+    }
+    // 获取当前播放倍速
+    players.forEach(player => {
+        player.playbackRate = currentPlaybackRate;
+    });
+    xSpeedText.innerHTML = currentPlaybackRate + "x";
+
+    if(currentPlaybackRate == 1) {
+        xSpeedButton.classList.remove('selected');
+    } else {
+        xSpeedButton.classList.add('selected');
+    }
 }
 
 // 加载json文件
@@ -310,6 +325,11 @@ players.forEach(player => {
                 resizeWindow();
                 hasResizeWindow = true;
             }
+
+            // 设置倍率需要等缓冲完，否则设置不生效
+            players.forEach(player => {
+                player.playbackRate = currentPlaybackRate;
+            });
 
             // 如果用户暂停播放，拖动进度条视频跨越了视频，加载完成之后，不自动播放
             // 最开始的时候，加载完成之后，自动播放

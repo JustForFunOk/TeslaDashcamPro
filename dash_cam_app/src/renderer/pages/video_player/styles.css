@@ -71,6 +71,8 @@ button {
 
 /* 使用方形按钮 参考app中的按钮 */
 .tool-bar-button {
+    position: relative;
+    /* 成为其子元素定位的参考框 */
     width: 40px;
     height: 40px;
     border: none;
@@ -88,6 +90,32 @@ button {
 
 .tool-bar-button:hover {
     background-color: var(--foreground-color);
+}
+
+.tool-bar-button.selected {
+    background-color: var(--foreground-color);
+}
+
+.button-text {
+    position: absolute;
+    top: 50%;
+    /* 垂直居中 */
+    left: 50%;
+    /* 水平居中 */
+    transform: translate(-50%, -50%);
+    /* 让文本的中心点与图标的中心对齐 */
+    font-size: 14px;
+    font-weight: bold;
+    /* 设置文本大小 */
+    color: var(--background-color);
+    /* 设置文本颜色 */
+    pointer-events: none;
+    /* 防止文本干扰按钮的点击事件 */
+}
+
+#x_speed_text {
+    transform: translate(-65%, -50%);
+    /* 微调位置 */
 }
 
 #back-button {
