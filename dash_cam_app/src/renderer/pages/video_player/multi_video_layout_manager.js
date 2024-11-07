@@ -158,6 +158,8 @@ players[0].addEventListener('timeupdate', () => {
 function togglePlayPause() {
     if (is_playing) {
         pauseAllVideos();
+        // 暂停则恢复播放1倍速播放
+        setPlaybackRate(1);
     } else {
         if (currentIndex < totalClipsNumber) {
             playAllVideos();
@@ -179,11 +181,15 @@ function backward5Seconds() {
 
 // 倍速播放
 function forwardXSpeed() {
-    currentPlaybackRate = currentPlaybackRate * 2;
+    setPlaybackRate(currentPlaybackRate * 2);
+    playAllVideos();
+}
+
+function setPlaybackRate(rate) {
+    currentPlaybackRate = rate;
     if(currentPlaybackRate > maxPlaybackRate) {
         currentPlaybackRate = 1;
     }
-    // 获取当前播放倍速
     players.forEach(player => {
         player.playbackRate = currentPlaybackRate;
     });
