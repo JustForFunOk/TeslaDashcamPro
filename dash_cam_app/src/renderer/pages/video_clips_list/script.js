@@ -22,11 +22,12 @@ function restoreVideoList() {
 
 selectFolderButton.addEventListener('click', async () => {
     // 调用 Electron API 选择文件夹
-    [readSuccess, videoFiles] = await window.electronAPI.selectFolder();
+    [readSuccess, videoFiles, decodedCanFiles] = await window.electronAPI.selectFolder();
 
     if (readSuccess) {
         // 保存视频列表到sessionStorage本地应用运行期间都可以获取其中的内容
         sessionStorage.setItem('videoFiles', JSON.stringify(videoFiles));
+        sessionStorage.setItem('decodedCanFiles', JSON.stringify(decodedCanFiles));
 
         loadEntries("SavedClips");
         loadEntries("SentryClips");

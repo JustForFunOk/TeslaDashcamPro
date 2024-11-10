@@ -306,6 +306,48 @@ async function getClipsDuration(sorted_clips) {
     return duration_s;
 }
 
+// 获取指定文件夹或子文件夹下所有名为 decoded_can 文件夹下的所有json文件
+function findJsonFilesInDecodedCan(dirPath) {
+    const result = [];
+
+    // 递归查找文件夹
+    function exploreFolder(currentPath) {
+        const files = fs.readdirSync(currentPath);
+        for (let file of files) {
+            const fullPath = path.join(currentPath, file);
+            const stat = fs.statSync(fullPath);
+
+            if (stat.isDirectory()) {
+                // 如果是目录，检查其是否为 decoded_can
+                if (file === 'decoded_can') {
+                    // 查找该文件夹下所有的 JSON 文件
+                    const decodedCanFiles = fs.readdirSync(fullPath);
+                    for (let decodedFile of decodedCanFiles) {
+                        if (decodedFile.endsWith('.json')) {
+                            // 提取时间戳（假设文件名格式为 "YYYY-MM-DD_HH-MM-SS.json"）
+                            const timestamp = decodedFile.split('.')[0]; // 获取文件名部分，去除扩展名
+                            result.push({
+                                timestamp: timestamp,
+                                filePath: path.join(fullPath, decodedFile)
+                            });
+                        }
+                    }
+                } else {
+                    // 继续递归子文件夹
+                    exploreFolder(fullPath);
+                }
+            }
+        }
+    }
+
+    // 开始遍历
+    exploreFolder(dirPath);
+
+    // 对结果按照时间戳进行排序
+    result.sort((a, b) => { return a.timestamp.localeCompare(b.timestamp); });
+
+    return result;
+}
 
 let mainWindow;
 
@@ -313,9 +355,9 @@ app.whenReady().then(() => {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
-        resizable: false, // 禁止窗口缩放
-        maximizable: false,    // 禁止最大化
-        fullscreenable: false, // 禁止全屏
+        // resizable: false, // 禁止窗口缩放
+        // maximizable: false,    // 禁止最大化
+        // fullscreenable: false, // 禁止全屏
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),  // 预加载文件
         }
@@ -328,7 +370,7 @@ app.whenReady().then(() => {
 
     mainWindow.on('maximize', () => {
         mainWindow.unmaximize();
-      });
+    });
 
     mainWindow.loadFile('src/renderer/pages/video_clips_list/index.html');
 });
@@ -345,7 +387,11 @@ ipcMain.handle('select-folder', async () => {
         // const videoFiles = scanDirectory(folderPath);  // 递归获取所有视频文件
         const videoFiles = await parseTeslaCamFolder(folderPath);
         // console.log(JSON.stringify(videoFiles, null, 2));
-        return [true, videoFiles];
+
+        // 尝试加载所有CAN数据路径
+        const decodedCanFiles = findJsonFilesInDecodedCan(folderPath);
+
+        return [true, videoFiles, decodedCanFiles];
     }
 });
 
@@ -355,15 +401,15 @@ ipcMain.handle('resize-window', (event, videoWidth, videoHeight, extraWidth, ext
 
     // 获取显示器能显示的宽高
     // 获取窗口的当前位置
-    const {x: winX, y: winY} = mainWindow.getBounds();
+    const { x: winX, y: winY } = mainWindow.getBounds();
     // 获取窗口所在的显示器
     const display = screen.getDisplayNearestPoint({ x: winX, y: winY });
     // workAreaSize会去除显示器窗口上已有的系统导航栏等
     const { width: maxDisplayWidth, height: maxDisplayHeight } = display.workAreaSize;
 
     // 不占满整个空间，只使用80%的区域显示
-    const displayWidth = Math.floor(0.8 * maxDisplayWidth);
-    const displayHeight = Math.floor(0.8 * maxDisplayHeight);
+    const displayWidth = Math.floor(0.9 * maxDisplayWidth);
+    const displayHeight = Math.floor(0.9 * maxDisplayHeight);
 
     // 获取需要的宽高
     const desiredWidth = videoWidth + extraWidth;
@@ -373,9 +419,9 @@ ipcMain.handle('resize-window', (event, videoWidth, videoHeight, extraWidth, ext
     let finalWindowHeight = desireHeight;
 
     // 需要缩小显示
-    if(desiredWidth > displayWidth || desireHeight > displayHeight) {
+    if (desiredWidth > displayWidth || desireHeight > displayHeight) {
 
-        if(desireHeight/displayHeight > desiredWidth/displayWidth){
+        if (desireHeight / displayHeight > desiredWidth / displayWidth) {
             // 将高度缩放到最大能显示的尺寸，此时宽度肯定不会超出显示范围
             finalWindowHeight = displayHeight;
             finalWindowWidth = Math.floor(videoWidth / videoHeight * (finalWindowHeight - extraHeight));

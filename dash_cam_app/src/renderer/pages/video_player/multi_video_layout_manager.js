@@ -45,6 +45,11 @@ let hasResizeWindow = false;
 let currentPlaybackRate = 1;
 const maxPlaybackRate = 8;
 
+// CAN时间与视频时间的差值，若CAN时间比视频时间提前这个值为正，否则为负
+const deltaT = 0.0;
+
+let twoMinutesJsonCanData = [];
+
 // 返回按钮点击事件，跳转回主页面
 const backButton = document.getElementById('back-button');
 backButton.addEventListener('click', () => {
@@ -53,19 +58,31 @@ backButton.addEventListener('click', () => {
 
 
 // YYYY-MM-DD_HH-MM-SS
-function formatTimestamp(timestamp_str) {
+function filenameDateToJsDate(timestamp_str) {
     const [datePart, timePart] = timestamp_str.split('_');
     const [year, month, day] = datePart.split('-').map(Number);
     const [hours, minutes, seconds] = timePart.split('-').map(Number);
     return new Date(year, month - 1, day, hours, minutes, seconds); // 月份从0开始
 };
 
+function jsDateToFilenameDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份是从0开始的，需要加1，并补充零位
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
+}
+
+
 function getWeekdayName(date) {
     const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
     return weekdays[date.getDay()];
 }
 
-function formatDate(date, decimalPart) {
+function formatDate(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份从0开始
     const day = String(date.getDate()).padStart(2, '0');
@@ -76,18 +93,22 @@ function formatDate(date, decimalPart) {
     return `${weekDay}  ${year}-${month}-${day}  ${hours}:${minutes}:${seconds}`;
 }
 
-function formatUTCDate(date, decimalPart) {
-    const utcDate = new Date(date);
-    utcDate.setHours(utcDate.getHours() - 8)
+// 将视频时间转换为can信号时间
+// date 当前播放的时间
+// decimalPart 当前播放的0.1s部分
+// deltaT can信号中的时间与视频时间的时间差，单位s，浮点数，精确到小数点后1位，如1.5
+function getCurrentCanDate(date, decimalPart, deltaT) {
+    const videoDate = new Date(date);
+    videoDate.setHours(videoDate.getHours() - 8)
 
-    // utcDate.setSeconds(utcDate.getSeconds() - 5)  // hack代码
+    videoDate.setSeconds(videoDate.getSeconds() + decimalPart + deltaT)
 
-    const year = utcDate.getFullYear();
-    const month = String(utcDate.getMonth() + 1).padStart(2, '0'); // 月份从0开始
-    const day = String(utcDate.getDate()).padStart(2, '0');
-    const hours = String(utcDate.getHours()).padStart(2, '0');
-    const minutes = String(utcDate.getMinutes()).padStart(2, '0');
-    const seconds = String(utcDate.getSeconds()).padStart(2, '0');
+    const year = videoDate.getFullYear();
+    const month = String(videoDate.getMonth() + 1).padStart(2, '0'); // 月份从0开始
+    const day = String(videoDate.getDate()).padStart(2, '0');
+    const hours = String(videoDate.getHours()).padStart(2, '0');
+    const minutes = String(videoDate.getMinutes()).padStart(2, '0');
+    const seconds = String(videoDate.getSeconds()).padStart(2, '0');
 
     return `${year % 100}${month}${day}${hours}${minutes}${seconds}.${decimalPart}`;
 }
@@ -114,43 +135,52 @@ function formatDuration(seconds) {
 
 
 players[0].addEventListener('timeupdate', () => {
+    // TODO: 限制下述代码的执行频率
     // 通过目前播放的视频 计算出进度条的进度
+    // 第一个视频片段的起始时间
     const first_ts = savedVideoFiles[type].at(index).clips.at(0).filename_ts;
-    const firstTimestamp = formatTimestamp(first_ts);
+    const firstTimestamp = filenameDateToJsDate(first_ts);
 
+    // 目前视频片段的起始时间
     const current_clip_ts = savedVideoFiles[type].at(index).clips.at(currentIndex).filename_ts;
-    const currentClipStartTimestamp = formatTimestamp(current_clip_ts);
+    const currentClipStartTimestamp = filenameDateToJsDate(current_clip_ts);
 
+    // 目前视频片段的播放时间
     const playTimeInClip = players[0].currentTime;
 
+    // 计算出当前播放进度在整个视频片段中的时长，设置进度条
     progressBar.value = playTimeInClip + (currentClipStartTimestamp - firstTimestamp) / 1000;
 
+    // 当前播放到的时间戳
     const currentFrameTimestamp = currentClipStartTimestamp;
     currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(playTimeInClip));
 
+    // 计算0.1s的部分
     const decimalPart = Math.floor((playTimeInClip % 1) * 10);
 
+    // 当前时间戳转换为用于显示的格式
     const currentDate = formatDate(currentFrameTimestamp);
 
-    const currentUtcDate = formatUTCDate(currentFrameTimestamp, decimalPart);
+    // ISO 8601 格式的日期，当地时间 2024-10-03T16:35:09.7
+    // const currentUtcDate = getCurrentCanDate(currentFrameTimestamp, decimalPart, deltaT);
 
-    const can_data = jsonData.find(item => item.ts === currentUtcDate);
+    // const can_data = jsonData.find(item => item.ts === currentUtcDate);
 
     // 更新时间戳
     currentTime.innerHTML = formatDuration(progressBar.value);
     timeDisplay.innerHTML = currentDate;
 
-    if (can_data) {
-        vehicleSpeed.innerHTML = can_data.v + ' km/h';
+    // if (can_data) {
+    //     vehicleSpeed.innerHTML = can_data.v + ' km/h';
 
-        if (can_data.turn_left == "TURN_SIGNAL_ACTIVE_HIGH") {
-            // addGreenFilter();
-            turnLeftIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
-        } else {
-            // removeGreenFilter();
-            turnLeftIndicator.style.filter = "";
-        }
-    }
+    //     if (can_data.turn_left == "TURN_SIGNAL_ACTIVE_HIGH") {
+    //         // addGreenFilter();
+    //         turnLeftIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+    //     } else {
+    //         // removeGreenFilter();
+    //         turnLeftIndicator.style.filter = "";
+    //     }
+    // }
 
 });
 
@@ -187,7 +217,7 @@ function forwardXSpeed() {
 
 function setPlaybackRate(rate) {
     currentPlaybackRate = rate;
-    if(currentPlaybackRate > maxPlaybackRate) {
+    if (currentPlaybackRate > maxPlaybackRate) {
         currentPlaybackRate = 1;
     }
     players.forEach(player => {
@@ -195,23 +225,13 @@ function setPlaybackRate(rate) {
     });
     xSpeedText.innerHTML = currentPlaybackRate + "x";
 
-    if(currentPlaybackRate == 1) {
+    if (currentPlaybackRate == 1) {
         xSpeedButton.classList.remove('selected');
     } else {
         xSpeedButton.classList.add('selected');
     }
 }
 
-// 加载json文件
-// 假设你的 JSON 文件名为 data.json
-let jsonData = []
-fetch('can_dump_2024-10-03_16-50-09_id_318_257_118_3F5_decode.json')
-    .then(response => response.json())
-    .then(data => {
-        jsonData = data;
-        console.log('JSON data loaded successfully., data len:%d', jsonData.length);
-    })
-    .catch(error => console.error('Error loading JSON:', error));
 
 
 // 创建一个函数来根据 ts 查找 v 值
@@ -235,6 +255,7 @@ const index = urlParams.get('index');
 
 // 通过sessionStorage实现快页面的数据共享
 const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
+const decodedCanFiles = JSON.parse(sessionStorage.getItem('decodedCanFiles'));
 
 if (savedVideoFiles) {
     if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
@@ -246,10 +267,88 @@ if (savedVideoFiles) {
 
         // 获取每段视频的起始时间
         savedVideoFiles[type].at(index).clips.forEach(clip => {
-            clipsGroupStartTimestamp.push(formatTimestamp(clip.filename_ts));
+            clipsGroupStartTimestamp.push(filenameDateToJsDate(clip.filename_ts));
         });
 
         setVideosSrc(currentIndex);
+    }
+}
+
+// targetDateStr 格式：YYYY-MM-DD_HH-MM-SS
+function binarySearchCanJsonFile(canJsonList, targetDateStr) {
+    let left = 0;
+    let right = canJsonList.length - 1;
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        const comparison = canJsonList[mid].timestamp.localeCompare(targetDateStr);
+
+        if (comparison === 0) {
+            return mid;  // 找到目标字符串，返回索引
+        } else if (comparison < 0) {
+            left = mid + 1;  // 目标字符串应该在右侧
+        } else {
+            right = mid - 1; // 目标字符串应该在左侧
+        }
+    }
+
+    if (right < 0) {
+        right = 0;
+    }
+
+    if (right > canJsonList.length - 1) {
+        right = canJsonList.length - 1;
+    }
+
+    // 如果没有找到目标字符串，返回右指针位置的前一个位置
+    return right;
+}
+
+// 根据视频的时间戳来查找并加载对应的json文件
+// 查找前一个，当前，下一个共3个can json文件
+// 由于视频时间和CAN信号时间存在差异，所以前一个文件也加载以避免在极端情况下对应不上正确的can
+function loadTwoMinutesCanData(video_ts) {
+    twoMinutesJsonCanData.length = 0;
+
+    // 加上时间偏置，获取真实的对应到can到时间
+    const targetCanDate = filenameDateToJsDate(video_ts);
+    targetCanDate.setSeconds(targetCanDate.getSeconds() + Math.floor(deltaT));
+    const targetCanDateStr = jsDateToFilenameDate(targetCanDate);
+
+    // 根据时间戳找到要加载的两个json文件
+    fileIndex = binarySearchCanJsonFile(decodedCanFiles, targetCanDateStr);
+
+    if (fileIndex >= 0 && fileIndex < decodedCanFiles.length) {
+        // 检查是否是临近时间的数据 1.5min内
+        const jsonDate = filenameDateToJsDate(decodedCanFiles[fileIndex].timestamp);
+        const deltaMs = targetCanDate - jsonDate;
+        if (Math.abs(deltaMs) < 1.5 * 60000) {
+            const file1 = decodedCanFiles[fileIndex].filePath;
+            fetch(file1)
+                .then(response => response.json())
+                .then(data => {
+                    twoMinutesJsonCanData = data;
+                    console.log('JSON data loaded successfully: %s', file1);
+                })
+                .catch(error => console.error('Error loading JSON:', error));
+        }
+    }
+
+    if (fileIndex + 1 >= 0 && fileIndex + 1 < decodedCanFiles.length) {
+        // 检查是否是临近时间的数据 1.5min内
+        const jsonDate = filenameDateToJsDate(decodedCanFiles[fileIndex + 1].timestamp);
+        const deltaMs = targetCanDate - jsonDate;
+        if (Math.abs(deltaMs) < 1.5 * 60000) {
+            const file2 = decodedCanFiles[fileIndex + 1].filePath;
+            fetch(file2)
+                .then(response => response.json())
+                .then(data => {
+                    twoMinutesJsonCanData.push(...data);
+                    console.log('JSON data loaded successfully: %s', file2);
+                })
+                .catch(error => console.error('Error loading JSON:', error));
+        }
     }
 }
 
@@ -257,6 +356,12 @@ if (savedVideoFiles) {
 function setVideosSrc(clipsIndex) {
     // 设置播放源
     if (clipsIndex < savedVideoFiles[type].at(index).clips.length) {
+        const video_ts = savedVideoFiles[type].at(index).clips.at(clipsIndex).filename_ts;
+        // 加载can文件，通过视频时间戳查找对应can文件并加载
+
+        // video_ts格式如：2024-10-03_16-35-13
+        loadTwoMinutesCanData(video_ts);
+
         const videos = savedVideoFiles[type].at(index).clips.at(clipsIndex).videos;
 
         valid_videos_channel_cnt = 0;
