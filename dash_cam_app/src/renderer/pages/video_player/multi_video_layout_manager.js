@@ -10,6 +10,7 @@ const progressBar = document.getElementById('progress-bar');
 const timeDisplay = document.getElementById('timestamp');
 const vehicleSpeed = document.getElementById('speed');
 const turnLeftIndicator = document.getElementById('left-turn-light');
+const turnRightIndicator = document.getElementById('right-turn-light');
 const currentTime = document.getElementById('current-time');
 const totalDuration = document.getElementById('total-duration');
 const xSpeedText = document.getElementById('x-speed-text');
@@ -98,10 +99,8 @@ function formatDate(date) {
 // decimalPart 当前播放的0.1s部分
 // deltaT can信号中的时间与视频时间的时间差，单位s，浮点数，精确到小数点后1位，如1.5
 function getCurrentCanDate(date, decimalPart, deltaT) {
-    const videoDate = new Date(date);
-    videoDate.setHours(videoDate.getHours() - 8)
-
-    videoDate.setSeconds(videoDate.getSeconds() + decimalPart + deltaT)
+    const canTsMs = date.getTime() + decimalPart * 100 + deltaT * 1000;
+    const videoDate = new Date(canTsMs);
 
     const year = videoDate.getFullYear();
     const month = String(videoDate.getMonth() + 1).padStart(2, '0'); // 月份从0开始
@@ -109,8 +108,9 @@ function getCurrentCanDate(date, decimalPart, deltaT) {
     const hours = String(videoDate.getHours()).padStart(2, '0');
     const minutes = String(videoDate.getMinutes()).padStart(2, '0');
     const seconds = String(videoDate.getSeconds()).padStart(2, '0');
+    const decimal = Math.floor(videoDate.getMilliseconds() / 100);
 
-    return `${year % 100}${month}${day}${hours}${minutes}${seconds}.${decimalPart}`;
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${decimal}`;
 }
 
 
@@ -133,6 +133,36 @@ function formatDuration(seconds) {
     }
 }
 
+// targetDateStr 格式：2024-10-03T16:41:20.2
+function binarySearchLoadedCanData(canJsonList, targetDateStr) {
+    let left = 0;
+    let right = canJsonList.length - 1;
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        const comparison = canJsonList[mid].ts.localeCompare(targetDateStr);
+
+        if (comparison === 0) {
+            return mid;  // 找到目标字符串，返回索引
+        } else if (comparison < 0) {
+            left = mid + 1;  // 目标字符串应该在右侧
+        } else {
+            right = mid - 1; // 目标字符串应该在左侧
+        }
+    }
+
+    if (right < 0) {
+        right = 0;
+    }
+
+    if (right > canJsonList.length - 1) {
+        right = canJsonList.length - 1;
+    }
+
+    // 如果没有找到目标字符串，返回右指针位置的前一个位置
+    return right;
+}
 
 players[0].addEventListener('timeupdate', () => {
     // TODO: 限制下述代码的执行频率
@@ -161,27 +191,39 @@ players[0].addEventListener('timeupdate', () => {
     // 当前时间戳转换为用于显示的格式
     const currentDate = formatDate(currentFrameTimestamp);
 
-    // ISO 8601 格式的日期，当地时间 2024-10-03T16:35:09.7
-    // const currentUtcDate = getCurrentCanDate(currentFrameTimestamp, decimalPart, deltaT);
-
-    // const can_data = jsonData.find(item => item.ts === currentUtcDate);
-
     // 更新时间戳
     currentTime.innerHTML = formatDuration(progressBar.value);
     timeDisplay.innerHTML = currentDate;
 
-    // if (can_data) {
-    //     vehicleSpeed.innerHTML = can_data.v + ' km/h';
+    // ISO 8601 格式的日期，当地时间 2024-10-03T16:35:09.7
+    const canDate = getCurrentCanDate(currentFrameTimestamp, decimalPart, deltaT);
 
-    //     if (can_data.turn_left == "TURN_SIGNAL_ACTIVE_HIGH") {
-    //         // addGreenFilter();
-    //         turnLeftIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
-    //     } else {
-    //         // removeGreenFilter();
-    //         turnLeftIndicator.style.filter = "";
-    //     }
-    // }
+    // 转换为can数据的时间戳，二分查找对应can数据
+    const dataIndex = binarySearchLoadedCanData(twoMinutesJsonCanData, canDate);
 
+    const canData = twoMinutesJsonCanData[dataIndex];
+
+    if (canData) {
+        if (canData.v) {
+            vehicleSpeed.innerHTML = canData.v + ' km/h';
+        }
+
+        if (canData.turn_left == "TURN_SIGNAL_ACTIVE_HIGH") {
+            // addGreenFilter();
+            turnLeftIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+        } else {
+            // removeGreenFilter();
+            turnLeftIndicator.style.filter = "";
+        }
+
+        if (canData.turn_right == "TURN_SIGNAL_ACTIVE_HIGH") {
+            // addGreenFilter();
+            turnRightIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+        } else {
+            // removeGreenFilter();
+            turnRightIndicator.style.filter = "";
+        }
+    }
 });
 
 // 播放暂停按钮
@@ -203,10 +245,10 @@ function togglePlayPause() {
 }
 
 // 回退5s
-function backward5Seconds() {
+async function backward5Seconds() {
     const newValue = Number(progressBar.value) - 5;
     progressBar.value = newValue;
-    changeProgressBarValue();
+    await changeProgressBarValue();
 }
 
 // 倍速播放
@@ -308,7 +350,7 @@ function binarySearchCanJsonFile(canJsonList, targetDateStr) {
 // 根据视频的时间戳来查找并加载对应的json文件
 // 查找前一个，当前，下一个共3个can json文件
 // 由于视频时间和CAN信号时间存在差异，所以前一个文件也加载以避免在极端情况下对应不上正确的can
-function loadTwoMinutesCanData(video_ts) {
+async function loadTwoMinutesCanData(video_ts) {
     twoMinutesJsonCanData.length = 0;
 
     // 加上时间偏置，获取真实的对应到can到时间
@@ -323,15 +365,14 @@ function loadTwoMinutesCanData(video_ts) {
         // 检查是否是临近时间的数据 1.5min内
         const jsonDate = filenameDateToJsDate(decodedCanFiles[fileIndex].timestamp);
         const deltaMs = targetCanDate - jsonDate;
-        if (Math.abs(deltaMs) < 1.5 * 60000) {
+        try {
             const file1 = decodedCanFiles[fileIndex].filePath;
-            fetch(file1)
-                .then(response => response.json())
-                .then(data => {
-                    twoMinutesJsonCanData = data;
-                    console.log('JSON data loaded successfully: %s', file1);
-                })
-                .catch(error => console.error('Error loading JSON:', error));
+            const response = await fetch(file1);
+            const data = await response.json();
+            twoMinutesJsonCanData = data;
+            console.log('JSON data loaded successfully: %s', file1);
+        } catch (error) {
+            console.error('Error loading JSON:', error);
         }
     }
 
@@ -340,27 +381,28 @@ function loadTwoMinutesCanData(video_ts) {
         const jsonDate = filenameDateToJsDate(decodedCanFiles[fileIndex + 1].timestamp);
         const deltaMs = targetCanDate - jsonDate;
         if (Math.abs(deltaMs) < 1.5 * 60000) {
-            const file2 = decodedCanFiles[fileIndex + 1].filePath;
-            fetch(file2)
-                .then(response => response.json())
-                .then(data => {
-                    twoMinutesJsonCanData.push(...data);
-                    console.log('JSON data loaded successfully: %s', file2);
-                })
-                .catch(error => console.error('Error loading JSON:', error));
+            try {
+                const file2 = decodedCanFiles[fileIndex + 1].filePath;
+                const response = await fetch(file2);
+                const data = await response.json();
+                twoMinutesJsonCanData.push(...data);
+                console.log('JSON data loaded successfully: %s', file2);
+            } catch (error) {
+                console.error('Error loading JSON:', error);
+            }
         }
     }
 }
 
 
-function setVideosSrc(clipsIndex) {
+async function setVideosSrc(clipsIndex) {
     // 设置播放源
     if (clipsIndex < savedVideoFiles[type].at(index).clips.length) {
         const video_ts = savedVideoFiles[type].at(index).clips.at(clipsIndex).filename_ts;
         // 加载can文件，通过视频时间戳查找对应can文件并加载
 
         // video_ts格式如：2024-10-03_16-35-13
-        loadTwoMinutesCanData(video_ts);
+        await loadTwoMinutesCanData(video_ts);
 
         const videos = savedVideoFiles[type].at(index).clips.at(clipsIndex).videos;
 
@@ -452,14 +494,14 @@ players.forEach(player => {
 
     // 播放完视频自动播放下一个
     // 当当前视频播放结束时，加载并播放下一个视频
-    player.addEventListener('ended', () => {
+    player.addEventListener('ended', async () => {
         ended_videos_channel_cnt++;
         if (ended_videos_channel_cnt === valid_videos_channel_cnt) {
             // 4路视频都播放完毕
             currentIndex++;
 
             if (currentIndex < totalClipsNumber) {
-                setVideosSrc(currentIndex);
+                await setVideosSrc(currentIndex);
             } else {
                 // 播放到进度条结束
                 play_pause_icon.src = "play.svg";
@@ -560,7 +602,7 @@ function syncProgressWithVideo() {
     progressBar.addEventListener('input', changeProgressBarValue);
 }
 
-function changeProgressBarValue() {
+async function changeProgressBarValue() {
     // 第一个视频时间戳 + 进度条值 = 进度条绝对时间
     let currentFrameTimestamp = new Date(clipsGroupStartTimestamp[0]);
     currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(progressBar.value));
@@ -573,7 +615,7 @@ function changeProgressBarValue() {
 
     // 切换视频源
     if (clips_index != currentIndex) {
-        setVideosSrc(clips_index);
+        await setVideosSrc(clips_index);
         currentIndex = clips_index;
     }
 
