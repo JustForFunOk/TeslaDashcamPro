@@ -113,9 +113,19 @@ button {
     /* 防止文本干扰按钮的点击事件 */
 }
 
-#x_speed_text {
+#speed {
+    font-size: 16px;
+}
+
+#x-speed-text {
     transform: translate(-65%, -50%);
-    /* 微调位置 */
+    /* 向左微调位置 */
+}
+
+#accel-percentage-text {
+    transform: translate(-50%, 80%);
+    /* 向下调整位置 */
+    font-size: 12px;
 }
 
 #back-button {

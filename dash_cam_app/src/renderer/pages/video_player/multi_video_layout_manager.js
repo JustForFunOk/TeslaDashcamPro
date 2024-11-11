@@ -9,6 +9,9 @@ const play_pause_icon = document.getElementById('play-pause-icon');
 const progressBar = document.getElementById('progress-bar');
 const timeDisplay = document.getElementById('timestamp');
 const vehicleSpeed = document.getElementById('speed');
+const gearPosition = document.getElementById('gear');
+const acceleratorPedal = document.getElementById('accelerator-pedal');
+const accelPercentage = document.getElementById('accel-percentage-text');
 const turnLeftIndicator = document.getElementById('left-turn-light');
 const turnRightIndicator = document.getElementById('right-turn-light');
 const currentTime = document.getElementById('current-time');
@@ -204,8 +207,33 @@ players[0].addEventListener('timeupdate', () => {
     const canData = twoMinutesJsonCanData[dataIndex];
 
     if (canData) {
-        if (canData.v) {
+        if (typeof canData.v === "number" && canData.v >= 0) {
             vehicleSpeed.innerHTML = canData.v + ' km/h';
+        }
+
+        switch (canData.gear) {
+            case "DI_GEAR_D":
+                gearPosition.innerHTML = "D";
+                break;
+            case "DI_GEAR_P":
+                gearPosition.innerHTML = "P";
+                break;
+            case "DI_GEAR_R":
+                gearPosition.innerHTML = "R";
+                break;
+            case "DI_GEAR_N":
+                gearPosition.innerHTML = "N";
+                break;
+            default:
+                break;
+        }
+
+        if(canData.accel_pos > 0.0) {
+            acceleratorPedal.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+            accelPercentage.innerHTML = Math.round(canData.accel_pos) + "%";
+        } else {
+            acceleratorPedal.style.filter = "";
+            accelPercentage.innerHTML = "";
         }
 
         if (canData.turn_left == "TURN_SIGNAL_ACTIVE_HIGH") {
@@ -223,6 +251,14 @@ players[0].addEventListener('timeupdate', () => {
             // removeGreenFilter();
             turnRightIndicator.style.filter = "";
         }
+
+        // if (canData.hazard_light == "TURN_SIGNAL_ACTIVE_HIGH") {
+        //     // addGreenFilter();
+        //     turnRightIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+        // } else {
+        //     // removeGreenFilter();
+        //     turnRightIndicator.style.filter = "";
+        // }
     }
 });
 
