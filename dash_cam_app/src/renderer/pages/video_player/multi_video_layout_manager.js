@@ -252,13 +252,9 @@ players[0].addEventListener('timeupdate', () => {
             turnRightIndicator.style.filter = "";
         }
 
-        // if (canData.hazard_light == "TURN_SIGNAL_ACTIVE_HIGH") {
-        //     // addGreenFilter();
-        //     turnRightIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
-        // } else {
-        //     // removeGreenFilter();
-        //     turnRightIndicator.style.filter = "";
-        // }
+        // canData.hazard_light这个显示这里无需判断，触发双闪的时候，turn_left和turn_right会同时触发，可以达到双闪的显示效果
+        // if (canData.hazard_light == "TURN_SIGNAL_ACTIVE_HIGH")
+
     }
 });
 
