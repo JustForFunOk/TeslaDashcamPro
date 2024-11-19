@@ -236,7 +236,7 @@ players[0].addEventListener('timeupdate', () => {
             accelPercentage.innerHTML = "";
         }
 
-        if (canData.turn_left == "TURN_SIGNAL_ACTIVE_HIGH") {
+        if (canData.turn_left == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_left == "TURN_SIGNAL_ACTIVE_LOW") {
             // addGreenFilter();
             turnLeftIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
         } else {
@@ -244,7 +244,7 @@ players[0].addEventListener('timeupdate', () => {
             turnLeftIndicator.style.filter = "";
         }
 
-        if (canData.turn_right == "TURN_SIGNAL_ACTIVE_HIGH") {
+        if (canData.turn_right == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_right == "TURN_SIGNAL_ACTIVE_LOW") {
             // addGreenFilter();
             turnRightIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
         } else {
