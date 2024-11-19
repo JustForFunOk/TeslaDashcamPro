@@ -334,6 +334,7 @@ const decodedCanFiles = JSON.parse(sessionStorage.getItem('decodedCanFiles'));
 if (savedVideoFiles) {
     if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
         // 设置进度条长度
+        // 这里的duration是假设最后一段视频长度为1min，需要等到播放到最后一段时更新总时长
         progressBar.max = savedVideoFiles[type].at(index).duration;
         totalDuration.innerHTML = formatDuration(progressBar.max);
 
@@ -506,9 +507,16 @@ players.forEach(player => {
         loaded_videos_channel_cnt++;
 
         if (loaded_videos_channel_cnt === valid_videos_channel_cnt) {
+            // 初次加载时会根据视频分辨率缩放窗口
             if (!hasResizeWindow) {
                 resizeWindow();
                 hasResizeWindow = true;
+            }
+
+            // 默认最后一段视频长度是1min，但很多情况下并不是，等到播放到最后哦一段时更新总时长
+            if (currentIndex == totalClipsNumber - 1) {
+                progressBar.max = savedVideoFiles[type].at(index).duration - 60 + Math.round(selectedPlayer.duration);
+                totalDuration.innerHTML = formatDuration(progressBar.max);
             }
 
             // 设置倍率需要等缓冲完，否则设置不生效

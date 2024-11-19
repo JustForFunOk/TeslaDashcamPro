@@ -293,6 +293,7 @@ async function getClipsDuration(sorted_clips) {
         // console.log("clip minus: %f", duration_s);
     }
 
+    // 调用接口太费时了，所以假设最后一个视频长度是60s 等到实际播放的时候再更新duration
     // 加上最后一个视频的时间戳 通过ffmpeg获取视频时长
     // const last_video_duration = await getClipDuration(sorted_clips.at(clips_num - 1).videos);
     const last_video_duration = 60;
