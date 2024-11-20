@@ -7,6 +7,7 @@ const players = [
 
 const play_pause_icon = document.getElementById('play-pause-icon');
 const progressBar = document.getElementById('progress-bar');
+const marker = document.getElementById('marker');
 const timeDisplay = document.getElementById('timestamp');
 const vehicleSpeed = document.getElementById('speed');
 const gearPosition = document.getElementById('gear');
@@ -53,6 +54,8 @@ const maxPlaybackRate = 8;
 const deltaT = 0.0;
 
 let twoMinutesJsonCanData = [];
+
+let eventJsonData = {};
 
 // 返回按钮点击事件，跳转回主页面
 const backButton = document.getElementById('back-button');
@@ -167,6 +170,33 @@ function binarySearchLoadedCanData(canJsonList, targetDateStr) {
     return right;
 }
 
+function placeMarker() {
+    if('timestamp' in eventJsonData) {
+        // 日期格式如：2024-09-04T12:04:41 符合 ISO 8601 格式，JavaScript 原生支持该格式的解析
+        eventTriggerTimestamp = new Date(eventJsonData['timestamp']);
+
+        // 触发时间距离开头时间的时长
+        if(clipsGroupStartTimestamp.length > 0 && clipsDuration > 0) {
+            const sliderWidth = progressBar.offsetWidth;
+
+            const markerLeft = (eventTriggerTimestamp - clipsGroupStartTimestamp[0]) / 1000 / clipsDuration * sliderWidth;
+        
+            // 设置标识的水平位置
+            marker.style.left = `${markerLeft}px`;
+            marker.classList.remove('hidden');
+        }
+    } else {
+        marker.classList.add('hidden');
+    }
+}
+
+function setVideoDuration() {
+    progressBar.max = clipsDuration;
+    totalDuration.innerHTML = formatDuration(progressBar.max);
+
+    placeMarker();
+}
+
 players[0].addEventListener('timeupdate', () => {
     // TODO: 限制下述代码的执行频率
     // 通过目前播放的视频 计算出进度条的进度
@@ -259,7 +289,7 @@ players[0].addEventListener('timeupdate', () => {
 });
 
 // 播放暂停按钮
-function togglePlayPause() {
+async function togglePlayPause() {
     if (is_playing) {
         pauseAllVideos();
         // 暂停则恢复播放1倍速播放
@@ -270,7 +300,7 @@ function togglePlayPause() {
         } else {
             // 播放完毕 再次点击播放按钮 从头开始播放
             currentIndex = 0;
-            setVideosSrc(currentIndex);
+            await setVideosSrc(currentIndex);
             is_playing = true;
         }
     }
@@ -331,23 +361,29 @@ const index = urlParams.get('index');
 const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
 const decodedCanFiles = JSON.parse(sessionStorage.getItem('decodedCanFiles'));
 
-if (savedVideoFiles) {
-    if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
-        // 设置进度条长度
-        // 这里的duration是假设最后一段视频长度为1min，需要等到播放到最后一段时更新总时长
-        progressBar.max = savedVideoFiles[type].at(index).duration;
-        totalDuration.innerHTML = formatDuration(progressBar.max);
 
-        totalClipsNumber = savedVideoFiles[type].at(index).clips.length;
+(
+    async() => {
+        if (savedVideoFiles) {
+            if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
+                // 设置进度条长度
+                // 这里的duration是假设最后一段视频长度为1min，需要等到播放到最后一段时更新总时长
+                clipsDuration = savedVideoFiles[type].at(index).duration;
 
-        // 获取每段视频的起始时间
-        savedVideoFiles[type].at(index).clips.forEach(clip => {
-            clipsGroupStartTimestamp.push(filenameDateToJsDate(clip.filename_ts));
-        });
+                totalClipsNumber = savedVideoFiles[type].at(index).clips.length;
+        
+                // 获取每段视频的起始时间
+                savedVideoFiles[type].at(index).clips.forEach(clip => {
+                    clipsGroupStartTimestamp.push(filenameDateToJsDate(clip.filename_ts));
+                });
 
-        setVideosSrc(currentIndex);
+                await setVideosSrc(currentIndex);
+            }
+        }
     }
-}
+)();
+
+
 
 // targetDateStr 格式：YYYY-MM-DD_HH-MM-SS
 function binarySearchCanJsonFile(canJsonList, targetDateStr) {
@@ -424,6 +460,17 @@ async function loadTwoMinutesCanData(video_ts) {
                 console.error('Error loading JSON:', error);
             }
         }
+    }
+}
+
+async function loadEventJsonFile(filePath) {
+    try {
+        const response = await fetch(filePath);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error loading JSON:', error);
+        return {};
     }
 }
 
@@ -515,8 +562,9 @@ players.forEach(player => {
 
             // 默认最后一段视频长度是1min，但很多情况下并不是，等到播放到最后哦一段时更新总时长
             if (currentIndex == totalClipsNumber - 1) {
-                progressBar.max = savedVideoFiles[type].at(index).duration - 60 + Math.round(selectedPlayer.duration);
-                totalDuration.innerHTML = formatDuration(progressBar.max);
+                clipsDuration = savedVideoFiles[type].at(index).duration - 60 + Math.round(selectedPlayer.duration);
+
+                setVideoDuration();
             }
 
             // 设置倍率需要等缓冲完，否则设置不生效
@@ -673,9 +721,17 @@ function resizeWindow() {
 }
 
 // 在页面加载后调用 selectVideo，选择 video-f
-window.onload = function () {
+window.onload = async function () {
     selectVideo(players[0]); // 主动选择 video-f
     syncProgressWithVideo(); // 启用拖动进度条同步功能
+
+    // 针对Sentry和Saved加载json文件
+    eventJsonFilePath = savedVideoFiles[type].at(index).jsonPath;
+    if(eventJsonFilePath !== "") {
+        eventJsonData = await loadEventJsonFile(eventJsonFilePath);
+    }
+
+    setVideoDuration();
 };
 
 // 开始时更新进度条

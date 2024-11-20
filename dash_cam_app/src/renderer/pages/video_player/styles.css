@@ -324,11 +324,40 @@ button {
     margin: 0 10px;
 }
 
+.slider-container {
+    display: flex;
+    position: relative;
+    /* 设置容器为相对定位 */
+    flex-grow: 1;
+    /* 让进度条填满剩余空间 */
+    margin: 0 10px;
+    /* 进度条两侧留点空隙 */
+}
+
 #progress-bar {
     flex-grow: 1;
     /* 让进度条填满剩余空间 */
     margin: 0 10px;
     /* 进度条两侧留点空隙 */
+}
+
+.marker {
+    position: absolute;
+    /* 绝对定位，相对于 .slider-container */
+    top: 50%;
+    /* 垂直居中 */
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    /* 防止标识影响用户交互 */
+}
+
+.hidden {
+    display: none;
+    /* 隐藏标识 */
 }
 
 #delete-button .icon {
