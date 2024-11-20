@@ -59,6 +59,7 @@ let clipsDuration = 0;
 let clipsGroupStartTimestamp = [];
 
 let hasResizeWindow = false;
+let hasGetLastClipDuration = false;
 
 let currentPlaybackRate = 1;
 const maxPlaybackRate = 8;
@@ -75,10 +76,34 @@ let eventJsonData = {};
 backButton.addEventListener('click', () => window.history.back());
 
 // 当用户拖动进度条时同步视频的播放时间
-progressBar.addEventListener('input', changeProgressBarValue);
+progressBar.addEventListener('input', async () => {
+    await changeProgressBarValue();
+
+    // 解决用户手动拖动进度条到最后，不能触发player的ended事件，导致再次点击播放按钮会从最后一个视频的头部播放的bug
+    if(progressBar.value == progressBar.max) {
+        currentIndex = totalClipsNumber;
+
+        // 播放到进度条结束
+        play_pause_icon.src = "play.svg";
+        is_playing = false;
+        setPlaybackRate(1);
+
+        // 当前时间也修改为最大
+        currentTime.innerHTML = formatDuration(progressBar.max);
+    }
+});
 
 
 players[0].addEventListener('timeupdate', () => {
+    if(!hasGetLastClipDuration) {
+        return;
+    }
+
+    // 手动拖动进度条到最后时跳过执行，否则会越界
+    if(currentIndex >= totalClipsNumber) {
+        return;
+    }
+
     // TODO: 限制下述代码的执行频率
     // 通过目前播放的视频 计算出进度条的进度
     // 第一个视频片段的起始时间
@@ -171,7 +196,7 @@ players[0].addEventListener('timeupdate', () => {
 
 players.forEach(player => {
     // 4个视频都加载第一帧完毕后再同步播放
-    player.addEventListener('loadeddata', () => {
+    player.addEventListener('loadeddata', async () => {
         loaded_videos_channel_cnt++;
 
         if (loaded_videos_channel_cnt === valid_videos_channel_cnt) {
@@ -182,10 +207,17 @@ players.forEach(player => {
             }
 
             // 默认最后一段视频长度是1min，但很多情况下并不是，等到播放到最后哦一段时更新总时长
-            if (currentIndex == totalClipsNumber - 1) {
+            if (!hasGetLastClipDuration && currentIndex == totalClipsNumber - 1) {
                 clipsDuration = savedVideoFiles[type].at(index).duration - 60 + Math.round(selectedPlayer.duration);
 
                 setVideoDuration();
+
+                hasGetLastClipDuration = true;
+
+                currentIndex = 0;  // 默认从头播放
+                await setVideosSrc(currentIndex);
+
+                return;
             }
 
             // 设置倍率需要等缓冲完，否则设置不生效
@@ -215,6 +247,8 @@ players.forEach(player => {
                 // 播放到进度条结束
                 play_pause_icon.src = "play.svg";
                 is_playing = false;
+                setPlaybackRate(1);
+
             }
         }
     });
@@ -350,11 +384,10 @@ function setEventTriggerTimestampMarker() {
 
 function setVideoDuration() {
     progressBar.max = clipsDuration;
-    totalDuration.innerHTML = formatDuration(progressBar.max);
+    totalDuration.innerHTML = formatDuration(clipsDuration);
 
     setEventTriggerTimestampMarker();
 }
-
 
 
 // 播放暂停按钮
@@ -383,7 +416,14 @@ async function backward5Seconds() {
 }
 
 // 倍速播放
-function forwardXSpeed() {
+async function forwardXSpeed() {
+    if (currentIndex >= totalClipsNumber) {
+        // 播放完毕 再次点击倍速按钮 从头开始播放
+        currentIndex = 0;
+        await setVideosSrc(currentIndex);
+        is_playing = true;
+    }
+
     setPlaybackRate(currentPlaybackRate * 2);
     playAllVideos();
 }
@@ -405,7 +445,6 @@ function setPlaybackRate(rate) {
         xSpeedButton.classList.add('selected');
     }
 }
-
 
 
 // 创建一个函数来根据 ts 查找 v 值
@@ -521,7 +560,9 @@ async function setVideosSrc(clipsIndex) {
         // 加载can文件，通过视频时间戳查找对应can文件并加载
 
         // video_ts格式如：2024-10-03_16-35-13
-        await loadTwoMinutesCanData(video_ts);
+        if(hasGetLastClipDuration) {
+            await loadTwoMinutesCanData(video_ts);
+        }
 
         const videos = savedVideoFiles[type].at(index).clips.at(clipsIndex).videos;
 
@@ -707,6 +748,8 @@ function resizeWindow() {
     async() => {
         if (savedVideoFiles) {
             if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
+                selectVideo(players[0]); // 主动选择 video-f
+
                 // 设置进度条长度
                 // 这里的duration是假设最后一段视频长度为1min，需要等到播放到最后一段时更新总时长
                 clipsDuration = savedVideoFiles[type].at(index).duration;
@@ -724,12 +767,10 @@ function resizeWindow() {
                     eventJsonData = await loadEventJsonFile(eventJsonFilePath);
                 }
 
-                setVideoDuration();
-
-                currentIndex = 0;  // 默认从头开始播放视频
-                await setVideosSrc(currentIndex);
-
-                selectVideo(players[0]); // 主动选择 video-f
+                if (totalClipsNumber > 0) {
+                    currentIndex = totalClipsNumber - 1;  // 先加载最后一段视频获取总视频长度
+                    await setVideosSrc(currentIndex);
+                }
             }
         }
     }
