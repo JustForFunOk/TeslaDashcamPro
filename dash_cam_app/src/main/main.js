@@ -28,7 +28,7 @@ async function parseTeslaCamFolder(folderPath) {
 
     const recent_clips_path = path.join(folderPath, 'RecentClips');
     if (fs.existsSync(recent_clips_path)) {
-        processSingleFolderClips(folderPath, tmp_all_clips);
+        processSingleFolderClips(recent_clips_path, tmp_all_clips);
     }
 
     // 处理单文件夹下的视频文件 用于选择单一文件夹的场景
