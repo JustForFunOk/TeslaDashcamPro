@@ -12,6 +12,7 @@ const progressBar = document.getElementById('progress-bar');
 const marker = document.getElementById('marker');
 const timeDisplay = document.getElementById('timestamp');
 const drivingMode = document.getElementById('driving-mode');
+const steeringWheelIcon = document.getElementById('steering-wheel-icon');
 const drivingModeText = document.getElementById('driving-mode-text');
 const vehicleSpeed = document.getElementById('speed');
 const gearPosition = document.getElementById('gear');
@@ -177,7 +178,7 @@ players[0].addEventListener('timeupdate', () => {
         if (canData.turn_left == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_left == "TURN_SIGNAL_ACTIVE_LOW") {
             // addGreenFilter();
             turnLeftIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
-        } else {
+        } else if (canData.turn_left == "TURN_SIGNAL_OFF"){
             // removeGreenFilter();
             turnLeftIndicator.style.filter = "";
         }
@@ -185,7 +186,7 @@ players[0].addEventListener('timeupdate', () => {
         if (canData.turn_right == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_right == "TURN_SIGNAL_ACTIVE_LOW") {
             // addGreenFilter();
             turnRightIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
-        } else {
+        } else if (canData.turn_right == "TURN_SIGNAL_OFF"){
             // removeGreenFilter();
             turnRightIndicator.style.filter = "";
         }
@@ -193,16 +194,23 @@ players[0].addEventListener('timeupdate', () => {
         // canData.hazard_light这个显示这里无需判断，触发双闪的时候，turn_left和turn_right会同时触发，可以达到双闪的显示效果
         // if (canData.hazard_light == "TURN_SIGNAL_ACTIVE_HIGH")
 
-        if(canData.ap_state == "ACTIVE_NOMINAL" || canData.ap_state == "ACTIVE_NAV" || canData.ap_state == "ACTIVE_RESTRICTED") {
-            drivingMode.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
-            drivingModeText.innerHTML = "AP";
-        } else if (canData.acc_speed_limit !== "NONE") {
-            drivingMode.style.filter = "invert(50%)";
-            drivingModeText.innerHTML = "ACC";
-        } else {
-            drivingMode.style.filter = "invert(50%)";
-            drivingModeText.innerHTML = "";
+
+        if(canData.ap_state !== null && canData.acc_speed_limit != null) {
+            if(canData.ap_state == "ACTIVE_NOMINAL" || canData.ap_state == "ACTIVE_NAV" || canData.ap_state == "ACTIVE_RESTRICTED") {
+                drivingMode.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+                drivingModeText.innerHTML = "AP";
+            } else if (canData.acc_speed_limit !== "NONE") {
+                drivingMode.style.filter = "invert(50%)";  // 这里不加上filter会影响ACC文本位置的显示，原因未知
+                drivingModeText.innerHTML = "ACC";
+            } else {
+                drivingMode.style.filter = "invert(50%)";
+                drivingModeText.innerHTML = "";
+            }
         }
+
+
+        const steeringAngle = Math.round(canData.steering_angle) % 360;
+        steeringWheelIcon.style.transform = `rotate(${steeringAngle}deg)`;
 
     }
 });
