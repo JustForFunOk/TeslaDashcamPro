@@ -11,6 +11,8 @@ const play_pause_icon = document.getElementById('play-pause-icon');
 const progressBar = document.getElementById('progress-bar');
 const marker = document.getElementById('marker');
 const timeDisplay = document.getElementById('timestamp');
+const drivingMode = document.getElementById('driving-mode');
+const drivingModeText = document.getElementById('driving-mode-text');
 const vehicleSpeed = document.getElementById('speed');
 const gearPosition = document.getElementById('gear');
 const acceleratorPedal = document.getElementById('accelerator-pedal');
@@ -122,7 +124,7 @@ players[0].addEventListener('timeupdate', () => {
 
     // 当前播放到的时间戳
     const currentFrameTimestamp = currentClipStartTimestamp;
-    currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.round(playTimeInClip));
+    currentFrameTimestamp.setSeconds(currentFrameTimestamp.getSeconds() + Math.floor(playTimeInClip));
 
     // 计算0.1s的部分
     const decimalPart = Math.floor((playTimeInClip % 1) * 10);
@@ -190,6 +192,17 @@ players[0].addEventListener('timeupdate', () => {
 
         // canData.hazard_light这个显示这里无需判断，触发双闪的时候，turn_left和turn_right会同时触发，可以达到双闪的显示效果
         // if (canData.hazard_light == "TURN_SIGNAL_ACTIVE_HIGH")
+
+        if(canData.ap_state == "ACTIVE_NOMINAL" || canData.ap_state == "ACTIVE_NAV" || canData.ap_state == "ACTIVE_RESTRICTED") {
+            drivingMode.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+            drivingModeText.innerHTML = "AP";
+        } else if (canData.acc_speed_limit !== "NONE") {
+            drivingMode.style.filter = "invert(50%)";
+            drivingModeText.innerHTML = "ACC";
+        } else {
+            drivingMode.style.filter = "invert(50%)";
+            drivingModeText.innerHTML = "";
+        }
 
     }
 });
