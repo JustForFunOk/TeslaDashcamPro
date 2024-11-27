@@ -20,6 +20,10 @@ const acceleratorPedal = document.getElementById('accelerator-pedal');
 const accelPercentage = document.getElementById('accel-percentage-text');
 const turnLeftIndicator = document.getElementById('left-turn-light');
 const turnRightIndicator = document.getElementById('right-turn-light');
+const sideMarker = document.getElementById('side-marker-light');
+const lowBeamHeadlight = document.getElementById('low-beam-headlight');
+const highBeamHeadlight = document.getElementById('high-beam-headlight');
+const fogLight = document.getElementById('fog-light');
 const currentTime = document.getElementById('current-time');
 const totalDuration = document.getElementById('total-duration');
 const xSpeedText = document.getElementById('x-speed-text');
@@ -194,6 +198,25 @@ players[0].addEventListener('timeupdate', () => {
         // canData.hazard_light这个显示这里无需判断，触发双闪的时候，turn_left和turn_right会同时触发，可以达到双闪的显示效果
         // if (canData.hazard_light == "TURN_SIGNAL_ACTIVE_HIGH")
 
+        // 开启近光灯时，side marker信号为off 但是灯应该还在亮着？
+        if (canData.side_marker == "LIGHT_ON" || canData.low_beam == "LIGHT_ON") {
+            sideMarker.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+        } else if (canData.side_marker !== null) {
+            // 可能为OFF FAULT SNA，null可能是因为每分钟开头的无效数据
+            sideMarker.style.filter = "";
+        }
+
+        if (canData.low_beam == "LIGHT_ON") {
+            lowBeamHeadlight.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+        } else if (canData.low_beam !== null) {
+            lowBeamHeadlight.style.filter = "";
+        }
+
+        if (canData.high_beam == "LIGHT_ON") {
+            highBeamHeadlight.style.filter = "invert(0.5) sepia(1) saturate(500%) hue-rotate(200deg) brightness(1.1)";
+        } else if (canData.high_beam !== null) {
+            highBeamHeadlight.style.filter = "";
+        }
 
         if(canData.ap_state !== null && canData.acc_speed_limit != null) {
             if(canData.ap_state == "ACTIVE_NOMINAL" || canData.ap_state == "ACTIVE_NAV" || canData.ap_state == "ACTIVE_RESTRICTED") {
