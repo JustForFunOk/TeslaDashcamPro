@@ -1,7 +1,6 @@
 const { app, BrowserWindow, Menu, dialog, ipcMain, screen } = require('electron');
 const path = require('path');
 const fs = require('fs');
-const ffmpeg = require('fluent-ffmpeg');
 
 // 定义允许的视频文件扩展名
 const allowedExtensions = ['.mp4'];
@@ -219,47 +218,6 @@ function parseFileName(fileName) {
     return null;
 }
 
-// 帮助函数
-function getVideoDuration(filePath, timeout = 5000) {
-    return new Promise((resolve) => {
-        const timeoutId = setTimeout(() => {
-            resolve(0); // 超时返回0
-        }, timeout);
-
-        ffmpeg.ffprobe(filePath, (err, metadata) => {
-            clearTimeout(timeoutId); // 清除超时
-            if (err) {
-                console.error('Error getting duration for:', filePath, err);
-                resolve(0); // 获取失败，返回0
-            } else {
-                resolve(metadata.format.duration); // 获取成功，返回时长
-            }
-        });
-    });
-}
-
-async function getMaxVideoDuration(filePaths) {
-    if (filePaths.length === 0) {
-        return 0; // 如果数组为空，直接返回0
-    }
-
-    const durationPromises = filePaths.map(filePath => getVideoDuration(filePath));
-    const durations = await Promise.all(durationPromises);
-    return Math.max(...durations); // 返回最大时长
-}
-
-
-async function getClipDuration(clip) {
-    videos = [];
-    if (clip.F != "") videos.push(clip.F);
-    if (clip.B != "") videos.push(clip.B);
-    if (clip.L != "") videos.push(clip.L);
-    if (clip.R != "") videos.push(clip.R);
-
-    const max_duration = await getMaxVideoDuration(videos);
-
-    return max_duration;
-}
 
 // YYYY-MM-DD_HH-MM-SS
 function formatTimestamp(timestamp_str) {

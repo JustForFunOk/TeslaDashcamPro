@@ -2,7 +2,11 @@
 
 ## 常用命令
 
+* 新环境中安装依赖 npm install
+
 * 本地运行 npm start
+
+* 打包 npm run make
 
 * [打包应用](https://www.electronjs.org/zh/docs/latest/tutorial/%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B)
 
