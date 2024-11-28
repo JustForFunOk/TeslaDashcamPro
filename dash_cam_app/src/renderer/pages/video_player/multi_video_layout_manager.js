@@ -16,6 +16,7 @@ const steeringWheelIcon = document.getElementById('steering-wheel-icon');
 const drivingModeText = document.getElementById('driving-mode-text');
 const vehicleSpeed = document.getElementById('speed');
 const gearPosition = document.getElementById('gear');
+const brakePedal = document.getElementById('brake-pedal');
 const acceleratorPedal = document.getElementById('accelerator-pedal');
 const accelPercentage = document.getElementById('accel-percentage-text');
 const turnLeftIndicator = document.getElementById('left-turn-light');
@@ -23,7 +24,7 @@ const turnRightIndicator = document.getElementById('right-turn-light');
 const sideMarker = document.getElementById('side-marker-light');
 const lowBeamHeadlight = document.getElementById('low-beam-headlight');
 const highBeamHeadlight = document.getElementById('high-beam-headlight');
-const fogLight = document.getElementById('fog-light');
+// const fogLight = document.getElementById('fog-light');
 const currentTime = document.getElementById('current-time');
 const totalDuration = document.getElementById('total-duration');
 const xSpeedText = document.getElementById('x-speed-text');
@@ -171,12 +172,18 @@ players[0].addEventListener('timeupdate', () => {
                 break;
         }
 
-        if(canData.accel_pos > 0.0) {
+        if (canData.accel_pos > 0.0) {
             acceleratorPedal.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
             accelPercentage.innerHTML = Math.round(canData.accel_pos) + "%";
         } else {
             acceleratorPedal.style.filter = "";
             accelPercentage.innerHTML = "";
+        }
+
+        if (canData.brake_pedal == "DRIVER_APPLYING_BRAKES") {
+            brakePedal.style.filter = "brightness(0) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(353deg) brightness(96%) contrast(111%)";  // 红色
+        } else if (canData.brake_pedal !== null) {
+            brakePedal.style.filter = "";
         }
 
         if (canData.turn_left == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_left == "TURN_SIGNAL_ACTIVE_LOW") {
@@ -213,7 +220,7 @@ players[0].addEventListener('timeupdate', () => {
         }
 
         if (canData.high_beam == "LIGHT_ON") {
-            highBeamHeadlight.style.filter = "invert(0.5) sepia(1) saturate(500%) hue-rotate(200deg) brightness(1.1)";
+            highBeamHeadlight.style.filter = "brightness(100%) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(210deg) brightness(96%) contrast(111%)";
         } else if (canData.high_beam !== null) {
             highBeamHeadlight.style.filter = "";
         }
