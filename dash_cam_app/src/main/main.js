@@ -2,8 +2,9 @@ const { app, BrowserWindow, Menu, dialog, ipcMain, screen } = require('electron'
 const path = require('path');
 const fs = require('fs');
 
-// 定义允许的视频文件扩展名
-const allowedExtensions = ['.mp4'];
+// 将saved 和 sentry 文件夹下的也加入到recent中，目的是组成连贯的视频。
+// 但是会导致recent中视频段变得很多，先关掉这个功能
+const addSavedAndSentryToRecent = false;
 
 async function parseTeslaCamFolder(folderPath) {
     const result = {
@@ -125,11 +126,14 @@ async function processSubClips(dirPath, result, all_clips) {
 
                 addVideoToDict(dataStructure.clips.at(dataStructure.clips.length - 1).videos, position, video_file_path);
 
-                // 加入到all_clips中避免后续处理全部视频时重复遍历
-                all_clips.push({
-                    file_name: clip_name,
-                    full_path: video_file_path
-                });
+                if (addSavedAndSentryToRecent) {
+                    // 加入到all_clips中避免后续处理全部视频时重复遍历
+                    all_clips.push({
+                        file_name: clip_name,
+                        full_path: video_file_path
+                    });
+                }
+
             }
         }
         );
