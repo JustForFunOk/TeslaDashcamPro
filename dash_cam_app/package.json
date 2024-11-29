@@ -4,10 +4,10 @@
   "description": "Tesla Dash Camera Manager App",
   "main": "./src/main/main.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "cross-env NODE_ENV=development electron-forge start",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "package": "cross-env NODE_ENV=production electron-forge package",
+    "make": "cross-env NODE_ENV=production electron-forge make"
   },
   "author": "SJ",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.5.0",
     "@electron-forge/plugin-fuses": "^7.5.0",
     "@electron/fuses": "^1.8.0",
+    "cross-env": "^7.0.3",
     "electron": "^32.2.0",
     "three": "^0.169.0"
   },

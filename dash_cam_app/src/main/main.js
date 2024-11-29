@@ -315,25 +315,27 @@ function findJsonFilesInDecodedCan(dirPath) {
 let mainWindow;
 
 app.whenReady().then(() => {
+    const isDev = process.env.NODE_ENV === 'development';
+
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
-        // resizable: false, // 禁止窗口缩放
-        // maximizable: false,    // 禁止最大化
-        // fullscreenable: false, // 禁止全屏
+        resizable: isDev, // 仅开发模式允许窗口缩放
+        maximizable: isDev, // 仅开发模式允许最大化
+        fullscreenable: isDev, // 仅开发模式允许全屏
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),  // 预加载文件
         }
     });
 
-    // 隐藏菜单栏  隐藏之后前端调试页面就无法用了 先不隐藏
-    // Menu.setApplicationMenu(null);
+    // 隐藏之后前端调试页面就无法用了 开发环境可以用来调试代码
+    if (!isDev) {
+        Menu.setApplicationMenu(null);
 
-    // mainWindow.setAspectRatio(4 / 3, { width: 0, height: 140 });
-
-    mainWindow.on('maximize', () => {
-        mainWindow.unmaximize();
-    });
+        mainWindow.on('maximize', () => {
+            mainWindow.unmaximize();
+        });
+    }
 
     mainWindow.loadFile('src/renderer/pages/video_clips_list/index.html');
 });
