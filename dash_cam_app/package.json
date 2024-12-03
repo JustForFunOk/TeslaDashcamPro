@@ -1,5 +1,5 @@
 {
-  "name": "dash_cam_app",
+  "name": "TeslaDashcamPro",
   "version": "1.0.0",
   "description": "Tesla Dash Camera Manager App",
   "main": "./src/main/main.js",
