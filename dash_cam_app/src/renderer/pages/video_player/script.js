@@ -6,11 +6,10 @@ const players = [
     document.getElementById('video-r')   // R
 ];
 
-const backButton = document.getElementById('back-button');
-const play_pause_icon = document.getElementById('play-pause-icon');
-const progressBar = document.getElementById('progress-bar');
-const marker = document.getElementById('marker');
 const timeDisplay = document.getElementById('timestamp');
+
+const canDataDisplay = document.getElementById('can-data');
+const headContainer = document.querySelector('.header-title-container');
 const drivingMode = document.getElementById('driving-mode');
 const steeringWheelIcon = document.getElementById('steering-wheel-icon');
 const drivingModeText = document.getElementById('driving-mode-text');
@@ -25,6 +24,11 @@ const sideMarker = document.getElementById('side-marker-light');
 const lowBeamHeadlight = document.getElementById('low-beam-headlight');
 const highBeamHeadlight = document.getElementById('high-beam-headlight');
 // const fogLight = document.getElementById('fog-light');
+
+const backButton = document.getElementById('back-button');
+const play_pause_icon = document.getElementById('play-pause-icon');
+const progressBar = document.getElementById('progress-bar');
+const eventMarker = document.getElementById('event-marker');
 const currentTime = document.getElementById('current-time');
 const totalDuration = document.getElementById('total-duration');
 const xSpeedText = document.getElementById('x-speed-text');
@@ -40,6 +44,10 @@ const index = urlParams.get('index');
 // 通过sessionStorage实现快页面的数据共享
 const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
 const decodedCanFiles = JSON.parse(sessionStorage.getItem('decodedCanFiles'));
+
+const grayToGreenFilter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+const grayToRedFilter = "brightness(0) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(353deg) brightness(96%) contrast(111%)";
+const grayToBlueFilter = "brightness(100%) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(210deg) brightness(96%) contrast(111%)";
 
 // 当前播放的clips group中的视频索引
 let currentIndex = 0;
@@ -72,6 +80,7 @@ let hasGetLastClipDuration = false;
 let currentPlaybackRate = 1;
 const maxPlaybackRate = 8;
 
+// can data
 // CAN时间与视频时间的差值，若CAN时间比视频时间提前这个值为正，否则为负
 const deltaT = 0.0;
 
@@ -79,6 +88,13 @@ let twoMinutesJsonCanData = [];
 
 let eventJsonData = {};
 
+let hasCanData = true;
+
+if(decodedCanFiles.length == 0) {
+    hasCanData = false;
+    canDataDisplay.classList.add('hidden');
+    headContainer.style.justifyContent = 'center';
+}
 
 // 返回按钮点击事件，跳转回主页面
 backButton.addEventListener('click', () => window.history.back());
@@ -145,6 +161,11 @@ players[0].addEventListener('timeupdate', () => {
     // ISO 8601 格式的日期，当地时间 2024-10-03T16:35:09.7
     const canDate = getCurrentCanDate(currentFrameTimestamp, decimalPart, deltaT);
 
+
+    if (hasCanData) {
+        return;
+    }
+
     // 转换为can数据的时间戳，二分查找对应can数据
     const dataIndex = binarySearchLoadedCanData(twoMinutesJsonCanData, canDate);
 
@@ -173,7 +194,7 @@ players[0].addEventListener('timeupdate', () => {
         }
 
         if (canData.accel_pos > 0.0) {
-            acceleratorPedal.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+            acceleratorPedal.style.filter = grayToGreenFilter;
             accelPercentage.innerHTML = Math.round(canData.accel_pos) + "%";
         } else {
             acceleratorPedal.style.filter = "";
@@ -181,14 +202,14 @@ players[0].addEventListener('timeupdate', () => {
         }
 
         if (canData.brake_pedal == "DRIVER_APPLYING_BRAKES") {
-            brakePedal.style.filter = "brightness(0) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(353deg) brightness(96%) contrast(111%)";  // 红色
+            brakePedal.style.filter = grayToRedFilter;
         } else if (canData.brake_pedal !== null) {
             brakePedal.style.filter = "";
         }
 
         if (canData.turn_left == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_left == "TURN_SIGNAL_ACTIVE_LOW") {
             // addGreenFilter();
-            turnLeftIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+            turnLeftIndicator.style.filter = grayToGreenFilter;
         } else if (canData.turn_left == "TURN_SIGNAL_OFF"){
             // removeGreenFilter();
             turnLeftIndicator.style.filter = "";
@@ -196,7 +217,7 @@ players[0].addEventListener('timeupdate', () => {
 
         if (canData.turn_right == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_right == "TURN_SIGNAL_ACTIVE_LOW") {
             // addGreenFilter();
-            turnRightIndicator.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+            turnRightIndicator.style.filter = grayToGreenFilter;
         } else if (canData.turn_right == "TURN_SIGNAL_OFF"){
             // removeGreenFilter();
             turnRightIndicator.style.filter = "";
@@ -207,27 +228,27 @@ players[0].addEventListener('timeupdate', () => {
 
         // 开启近光灯时，side marker信号为off 但是灯应该还在亮着？
         if (canData.side_marker == "LIGHT_ON" || canData.low_beam == "LIGHT_ON") {
-            sideMarker.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+            sideMarker.style.filter = grayToGreenFilter;
         } else if (canData.side_marker !== null) {
             // 可能为OFF FAULT SNA，null可能是因为每分钟开头的无效数据
             sideMarker.style.filter = "";
         }
 
         if (canData.low_beam == "LIGHT_ON") {
-            lowBeamHeadlight.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+            lowBeamHeadlight.style.filter = grayToGreenFilter;
         } else if (canData.low_beam !== null) {
             lowBeamHeadlight.style.filter = "";
         }
 
         if (canData.high_beam == "LIGHT_ON") {
-            highBeamHeadlight.style.filter = "brightness(100%) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(210deg) brightness(96%) contrast(111%)";
+            highBeamHeadlight.style.filter = grayToBlueFilter;
         } else if (canData.high_beam !== null) {
             highBeamHeadlight.style.filter = "";
         }
 
         if(canData.ap_state !== null && canData.acc_speed_limit != null) {
             if(canData.ap_state == "ACTIVE_NOMINAL" || canData.ap_state == "ACTIVE_NAV" || canData.ap_state == "ACTIVE_RESTRICTED") {
-                drivingMode.style.filter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
+                drivingMode.style.filter = grayToGreenFilter;
                 drivingModeText.innerHTML = "AP";
             } else if (canData.acc_speed_limit !== "NONE") {
                 drivingMode.style.filter = "invert(50%)";  // 这里不加上filter会影响ACC文本位置的显示，原因未知
@@ -238,10 +259,8 @@ players[0].addEventListener('timeupdate', () => {
             }
         }
 
-
         const steeringAngle = Math.round(canData.steering_angle) % 360;
         steeringWheelIcon.style.transform = `rotate(${steeringAngle}deg)`;
-
     }
 });
 
@@ -425,11 +444,11 @@ function setEventTriggerTimestampMarker() {
             const markerLeft = (eventTriggerTimestamp - clipsGroupStartTimestamp[0]) / 1000 / clipsDuration * sliderWidth;
         
             // 设置标识的水平位置
-            marker.style.left = `${markerLeft}px`;
-            marker.classList.remove('hidden');
+            eventMarker.style.left = `${markerLeft}px`;
+            eventMarker.classList.remove('hidden');
         }
     } else {
-        marker.classList.add('hidden');
+        eventMarker.classList.add('hidden');
     }
 }
 
@@ -498,22 +517,6 @@ function setPlaybackRate(rate) {
 }
 
 
-// 创建一个函数来根据 ts 查找 v 值
-function getValueByTs(newTs) {
-    const result = jsonData.find(item => item.ts === newTs);
-
-    if (result) {
-        // console.log(`The value of v for ts ${newTs} is: ${result.v}`);
-        return result.v;
-    } else {
-        // console.log(`No entry found for ts: ${newTs}`);
-        return -1;
-    }
-}
-
-
-
-
 // targetDateStr 格式：YYYY-MM-DD_HH-MM-SS
 function binarySearchCanJsonFile(canJsonList, targetDateStr) {
     let left = 0;
@@ -546,8 +549,6 @@ function binarySearchCanJsonFile(canJsonList, targetDateStr) {
 }
 
 // 根据视频的时间戳来查找并加载对应的json文件
-// 查找前一个，当前，下一个共3个can json文件
-// 由于视频时间和CAN信号时间存在差异，所以前一个文件也加载以避免在极端情况下对应不上正确的can
 async function loadTwoMinutesCanData(video_ts) {
     twoMinutesJsonCanData.length = 0;
 
@@ -568,7 +569,7 @@ async function loadTwoMinutesCanData(video_ts) {
             const response = await fetch(file1);
             const data = await response.json();
             twoMinutesJsonCanData = data;
-            console.log('JSON data loaded successfully: %s', file1);
+            // console.log('JSON data loaded successfully: %s', file1);
         } catch (error) {
             console.error('Error loading JSON:', error);
         }

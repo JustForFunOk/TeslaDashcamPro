@@ -11,13 +11,12 @@
 </head>
 
 <body>
-    <!-- 返回按钮 -->
     <div class="header-title-container">
         <div id="timestamp" class="header-center"></div>
 
-        <div class="header-right">
+        <div id="can-data" class="header-right">
             <div id="speed"></div>
-            <div id="gear" class="vehicle-info-icon">P</div>
+            <div id="gear" class="vehicle-info-icon"></div>
             <div id="driving-mode" class="vehicle-info-icon">
                 <img id="steering-wheel-icon" src="steering_wheel_min.svg" alt="steering wheel icon" class="icon" />
                 <div id="driving-mode-text" class="icon-bottom-text"></div>
@@ -102,7 +101,7 @@
             <div id="current-time" class="bar-time">mm:ss</div>
             <div class="slider-container">
                 <input type="range" id="progress-bar" value="0">
-                <div id="marker" class="marker hidden"></div>
+                <div id="event-marker" class="marker hidden"></div>
             </div>
             <div id="total-duration" class="bar-time">mm:ss</div>
         </div>
@@ -114,7 +113,7 @@
     </div>
 
 
-    <script src="./multi_video_layout_manager.js"></script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
