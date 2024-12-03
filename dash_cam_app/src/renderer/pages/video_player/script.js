@@ -163,7 +163,7 @@ players[0].addEventListener('timeupdate', () => {
     const canDate = getCurrentCanDate(currentFrameTimestamp, decimalPart, deltaT);
 
 
-    if (hasCanData) {
+    if (!hasCanData) {
         return;
     }
 
