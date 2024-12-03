@@ -57,6 +57,11 @@ button {
     /* 反转svg颜色 */
 }
 
+#x-speed-icon {
+    width: 25px;
+    height: 25px;
+}
+
 /* 使用方形按钮 参考app中的按钮 */
 .tool-bar-button {
     position: relative;
