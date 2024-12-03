@@ -318,8 +318,8 @@ app.whenReady().then(() => {
     const isDev = process.env.NODE_ENV === 'development';
 
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 960,
+        height: 810,
         icon: path.join(app.getAppPath(), 'assets/icon/tesla_dashcam_icon.png'),
         resizable: isDev, // 仅开发模式允许窗口缩放
         maximizable: isDev, // 仅开发模式允许最大化

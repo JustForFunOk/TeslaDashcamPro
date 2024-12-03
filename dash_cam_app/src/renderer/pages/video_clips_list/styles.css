@@ -41,7 +41,6 @@ header {
     /* 垂直居中对齐 */
     width: 100%;
     /* 使其占满可用宽度 */
-    margin: 10px;
 }
 
 h1 {
@@ -91,7 +90,7 @@ h1 {
     /* 按钮均匀分布 */
     width: 100%;
     /* 使按钮容器占满宽度 */
-    margin-top: 10px;
+    margin: 10px 0px;
     /* 可选：调整上边距 */
 }
 
@@ -136,11 +135,11 @@ h1 {
     content: '';
     position: absolute;
     top: 0;
-    left: 25.5px;
+    left: 35.5px;
     /* 确保时间线与图标中心对齐 */
     width: 1px;
     height: 100%;
-    background-color: var(--foreground-color);
+    background-color: var(--selected-item-color);
     z-index: -1;
     /* 让时间线显示在背景 */
 }
@@ -160,7 +159,8 @@ h1 {
 
 .date-header.highlight .date-icon {
     color: var(--selected-item-color);
-    font-size: 1.2em;
+    margin-left: 7px;
+    font-size: 1.5em;
     /* Slightly larger icon */
 }
 
@@ -172,6 +172,7 @@ h1 {
 .date-icon {
     font-size: 20px;
     margin-right: 10px;
+    margin-left: 10px;
     position: relative;
     z-index: 1;
     /* 让符号显示在时间线之上 */
@@ -210,11 +211,9 @@ h1 {
 
 .video-entry {
     cursor: pointer;
-    /* Indicate that this is clickable */
+    margin-left: 15px;
     margin-bottom: 10px;
-    /* Space between entries */
     padding: 10px;
-    /* Optional: styling */
     display: flex;
     align-items: center;
     text-decoration: none;

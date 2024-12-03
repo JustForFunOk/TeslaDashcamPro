@@ -9,7 +9,7 @@ const players = [
 const timeDisplay = document.getElementById('timestamp');
 
 const canDataDisplay = document.getElementById('can-data');
-const headContainer = document.querySelector('.header-title-container');
+const topContainer = document.getElementById('top-container');
 const drivingMode = document.getElementById('driving-mode');
 const steeringWheelIcon = document.getElementById('steering-wheel-icon');
 const drivingModeText = document.getElementById('driving-mode-text');
@@ -25,6 +25,7 @@ const lowBeamHeadlight = document.getElementById('low-beam-headlight');
 const highBeamHeadlight = document.getElementById('high-beam-headlight');
 // const fogLight = document.getElementById('fog-light');
 
+const bottomContainer = document.getElementById('bottom-container');
 const backButton = document.getElementById('back-button');
 const play_pause_icon = document.getElementById('play-pause-icon');
 const progressBar = document.getElementById('progress-bar');
@@ -93,7 +94,7 @@ let hasCanData = true;
 if(decodedCanFiles.length == 0) {
     hasCanData = false;
     canDataDisplay.classList.add('hidden');
-    headContainer.style.justifyContent = 'center';
+    topContainer.style.justifyContent = 'center';
 }
 
 // 返回按钮点击事件，跳转回主页面
@@ -792,7 +793,17 @@ function resizeWindow() {
     const videoW = selectedPlayer.videoWidth;
     const videoH = selectedPlayer.videoHeight;
     const extraWidth = 0;  // 若左边显示3D渲染结果则需要设置这个值
-    const extraHeight = 120;  // 这个根据实际情况手动调节，TODO可以自动 
+
+    const topContainerStyle = window.getComputedStyle(topContainer);
+    const topContainerMarginTop = parseFloat(topContainerStyle.marginTop);
+    const topContainerMarginBottom = parseFloat(topContainerStyle.marginBottom);
+
+    const bottomContainerStyle = window.getComputedStyle(bottomContainer);
+    const bottomContainerMarginTop = parseFloat(bottomContainerStyle.marginTop);
+    const bottomContainerMarginBottom = parseFloat(bottomContainerStyle.marginBottom);
+
+    const extraHeight = topContainer.offsetHeight + topContainerMarginTop + topContainerMarginBottom + bottomContainer.offsetHeight + bottomContainerMarginTop + bottomContainerMarginBottom;
+    console.log(extraHeight);
     window.electronAPI.resizeWindow(videoW, videoH, extraWidth, extraHeight);
 }
 

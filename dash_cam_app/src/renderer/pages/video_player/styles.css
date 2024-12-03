@@ -16,18 +16,6 @@ body {
     background-color: var(--background-color);
 }
 
-.header-title-container {
-    display: flex;
-    /* 使用 Flexbox */
-    justify-content: space-between;
-    /* 在两端对齐 */
-    align-items: center;
-    /* 垂直居中对齐 */
-    width: 100%;
-    /* 使其占满可用宽度 */
-    margin: 10px 0px;
-}
-
 .header-right {
     flex: 1;
     justify-content: flex-end;
@@ -156,9 +144,13 @@ button {
 }
 
 #timestamp {
+    height: 40px;
+    line-height: 40px;
+    /* line-height设置与height相同以保证上下居中 */
     background: transparent;
     color: var(--selected-item-color);
     margin: 0px 20px;
+    font-size: 18px;
 }
 
 .vehicle-info-icon {
@@ -313,7 +305,7 @@ button {
     right: 2%;
 }
 
-.bottom-container {
+.top-bottom-container {
     display: flex;
     /* 使用 Flexbox */
     justify-content: space-between;
