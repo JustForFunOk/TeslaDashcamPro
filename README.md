@@ -1,6 +1,7 @@
-# 特斯拉行车记录仪增强版
-
-> 专为特斯拉车主设计的桌面版本行车记录仪回看软件
+<div align="center">
+    <img src="assets/icon/tesla_dashcam_icon.png" alt="app icon" width="100" >
+    <h1>Tesla 行车记录仪增强版</h1>
+</div>
 
 
 ![软件截图]()

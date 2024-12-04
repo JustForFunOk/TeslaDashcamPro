@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>特斯拉行车记录仪增强版</title>
+    <title>TeslaDashcamPro</title>
     <link rel="stylesheet" href="./styles.css">
 </head>
 
@@ -62,10 +62,10 @@
         <div id="overlay-r" class="overlay"></div>
 
         <!-- 视角文本  这里不能作为overlay的子类 因为z层级不一样-->
-        <div id="label-f" class="label">前</div>
-        <div id="label-b" class="label">后</div>
-        <div id="label-l" class="label">左</div>
-        <div id="label-r" class="label">右</div>
+        <div id="label-f" class="label">Front</div>
+        <div id="label-b" class="label">Rear</div>
+        <div id="label-l" class="label">Left</div>
+        <div id="label-r" class="label">Right</div>
 
         <!-- 缩略图视角视频 -->
         <video id="video-f" class="video large" onclick="selectVideo(this)" muted src="">
@@ -105,11 +105,11 @@
             </div>
             <div id="total-duration" class="bar-time">mm:ss</div>
         </div>
-        <div>
+        <!-- <div>
             <button id="delete-button" class="tool-bar-button">
                 <img src="delete_icon_regular.svg" alt="delete video" class="icon" />
             </button>
-        </div>
+        </div> -->
     </div>
 
 

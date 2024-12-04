@@ -194,7 +194,7 @@ window.onload = () => {
     restoreVideoList();
 
     // 恢复页面状态，初始状态显示save页面
-    const activeSection = sessionStorage.getItem('activeSection') || 'saved';
+    const activeSection = sessionStorage.getItem('activeSection') || 'recent';
     showSection(activeSection);
 
     // 恢复折叠状态

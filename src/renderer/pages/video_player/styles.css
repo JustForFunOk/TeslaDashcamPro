@@ -144,10 +144,6 @@ button {
     font-size: 12px;
 }
 
-#back-button {
-    margin-left: 20px;
-}
-
 #timestamp {
     height: 40px;
     line-height: 40px;
@@ -357,8 +353,6 @@ button {
 #progress-bar {
     flex-grow: 1;
     /* 让进度条填满剩余空间 */
-    margin: 0 10px;
-    /* 进度条两侧留点空隙 */
 }
 
 .marker {

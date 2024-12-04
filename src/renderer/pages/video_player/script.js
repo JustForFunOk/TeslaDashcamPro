@@ -347,9 +347,10 @@ function jsDateToFilenameDate(date) {
 
 
 function getWeekdayName(date) {
-    const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     return weekdays[date.getDay()];
 }
+
 
 function formatDate(date) {
     const year = date.getFullYear();
@@ -359,7 +360,7 @@ function formatDate(date) {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const seconds = String(date.getSeconds()).padStart(2, '0');
     const weekDay = getWeekdayName(date);
-    return `${weekDay}  ${year}-${month}-${day}  ${hours}:${minutes}:${seconds}`;
+    return `${weekDay}, ${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
 // 将视频时间转换为can信号时间
@@ -586,7 +587,7 @@ async function loadTwoMinutesCanData(video_ts) {
                 const response = await fetch(file2);
                 const data = await response.json();
                 twoMinutesJsonCanData.push(...data);
-                console.log('JSON data loaded successfully: %s', file2);
+                // console.log('JSON data loaded successfully: %s', file2);
             } catch (error) {
                 console.error('Error loading JSON:', error);
             }
@@ -803,7 +804,7 @@ function resizeWindow() {
     const bottomContainerMarginBottom = parseFloat(bottomContainerStyle.marginBottom);
 
     const extraHeight = topContainer.offsetHeight + topContainerMarginTop + topContainerMarginBottom + bottomContainer.offsetHeight + bottomContainerMarginTop + bottomContainerMarginBottom;
-    console.log(extraHeight);
+
     window.electronAPI.resizeWindow(videoW, videoH, extraWidth, extraHeight);
 }
 
