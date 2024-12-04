@@ -5,6 +5,12 @@ module.exports = {
   packagerConfig: {
     asar: true,
     icon: 'assets/icon/tesla_dashcam_icon',
+    ignore: [
+      /\.vscode/,
+      /README\.md/,
+      /examples/,
+      /docs/,
+    ],
   },
   rebuildConfig: {},
   makers: [
