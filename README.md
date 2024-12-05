@@ -1,10 +1,10 @@
 <div align="center">
-    <img src="assets/icon/tesla_dashcam_icon.png" alt="app icon" width="100" >
+    <img src="docs/icon_src/tesla_dashcam_icon_128x128.png" alt="app icon" width="100">
     <h1>Tesla 行车记录仪增强版</h1>
 </div>
 
 
-![软件截图]()
+![软件截图](./docs/images/player_demo.jpeg)
 
 
 ## 主要特点
