@@ -1,33 +1,32 @@
-const selectFolderButton = document.getElementById('select-folder');
+const selectFolderBtn = document.getElementById('select-folder');
 const sections = {
     "SavedClips": document.getElementById("saved").querySelector(".timeline"),
     "SentryClips": document.getElementById("sentry").querySelector(".timeline"),
     "AllClips": document.getElementById("recent").querySelector(".timeline")
 };
 
-let videoFiles = {};
-let readSuccess = false;
+let videoFilesData = {};
+let isReadSuccess = false;
 
 // 加载已保存的视频列表（如果存在）
 function restoreVideoList() {
-    videoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
+    videoFilesData = JSON.parse(sessionStorage.getItem('videoFiles'));
 
-    if (videoFiles) {
+    if (videoFilesData) {
         loadEntries("SavedClips");
         loadEntries("SentryClips");
         loadEntries("AllClips");
     }
 }
 
-
-selectFolderButton.addEventListener('click', async () => {
+selectFolderBtn.addEventListener('click', async () => {
     // 调用 Electron API 选择文件夹
-    [readSuccess, videoFiles, decodedCanFiles] = await window.electronAPI.selectFolder();
+    [isReadSuccess, videoFilesData, decodedCanFilesData] = await window.electronAPI.selectFolder();
 
-    if (readSuccess) {
+    if (isReadSuccess) {
         // 保存视频列表到sessionStorage本地应用运行期间都可以获取其中的内容
-        sessionStorage.setItem('videoFiles', JSON.stringify(videoFiles));
-        sessionStorage.setItem('decodedCanFiles', JSON.stringify(decodedCanFiles));
+        sessionStorage.setItem('videoFiles', JSON.stringify(videoFilesData));
+        sessionStorage.setItem('decodedCanFiles', JSON.stringify(decodedCanFilesData));
 
         loadEntries("SavedClips");
         loadEntries("SentryClips");
@@ -51,12 +50,12 @@ function formatDuration(seconds) {
 
 function loadEntries(videoType) {
     const pageSection = sections[videoType];
-    const entries = videoFiles[videoType];
+    const entries = videoFilesData[videoType];
 
     pageSection.innerHTML = "";  // clear first
 
-    let currentDate = ""; // To track the current date
-    let entryContent = null; // To hold the entry content div
+    let currentEntryDate = ""; // To track the current date
+    let entryContentDiv = null; // To hold the entry content div
 
     // 倒序展示
     for (let i = entries.length - 1; i >= 0; i--) {
@@ -64,8 +63,8 @@ function loadEntries(videoType) {
         const entryDate = entry.timestamp.split("_")[0]; // Extract date part (e.g., "2024-09-04")
 
         // If the date has changed, create a new date item
-        if (entryDate !== currentDate) {
-            currentDate = entryDate; // Update current date
+        if (entryDate !== currentEntryDate) {
+            currentEntryDate = entryDate; // Update current date
 
             const dateItem = document.createElement("div");
             dateItem.classList.add("date-item");
@@ -82,31 +81,30 @@ function loadEntries(videoType) {
             dateSpan.classList.add("date");
             dateSpan.textContent = entryDate; // 1 这2处一定要用entryDate而不是currentDate，currentDate是引用
 
-
-            entryContent = document.createElement("div");
-            entryContent.id = videoType + entryDate;  // 2 Use “type+时间戳”作为id避免不同section中id的重复
-            entryContent.classList.add("entry-content");
-            entryContent.style.display = 'none'; // Start hidden
+            entryContentDiv = document.createElement("div");
+            entryContentDiv.id = videoType + entryDate;  // 2 Use “type+时间戳”作为id避免不同section中id的重复
+            entryContentDiv.classList.add("entry-content");
+            entryContentDiv.style.display = 'none'; // Start hidden
 
             dateHeader.appendChild(dateIcon);
             dateHeader.appendChild(dateSpan);
             dateItem.appendChild(dateHeader);
-            dateItem.appendChild(entryContent);
+            dateItem.appendChild(entryContentDiv);
             pageSection.appendChild(dateItem);
         }
 
         // Create a clickable link
-        const videoEntry = document.createElement("a");
-        videoEntry.href = `../video_player/index.html?type=${encodeURIComponent(videoType)}&index=${encodeURIComponent(i)}`;
-        videoEntry.classList.add("video-entry");
+        const videoEntryLink = document.createElement("a");
+        videoEntryLink.href = `../video_player/index.html?type=${encodeURIComponent(videoType)}&index=${encodeURIComponent(i)}`;
+        videoEntryLink.classList.add("video-entry");
 
-        const timeDiv = document.createElement("div");
-        timeDiv.classList.add("time");
+        const timeDivElement = document.createElement("div");
+        timeDivElement.classList.add("time");
         const hmsParts = entry.timestamp.split("_")[1].split('-');
-        timeDiv.textContent = `${hmsParts[0]}:${hmsParts[1]}`;  // 只显示时分
+        timeDivElement.textContent = `${hmsParts[0]}:${hmsParts[1]}`;  // 只显示时分
 
-        const videoThumbnail = document.createElement("div");
-        videoThumbnail.classList.add("video-thumbnail");
+        const videoThumbnailDiv = document.createElement("div");
+        videoThumbnailDiv.classList.add("video-thumbnail");
 
         const img = document.createElement("img");
 
@@ -116,17 +114,16 @@ function loadEntries(videoType) {
         } else {
             img.src = entry.thumbPath; // 使用实际的缩略图路径
         }
-        console.log(img.src);
 
-        const durationDiv = document.createElement("div");
-        durationDiv.classList.add("video-duration");
-        durationDiv.textContent = formatDuration(entry.duration);
+        const durationDivElement = document.createElement("div");
+        durationDivElement.classList.add("video-duration");
+        durationDivElement.textContent = formatDuration(entry.duration);
 
-        videoThumbnail.appendChild(img);
-        videoThumbnail.appendChild(durationDiv);
-        videoEntry.appendChild(timeDiv);
-        videoEntry.appendChild(videoThumbnail);
-        entryContent.appendChild(videoEntry); // Add video entry to current entry content
+        videoThumbnailDiv.appendChild(img);
+        videoThumbnailDiv.appendChild(durationDivElement);
+        videoEntryLink.appendChild(timeDivElement);
+        videoEntryLink.appendChild(videoThumbnailDiv);
+        entryContentDiv.appendChild(videoEntryLink); // Add video entry to current entry content
     }
 }
 

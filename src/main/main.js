@@ -8,35 +8,33 @@ const addSavedAndSentryToRecent = false;
 
 async function parseTeslaCamFolder(folderPath) {
     const result = {
-        // 使用字符串以便放到URL中传递给视频播放页面
         "SavedClips": [],
         "SentryClips": [],
         "AllClips": []
     };
 
-    tmp_all_clips = [];
+    let tmpAllClips = [];
 
-    const saved_clips_path = path.join(folderPath, 'SavedClips');
-    if (fs.existsSync(saved_clips_path)) {
-        await processSubClips(saved_clips_path, result["SavedClips"], tmp_all_clips);
+    const savedClipsPath = path.join(folderPath, 'SavedClips');
+    if (fs.existsSync(savedClipsPath)) {
+        await processSubClips(savedClipsPath, result["SavedClips"], tmpAllClips);
     }
 
-    const sentry_clips_path = path.join(folderPath, 'SentryClips');
-    if (fs.existsSync(sentry_clips_path)) {
-        await processSubClips(sentry_clips_path, result["SentryClips"], tmp_all_clips);
+    const sentryClipsPath = path.join(folderPath, 'SentryClips');
+    if (fs.existsSync(sentryClipsPath)) {
+        await processSubClips(sentryClipsPath, result["SentryClips"], tmpAllClips);
     }
 
-    const recent_clips_path = path.join(folderPath, 'RecentClips');
-    if (fs.existsSync(recent_clips_path)) {
-        processSingleFolderClips(recent_clips_path, tmp_all_clips);
+    const recentClipsPath = path.join(folderPath, 'RecentClips');
+    if (fs.existsSync(recentClipsPath)) {
+        processSingleFolderClips(recentClipsPath, tmpAllClips);
     }
 
     // 处理单文件夹下的视频文件 用于选择单一文件夹的场景
-    processSingleFolderClips(folderPath, tmp_all_clips);
-
+    processSingleFolderClips(folderPath, tmpAllClips);
 
     // 处理AllClips来自RecentClips, SavedClips和SentryClips或当前文件夹下的视频文件
-    await processAllClips(tmp_all_clips, result["AllClips"]);
+    await processAllClips(tmpAllClips, result["AllClips"]);
 
     return result;
 }
@@ -48,32 +46,29 @@ function addVideoToDict(dict, position, fullPath) {
     if (position === 'right_repeater') dict.R = fullPath;
 }
 
-async function processSingleFolderClips(dirPath, all_clips) {
-    // 获取RecentClips文件夹下的视频文件
+async function processSingleFolderClips(dirPath, allClips) {
     const files = fs.readdirSync(dirPath);
 
-    files.forEach(clip_name => {
-        const parsed = parseFileName(clip_name);
+    files.forEach(clipName => {
+        const parsed = parseFileName(clipName);
         if (parsed) {
-            // tmp_all_clips全是符合命名规则的mp4文件
-            all_clips.push({
-                file_name: clip_name,
-                full_path: path.join(dirPath, clip_name)
+            allClips.push({
+                file_name: clipName,
+                full_path: path.join(dirPath, clipName)
             });
         }
-    }
-    );
+    });
 }
 
 // dirPath输入的文件路径，为SavedClips或SentryClips文件夹路径
 // result将结果填入对应的数据结构中
 // all_clips用于后续处理所有的视频片段做准备
-async function processSubClips(dirPath, result, all_clips) {
+async function processSubClips(dirPath, result, allClips) {
     const subDirs = fs.readdirSync(dirPath).filter(subDir => fs.statSync(path.join(dirPath, subDir)).isDirectory());
     subDirs.sort();  // 正序，倒序放到渲染端操作
 
     for (const subDir of subDirs) {
-        let dataStructure = {
+        let dataStructureObject = {
             timestamp: subDir,  // 文件夹中的时间戳
             clips: [],  // 视频列表
             jsonPath: "",  // event.json路径
@@ -81,34 +76,31 @@ async function processSubClips(dirPath, result, all_clips) {
             duration: 0  // 暂时还未使用
         };
 
-        let tmp_clips = [];
+        let tmpClips = [];
 
         const subDirPath = path.join(dirPath, subDir);
         const files = fs.readdirSync(subDirPath);
         files.forEach(file => {
             if (file.endsWith('.mp4')) {
-                tmp_clips.push(file);
+                tmpClips.push(file);
             } else if (file === 'event.json') {
-                dataStructure.jsonPath = path.join(subDirPath, file);
+                dataStructureObject.jsonPath = path.join(subDirPath, file);
             } else if (file === 'thumb.png') {
-                dataStructure.thumbPath = path.join(subDirPath, file);
+                dataStructureObject.thumbPath = path.join(subDirPath, file);
             }
-        }
-        );
+        });
 
-        // 处理文件夹中的视频文件
-        tmp_clips.sort();  // 正序，一组中的视频文件是正序的用于播放
-        previous_ts = "";
-        tmp_clips.forEach(clip_name => {
-            const parsed = parseFileName(clip_name);
+        tmpClips.sort();  // 正序，一组中的视频文件是正序的用于播放
+        let previousTimestamp = "";
+        tmpClips.forEach(clipName => {
+            const parsed = parseFileName(clipName);
 
-            // 只处理符合文件名规则的视频文件
             if (parsed) {
                 const { file_ts, position } = parsed;
 
-                if (file_ts != previous_ts) {
+                if (file_ts != previousTimestamp) {
                     // 新的时间戳，添加一组进结果中，因为不能保证一定有4路视频，所以通过文件名中的时间戳分组
-                    dataStructure.clips.push(
+                    dataStructureObject.clips.push(
                         {
                             filename_ts: file_ts,
                             videos: {
@@ -119,45 +111,41 @@ async function processSubClips(dirPath, result, all_clips) {
                             }
                         }
                     );
-                    previous_ts = file_ts;
+                    previousTimestamp = file_ts;
                 }
 
-                const video_file_path = path.join(subDirPath, clip_name);
+                const videoFilePath = path.join(subDirPath, clipName);
 
-                addVideoToDict(dataStructure.clips.at(dataStructure.clips.length - 1).videos, position, video_file_path);
+                addVideoToDict(dataStructureObject.clips.at(dataStructureObject.clips.length - 1).videos, position, videoFilePath);
 
                 if (addSavedAndSentryToRecent) {
                     // 加入到all_clips中避免后续处理全部视频时重复遍历
-                    all_clips.push({
-                        file_name: clip_name,
-                        full_path: video_file_path
+                    allClips.push({
+                        file_name: clipName,
+                        full_path: videoFilePath
                     });
                 }
-
             }
-        }
-        );
+        });
 
-        // 计算duration
-        dataStructure.duration = await getClipsDuration(dataStructure.clips);
+        dataStructureObject.duration = await getClipsDuration(dataStructureObject.clips);
 
-        result.push(dataStructure);
+        result.push(dataStructureObject);
     }
-
 }
 
 // result将结果填入对应的数据结构中
 // all_clips为前面Saved和Sentry中已经获取的视频
-async function processAllClips(all_clips, result) {
-    // 通过文件名来排序
-    all_clips.sort((a, b) => { return a.file_name.localeCompare(b.file_name); });
+async function processAllClips(allClips, result) {
+    allClips.sort((a, b) => { return a.file_name.localeCompare(b.file_name); });
 
     let lastTimestamp = null;
-    let previous_ts = "";
+    let previousTimestamp = "";
+
     // 将4路视频组在一起，小组，同时按照时间间隔分大组
     const maxIntervalMinutes = 3;
 
-    all_clips.forEach(clip => {
+    allClips.forEach(clip => {
         const parsed = parseFileName(clip.file_name);
 
         if (parsed) {
@@ -177,7 +165,7 @@ async function processAllClips(all_clips, result) {
                 );
             }
 
-            if (file_ts != previous_ts) {
+            if (file_ts != previousTimestamp) {
                 // 创建小组
                 result.at(result.length - 1).clips.push(
                     {
@@ -190,27 +178,22 @@ async function processAllClips(all_clips, result) {
                         }
                     }
                 );
-                previous_ts = file_ts;
+                previousTimestamp = file_ts;
             }
 
-            let small_group = result.at(result.length - 1).clips;
+            let smallGroup = result.at(result.length - 1).clips;
 
-            addVideoToDict(small_group.at(small_group.length - 1).videos, position, clip.full_path);
+            addVideoToDict(smallGroup.at(smallGroup.length - 1).videos, position, clip.full_path);
 
             lastTimestamp = currentTimestamp;
         }
-    }
-    );
+    });
 
-    // 最后计算每个group的时长
-    // 计算duration
-    for (let clip_group of result) {
-        clip_group.duration = await getClipsDuration(clip_group.clips);
+    for (let clipGroup of result) {
+        clipGroup.duration = await getClipsDuration(clipGroup.clips);
     }
 }
 
-
-// 帮助函数：解析文件名，返回时间戳和视频位置
 function parseFileName(fileName) {
     const regex = /^(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})-(front|back|left_repeater|right_repeater)\.mp4$/;
     const match = fileName.match(regex);
@@ -252,7 +235,6 @@ async function getClipsDuration(sorted_clips) {
 
         // 相减
         duration_s = (lastTimestamp - firstTimestamp) / 1000;
-        // console.log("clip minus: %f", duration_s);
     }
 
     // 调用接口太费时了，所以假设最后一个视频长度是60s 等到实际播放的时候再更新duration

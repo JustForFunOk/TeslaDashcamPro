@@ -27,13 +27,13 @@ const highBeamHeadlight = document.getElementById('high-beam-headlight');
 
 const bottomContainer = document.getElementById('bottom-container');
 const backButton = document.getElementById('back-button');
-const play_pause_icon = document.getElementById('play-pause-icon');
+const playPauseIcon = document.getElementById('play-pause-icon');
 const progressBar = document.getElementById('progress-bar');
 const eventMarker = document.getElementById('event-marker');
 const currentTime = document.getElementById('current-time');
 const totalDuration = document.getElementById('total-duration');
-const xSpeedText = document.getElementById('x-speed-text');
-const xSpeedButton = document.getElementById('x-speed-btn');
+const xSpeedTextElement = document.getElementById('x-speed-text');
+const xSpeedButtonElement = document.getElementById('x-speed-btn');
 
 
 // 加载数据
@@ -57,11 +57,11 @@ let currentIndex = 0;
 let totalClipsNumber = 0;
 
 // 这个变量不会有data race的情况，标准的浏览器环境中的 JavaScript 是单线程的
-let loaded_videos_channel_cnt = 0;  // 已经准备好播放的路数
-let ended_videos_channel_cnt = 0;  // 当前视频源已播放完毕的路数
+let loadedVideosChannelCount = 0;  // 已经准备好播放的路数
+let endedVideosChannelCount = 0;  // 当前视频源已播放完毕的路数
 
-let valid_video_channels = [];
-let valid_videos_channel_cnt = 0; // 有数据的路数 最多是4路
+let validVideoChannels = [];
+let validVideosChannelCount = 0; // 有数据的路数 最多是4路
 
 // 4路都加载完毕自动播放
 let is_playing = true;
@@ -75,8 +75,8 @@ let clipsDuration = 0;
 // 每段视频开始的时间戳 用于视频切换
 let clipsGroupStartTimestamp = [];
 
-let hasResizeWindow = false;
-let hasGetLastClipDuration = false;
+let hasResizedWindow = false;
+let hasGotLastClipDuration = false;
 
 let currentPlaybackRate = 1;
 const maxPlaybackRate = 8;
@@ -85,9 +85,9 @@ const maxPlaybackRate = 8;
 // CAN时间与视频时间的差值，若CAN时间比视频时间提前这个值为正，否则为负
 const deltaT = 0.0;
 
-let twoMinutesJsonCanData = [];
+let twoMinutesJsonCanDataArray = [];
 
-let eventJsonData = {};
+let eventJsonDataObject = {};
 
 let hasCanData = true;
 
@@ -108,19 +108,17 @@ progressBar.addEventListener('input', async () => {
     if(progressBar.value == progressBar.max) {
         currentIndex = totalClipsNumber;
 
-        // 播放到进度条结束
-        play_pause_icon.src = "play.svg";
+        playPauseIcon.src = "play.svg";
         is_playing = false;
         setPlaybackRate(1);
 
-        // 当前时间也修改为最大
         currentTime.innerHTML = formatDuration(progressBar.max);
     }
 });
 
 
 players[0].addEventListener('timeupdate', () => {
-    if(!hasGetLastClipDuration) {
+    if(!hasGotLastClipDuration) {
         return;
     }
 
@@ -168,9 +166,9 @@ players[0].addEventListener('timeupdate', () => {
     }
 
     // 转换为can数据的时间戳，二分查找对应can数据
-    const dataIndex = binarySearchLoadedCanData(twoMinutesJsonCanData, canDate);
+    const dataIndex = binarySearchLoadedCanData(twoMinutesJsonCanDataArray, canDate);
 
-    const canData = twoMinutesJsonCanData[dataIndex];
+    const canData = twoMinutesJsonCanDataArray[dataIndex];
 
     if (canData) {
         if (typeof canData.v === "number" && canData.v >= 0) {
@@ -268,22 +266,22 @@ players[0].addEventListener('timeupdate', () => {
 players.forEach(player => {
     // 4个视频都加载第一帧完毕后再同步播放
     player.addEventListener('loadeddata', async () => {
-        loaded_videos_channel_cnt++;
+        loadedVideosChannelCount++;
 
-        if (loaded_videos_channel_cnt === valid_videos_channel_cnt) {
+        if (loadedVideosChannelCount === validVideosChannelCount) {
             // 初次加载时会根据视频分辨率缩放窗口
-            if (!hasResizeWindow) {
+            if (!hasResizedWindow) {
                 resizeWindow();
-                hasResizeWindow = true;
+                hasResizedWindow = true;
             }
 
             // 默认最后一段视频长度是1min，但很多情况下并不是，等到播放到最后哦一段时更新总时长
-            if (!hasGetLastClipDuration && currentIndex == totalClipsNumber - 1) {
+            if (!hasGotLastClipDuration && currentIndex == totalClipsNumber - 1) {
                 clipsDuration = savedVideoFiles[type].at(index).duration - 60 + Math.round(selectedPlayer.duration);
 
                 setVideoDuration();
 
-                hasGetLastClipDuration = true;
+                hasGotLastClipDuration = true;
 
                 currentIndex = 0;  // 默认从头播放
                 await setVideosSrc(currentIndex);
@@ -307,8 +305,8 @@ players.forEach(player => {
     // 播放完视频自动播放下一个
     // 当当前视频播放结束时，加载并播放下一个视频
     player.addEventListener('ended', async () => {
-        ended_videos_channel_cnt++;
-        if (ended_videos_channel_cnt === valid_videos_channel_cnt) {
+        endedVideosChannelCount++;
+        if (endedVideosChannelCount === validVideosChannelCount) {
             // 4路视频都播放完毕
             currentIndex++;
 
@@ -316,7 +314,7 @@ players.forEach(player => {
                 await setVideosSrc(currentIndex);
             } else {
                 // 播放到进度条结束
-                play_pause_icon.src = "play.svg";
+                playPauseIcon.src = "play.svg";
                 is_playing = false;
                 setPlaybackRate(1);
 
@@ -435,9 +433,9 @@ function binarySearchLoadedCanData(canJsonList, targetDateStr) {
 
 // 对于savedClips和sentryClips,根据读取的event.json文件，在进度条上设置触发的时间点标识
 function setEventTriggerTimestampMarker() {
-    if('timestamp' in eventJsonData) {
+    if('timestamp' in eventJsonDataObject) {
         // 日期格式如：2024-09-04T12:04:41 符合 ISO 8601 格式，JavaScript 原生支持该格式的解析
-        eventTriggerTimestamp = new Date(eventJsonData['timestamp']);
+        eventTriggerTimestamp = new Date(eventJsonDataObject['timestamp']);
 
         // 触发时间距离开头时间的时长
         if(clipsGroupStartTimestamp.length > 0 && clipsDuration > 0) {
@@ -509,12 +507,12 @@ function setPlaybackRate(rate) {
     players.forEach(player => {
         player.playbackRate = currentPlaybackRate;
     });
-    xSpeedText.innerHTML = currentPlaybackRate + "x";
+    xSpeedTextElement.innerHTML = currentPlaybackRate + "x";
 
     if (currentPlaybackRate == 1) {
-        xSpeedButton.classList.remove('selected');
+        xSpeedButtonElement.classList.remove('selected');
     } else {
-        xSpeedButton.classList.add('selected');
+        xSpeedButtonElement.classList.add('selected');
     }
 }
 
@@ -552,7 +550,7 @@ function binarySearchCanJsonFile(canJsonList, targetDateStr) {
 
 // 根据视频的时间戳来查找并加载对应的json文件
 async function loadTwoMinutesCanData(video_ts) {
-    twoMinutesJsonCanData.length = 0;
+    twoMinutesJsonCanDataArray.length = 0;
 
     // 加上时间偏置，获取真实的对应到can到时间
     const targetCanDate = filenameDateToJsDate(video_ts);
@@ -570,7 +568,7 @@ async function loadTwoMinutesCanData(video_ts) {
             const file1 = decodedCanFiles[fileIndex].filePath;
             const response = await fetch(file1);
             const data = await response.json();
-            twoMinutesJsonCanData = data;
+            twoMinutesJsonCanDataArray = data;
             // console.log('JSON data loaded successfully: %s', file1);
         } catch (error) {
             console.error('Error loading JSON:', error);
@@ -586,7 +584,7 @@ async function loadTwoMinutesCanData(video_ts) {
                 const file2 = decodedCanFiles[fileIndex + 1].filePath;
                 const response = await fetch(file2);
                 const data = await response.json();
-                twoMinutesJsonCanData.push(...data);
+                twoMinutesJsonCanDataArray.push(...data);
                 // console.log('JSON data loaded successfully: %s', file2);
             } catch (error) {
                 console.error('Error loading JSON:', error);
@@ -614,14 +612,14 @@ async function setVideosSrc(clipsIndex) {
         // 加载can文件，通过视频时间戳查找对应can文件并加载
 
         // video_ts格式如：2024-10-03_16-35-13
-        if(hasGetLastClipDuration) {
+        if(hasGotLastClipDuration) {
             await loadTwoMinutesCanData(video_ts);
         }
 
         const videos = savedVideoFiles[type].at(index).clips.at(clipsIndex).videos;
 
-        valid_videos_channel_cnt = 0;
-        valid_video_channels = [];
+        validVideosChannelCount = 0;
+        validVideoChannels = [];
 
         if (videos.F === '') {
             players[0].removeAttribute("src");
@@ -631,8 +629,8 @@ async function setVideosSrc(clipsIndex) {
             players[0].src = videos.F;
             players[0].removeAttribute("poster");
             players[0].classList.remove("not-allowed-click");
-            valid_video_channels.push("F");
-            valid_videos_channel_cnt++;
+            validVideoChannels.push("F");
+            validVideosChannelCount++;
         }
         players[0].load();
 
@@ -644,8 +642,8 @@ async function setVideosSrc(clipsIndex) {
             players[1].src = videos.B;
             players[1].removeAttribute("poster");
             players[1].classList.remove("not-allowed-click");
-            valid_video_channels.push("B");
-            valid_videos_channel_cnt++;
+            validVideoChannels.push("B");
+            validVideosChannelCount++;
         }
         players[1].load();
 
@@ -657,8 +655,8 @@ async function setVideosSrc(clipsIndex) {
             players[2].src = videos.L;
             players[2].removeAttribute("poster");
             players[2].classList.remove("not-allowed-click");
-            valid_video_channels.push("L");
-            valid_videos_channel_cnt++;
+            validVideoChannels.push("L");
+            validVideosChannelCount++;
         }
         players[2].load();
 
@@ -670,13 +668,13 @@ async function setVideosSrc(clipsIndex) {
             players[3].src = videos.R;
             players[3].removeAttribute("poster");
             players[3].classList.remove("not-allowed-click");
-            valid_video_channels.push("R");
-            valid_videos_channel_cnt++;
+            validVideoChannels.push("R");
+            validVideosChannelCount++;
         }
         players[3].load();
 
-        loaded_videos_channel_cnt = 0;  // 清零等待加载完毕
-        ended_videos_channel_cnt = 0;
+        loadedVideosChannelCount = 0;  // 清零等待加载完毕
+        endedVideosChannelCount = 0;
     }
     // 接下来会触发loadeddata事件
 }
@@ -688,7 +686,7 @@ function playAllVideos() {
             player.play();
         }
     });
-    play_pause_icon.src = "pause_min.svg";
+    playPauseIcon.src = "pause_min.svg";
     is_playing = true;
 }
 
@@ -702,7 +700,7 @@ function pauseAllVideos() {
         }
     });
 
-    play_pause_icon.src = "play.svg";
+    playPauseIcon.src = "play.svg";
     is_playing = false;
 }
 
@@ -828,7 +826,7 @@ function resizeWindow() {
                 // 针对Sentry和Saved加载json文件
                 eventJsonFilePath = savedVideoFiles[type].at(index).jsonPath;
                 if(eventJsonFilePath !== "") {
-                    eventJsonData = await loadEventJsonFile(eventJsonFilePath);
+                    eventJsonDataObject = await loadEventJsonFile(eventJsonFilePath);
                 }
 
                 if (totalClipsNumber > 0) {
