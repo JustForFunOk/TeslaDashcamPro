@@ -116,6 +116,10 @@ progressBar.addEventListener('input', async () => {
     }
 });
 
+// 解决第一次resize之后progress bar长度不能正确更新的问题
+window.addEventListener('resize', () => {
+    setEventTriggerTimestampMarker();});
+
 
 players[0].addEventListener('timeupdate', () => {
     if(!hasGotLastClipDuration) {
