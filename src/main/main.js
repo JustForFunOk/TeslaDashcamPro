@@ -2,6 +2,11 @@ const { app, BrowserWindow, Menu, dialog, ipcMain, screen } = require('electron'
 const path = require('path');
 const fs = require('fs');
 
+// 跳过windows中使用squirrel打包的exe启动动画
+if (require('electron-squirrel-startup')) {
+	app.quit();
+}
+
 // 将saved 和 sentry 文件夹下的也加入到recent中，目的是组成连贯的视频。
 // 但是会导致recent中视频段变得很多，先关掉这个功能
 const addSavedAndSentryToRecent = false;
