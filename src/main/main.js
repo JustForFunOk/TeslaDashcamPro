@@ -4,7 +4,7 @@ const fs = require('fs');
 
 // 跳过windows中使用squirrel打包的exe启动动画
 if (require('electron-squirrel-startup')) {
-	app.quit();
+    app.quit();
 }
 
 // 将saved 和 sentry 文件夹下的也加入到recent中，目的是组成连贯的视频。
@@ -386,3 +386,13 @@ ipcMain.handle('resize-window', (event, videoWidth, videoHeight, extraWidth, ext
 
     mainWindow.setContentSize(finalWindowWidth, finalWindowHeight);
 })
+
+ipcMain.handle('delete-file', async (event, filePath) => {
+    try {
+        fs.unlinkSync(filePath); // Synchronously delete the file
+        return true; // Indicate success
+    } catch (error) {
+        console.error("Error deleting file:", error);
+        return false; // Indicate failure
+    }
+});

@@ -269,6 +269,21 @@
             display: block;
             margin: 0 auto;
         }
+
+        .delete-btn {
+            margin-left: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .delete-btn:hover {
+            background-color: darkred;
+        }
     </style>
 </head>
 
@@ -409,12 +424,12 @@
                 timeDivElement.classList.add("time");
                 const hmsParts = entry.timestamp.split("_")[1].split('-');
                 timeDivElement.textContent = `${hmsParts[0]}:${hmsParts[1]}`;  // 只显示时分
+                videoEntryLink.appendChild(timeDivElement);
 
                 const videoThumbnailDiv = document.createElement("div");
                 videoThumbnailDiv.classList.add("video-thumbnail");
 
                 const img = document.createElement("img");
-
                 img.alt = "Video Thumbnail";
                 if (!entry.thumbPath || entry.thumbPath.trim() === '') {
                     img.src = "default_thumbnail.svg";  // 设置默认缩略图
@@ -428,8 +443,18 @@
 
                 videoThumbnailDiv.appendChild(img);
                 videoThumbnailDiv.appendChild(durationDivElement);
-                videoEntryLink.appendChild(timeDivElement);
                 videoEntryLink.appendChild(videoThumbnailDiv);
+
+                // Create a delete button
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.classList.add("delete-btn");
+                deleteButton.onclick = (event) => {
+                    event.preventDefault(); // Prevent link navigation
+                    deleteVideoEntry(videoType, entry, i); // Call the delete function
+                };
+                videoEntryLink.appendChild(deleteButton);
+
                 entryContentDiv.appendChild(videoEntryLink); // Add video entry to current entry content
             }
         }
@@ -491,6 +516,40 @@
             }
         }
 
+        async function deleteVideoEntry(videoType, entry, index) {
+            // Confirm deletion
+            const confirmDelete = confirm("Confirm delete? \nCannot be undone.");
+            if (!confirmDelete) return;
+
+            // Collect all video file paths from entry.clips
+            const filePaths = [];
+            entry.clips.forEach(clip => {
+                if (clip.videos) {
+                    // Assuming clip.videos contains the keys 'B', 'F', 'L', 'R'
+                    if (clip.videos.B) filePaths.push(clip.videos.B);
+                    if (clip.videos.F) filePaths.push(clip.videos.F);
+                    if (clip.videos.L) filePaths.push(clip.videos.L);
+                    if (clip.videos.R) filePaths.push(clip.videos.R);
+                }
+            });
+
+            // Call Electron API to delete each video file
+            const deleteResults = await Promise.all(filePaths.map(filePath => window.electronAPI.deleteFile(filePath)));
+
+            // If all deletions succeeded, update the data
+            if (deleteResults.every(result => result)) {
+                // Remove entry from videoFilesData
+                videoFilesData[videoType].splice(index, 1);
+
+                // Update sessionStorage
+                sessionStorage.setItem('videoFiles', JSON.stringify(videoFilesData));
+
+                // Refresh the UI
+                loadEntries(videoType);
+            } else {
+                alert("Failed to delete one or more videos. Please try again.");
+            }
+        }
 
 
         window.onload = () => {
