@@ -550,33 +550,59 @@
             const confirmDelete = confirm("Confirm delete? \nCannot be undone.");
             if (!confirmDelete) return;
 
-            // Collect all video file paths from entry.clips
-            const filePaths = [];
-            entry.clips.forEach(clip => {
-                if (clip.videos) {
-                    // Assuming clip.videos contains the keys 'B', 'F', 'L', 'R'
-                    if (clip.videos.B) filePaths.push(clip.videos.B);
-                    if (clip.videos.F) filePaths.push(clip.videos.F);
-                    if (clip.videos.L) filePaths.push(clip.videos.L);
-                    if (clip.videos.R) filePaths.push(clip.videos.R);
+            if (videoType === "AllClips") {
+                // Collect all video file paths from entry.clips
+                const filePaths = [];
+                entry.clips.forEach(clip => {
+                    if (clip.videos) {
+                        // Assuming clip.videos contains the keys 'B', 'F', 'L', 'R'
+                        if (clip.videos.B) filePaths.push(clip.videos.B);
+                        if (clip.videos.F) filePaths.push(clip.videos.F);
+                        if (clip.videos.L) filePaths.push(clip.videos.L);
+                        if (clip.videos.R) filePaths.push(clip.videos.R);
+                    }
+                });
+
+                // Call Electron API to delete each video file
+                const deleteResults = await Promise.all(filePaths.map(filePath => window.electronAPI.deleteFile(filePath)));
+
+                // If all deletions succeeded, update the data
+                if (deleteResults.every(result => result)) {
+                    // Remove entry from videoFilesData
+                    videoFilesData[videoType].splice(index, 1);
+
+                    // Update sessionStorage
+                    sessionStorage.setItem('videoFiles', JSON.stringify(videoFilesData));
+
+                    // Refresh the UI
+                    loadEntries(videoType);
+                } else {
+                    alert("Failed to delete one or more videos. Please try again.");
                 }
-            });
+            } else if (videoType === "SavedClips" || videoType === "SentryClips") {
+                let filePath = null;
 
-            // Call Electron API to delete each video file
-            const deleteResults = await Promise.all(filePaths.map(filePath => window.electronAPI.deleteFile(filePath)));
+                if (entry.jsonPath) {
+                    filePath = entry.jsonPath;
+                } else if (entry.thumbPath) {
+                    filePath = entry.thumbPath;
+                }
 
-            // If all deletions succeeded, update the data
-            if (deleteResults.every(result => result)) {
-                // Remove entry from videoFilesData
-                videoFilesData[videoType].splice(index, 1);
+                if (!filePath) {
+                    alert("Failed to determine the folder path. Deletion aborted.");
+                    return;
+                }
 
-                // Update sessionStorage
-                sessionStorage.setItem('videoFiles', JSON.stringify(videoFilesData));
+                // Call Electron API to delete the folder
+                const deleteResult = await window.electronAPI.deleteParentFolder(filePath);
 
-                // Refresh the UI
-                loadEntries(videoType);
-            } else {
-                alert("Failed to delete one or more videos. Please try again.");
+                if (deleteResult) {
+                    videoFilesData[videoType].splice(index, 1);
+                    sessionStorage.setItem("videoFiles", JSON.stringify(videoFilesData));
+                    loadEntries(videoType); // Refresh the UI
+                } else {
+                    alert("Failed to delete the folder. Please try again.");
+                }
             }
         }
 

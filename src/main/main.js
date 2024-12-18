@@ -390,9 +390,44 @@ ipcMain.handle('resize-window', (event, videoWidth, videoHeight, extraWidth, ext
 ipcMain.handle('delete-file', async (event, filePath) => {
     try {
         fs.unlinkSync(filePath); // Synchronously delete the file
-        return true; // Indicate success
+        return true;
     } catch (error) {
         console.error("Error deleting file:", error);
-        return false; // Indicate failure
+        return false;
+    }
+});
+
+// Function to recursively delete a folder and its contents
+function deleteFolderRecursive(folderPath) {
+    if (fs.existsSync(folderPath)) {
+        fs.readdirSync(folderPath).forEach(file => {
+            const currentPath = path.join(folderPath, file);
+
+            if (fs.lstatSync(currentPath).isDirectory()) {
+                // Recursively delete subfolders
+                deleteFolderRecursive(currentPath);
+            } else {
+                // Delete file
+                fs.unlinkSync(currentPath);
+                // console.log("delete file: %s", currentPath);
+            }
+        });
+        // Delete the folder itself
+        fs.rmdirSync(folderPath);
+        // console.log("delete folder: %s", folderPath);
+    }
+}
+
+// Handle folder deletion requests
+ipcMain.handle("delete-parent-folder", async (event, filePath) => {
+    // get parent folder path
+    const folderPath = path.dirname(filePath);
+
+    try {
+        deleteFolderRecursive(folderPath);
+        return true;
+    } catch (error) {
+        console.error("Error deleting folder:", error);
+        return false;
     }
 });
