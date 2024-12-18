@@ -223,6 +223,7 @@
             margin-bottom: 10px;
             padding: 10px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
             text-decoration: none;
             /* 移除下划线 */
@@ -231,6 +232,11 @@
         .video-entry:hover {
             background-color: #f0f0f0;
             /* Optional: hover effect */
+        }
+
+        .left-container {
+            display: flex;
+            align-items: center;
         }
 
         .time {
@@ -270,19 +276,34 @@
             margin: 0 auto;
         }
 
-        .delete-btn {
-            margin-left: 10px;
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 14px;
+        .right-container {
+            display: flex;
+            align-items: center;
         }
 
-        .delete-btn:hover {
-            background-color: darkred;
+        .tool-bar-button {
+            position: relative;
+            /* 成为其子元素定位的参考框 */
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 10%;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        .delete-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        .delete-icon:hover {
+            /* 删除图标设置为红色 */
+            filter: brightness(0) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(353deg) brightness(96%) contrast(111%)
         }
     </style>
 </head>
@@ -420,11 +441,15 @@
                 videoEntryLink.href = `../video_player/index.html?type=${encodeURIComponent(videoType)}&index=${encodeURIComponent(i)}`;
                 videoEntryLink.classList.add("video-entry");
 
+                // Include time, thumbnail, duration in left
+                const leftVideoInfoContainer = document.createElement("div");
+                leftVideoInfoContainer.classList.add("left-container");
+
                 const timeDivElement = document.createElement("div");
                 timeDivElement.classList.add("time");
                 const hmsParts = entry.timestamp.split("_")[1].split('-');
                 timeDivElement.textContent = `${hmsParts[0]}:${hmsParts[1]}`;  // 只显示时分
-                videoEntryLink.appendChild(timeDivElement);
+                leftVideoInfoContainer.appendChild(timeDivElement);
 
                 const videoThumbnailDiv = document.createElement("div");
                 videoThumbnailDiv.classList.add("video-thumbnail");
@@ -443,18 +468,22 @@
 
                 videoThumbnailDiv.appendChild(img);
                 videoThumbnailDiv.appendChild(durationDivElement);
-                videoEntryLink.appendChild(videoThumbnailDiv);
+                leftVideoInfoContainer.appendChild(videoThumbnailDiv);
 
-                // Create a delete button
+                const rightVideoActionContainer = document.createElement("div");
+                rightVideoActionContainer.classList.add("right-container");
+
                 const deleteButton = document.createElement("button");
-                deleteButton.textContent = "Delete";
-                deleteButton.classList.add("delete-btn");
+                deleteButton.innerHTML = '<img src="./delete_icon.svg" alt="Delete" class="delete-icon">';
+                deleteButton.classList.add("tool-bar-button");
                 deleteButton.onclick = (event) => {
                     event.preventDefault(); // Prevent link navigation
                     deleteVideoEntry(videoType, entry, i); // Call the delete function
                 };
-                videoEntryLink.appendChild(deleteButton);
+                rightVideoActionContainer.appendChild(deleteButton);
 
+                videoEntryLink.appendChild(leftVideoInfoContainer);
+                videoEntryLink.appendChild(rightVideoActionContainer);
                 entryContentDiv.appendChild(videoEntryLink); // Add video entry to current entry content
             }
         }
