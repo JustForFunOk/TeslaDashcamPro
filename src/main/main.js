@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, dialog, ipcMain, screen } = require('electron');
+const { app, BrowserWindow, Menu, dialog, ipcMain, screen, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -430,4 +430,9 @@ ipcMain.handle("delete-parent-folder", async (event, filePath) => {
         console.error("Error deleting folder:", error);
         return false;
     }
+});
+
+
+ipcMain.handle('open-folder', (event, filePath) => {
+    shell.showItemInFolder(filePath);
 });

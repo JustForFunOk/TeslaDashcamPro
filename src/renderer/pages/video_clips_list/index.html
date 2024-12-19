@@ -230,8 +230,7 @@
         }
 
         .video-entry:hover {
-            background-color: #f0f0f0;
-            /* Optional: hover effect */
+            background-color: var(--selected-item-color);
         }
 
         .left-container {
@@ -269,13 +268,6 @@
             font-size: 12px;
         }
 
-        .car-image img {
-            width: 100%;
-            max-width: 200px;
-            display: block;
-            margin: 0 auto;
-        }
-
         .right-container {
             display: flex;
             align-items: center;
@@ -304,6 +296,16 @@
         .delete-icon:hover {
             /* 删除图标设置为红色 */
             filter: brightness(0) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(353deg) brightness(96%) contrast(111%)
+        }
+
+        .open-folder-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        .open-folder-icon:hover {
+            /* 设置为深灰色 */
+            filter: brightness(0.5) contrast(1.1);
         }
     </style>
 </head>
@@ -473,12 +475,21 @@
                 const rightVideoActionContainer = document.createElement("div");
                 rightVideoActionContainer.classList.add("right-container");
 
+                const openFolderButton = document.createElement("button");
+                openFolderButton.innerHTML = '<img src="./folder.svg" alt="Open Folder" class="open-folder-icon">';
+                openFolderButton.classList.add("tool-bar-button");
+                openFolderButton.onclick = (event) => {
+                    event.preventDefault(); // Prevent link navigation
+                    openVideoFolder(entry);
+                };
+                rightVideoActionContainer.appendChild(openFolderButton);
+
                 const deleteButton = document.createElement("button");
                 deleteButton.innerHTML = '<img src="./delete_icon.svg" alt="Delete" class="delete-icon">';
                 deleteButton.classList.add("tool-bar-button");
                 deleteButton.onclick = (event) => {
                     event.preventDefault(); // Prevent link navigation
-                    deleteVideoEntry(videoType, entry, i); // Call the delete function
+                    deleteVideoEntry(videoType, entry, i);
                 };
                 rightVideoActionContainer.appendChild(deleteButton);
 
@@ -542,6 +553,34 @@
                 content.style.display = 'block';
                 icon.textContent = '►'; // Expanded state
                 header.classList.add('highlight'); // Add highlight to the header
+            }
+        }
+
+        async function openVideoFolder(entry) {
+            try {
+                let videoPath = null;
+
+                if (entry.clips.length > 0) {
+                    if (entry.clips[0].videos.B) {
+                        videoPath = entry.clips[0].videos.B;
+                    } else if (entry.clips[0].videos.F) {
+                        videoPath = entry.clips[0].videos.F;
+                    } else if (entry.clips[0].videos.L) {
+                        videoPath = entry.clips[0].videos.L;
+                    } else if (entry.clips[0].videos.R) {
+                        videoPath = entry.clips[0].videos.R;
+                    }
+                }
+
+                if (videoPath) {
+                    await window.electronAPI.openFolder(videoPath);
+                } else {
+                    console.error("Video path is not defined.");
+                    alert("Unable to open folder: Path not found.");
+                }
+            } catch (error) {
+                console.error("Failed to open folder:", error);
+                alert("Unable to open folder.");
             }
         }
 
