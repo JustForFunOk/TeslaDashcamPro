@@ -148,11 +148,17 @@ jobs:
           name: linux-deb-package
           path: dist/linux
 
+      - name: Check download result
+        run: ls -R dist
+
       - name: Download Linux .rpm Artifact
         uses: actions/download-artifact@v4
         with:
           name: linux-rpm-package
           path: dist/linux
+
+      - name: Check download result
+        run: ls -R dist
 
       - name: Download Windows Artifact
         uses: actions/download-artifact@v4
@@ -160,11 +166,17 @@ jobs:
           name: windows-package
           path: dist/windows
 
+      - name: Check download result
+        run: ls -R dist
+
       - name: Download macOS Artifact
         uses: actions/download-artifact@v4
         with:
           name: macos-package
           path: dist/macos
+
+      - name: Check download result
+        run: ls -R dist
 
       - name: Create Release
         id: create_release
@@ -177,11 +189,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Find .deb File
+        id: find_deb
+        run: |
+          # 查找 .deb 文件
+          DEB_FILE=$(find dist/linux -type f -name "*.deb" | head -n 1)
+          if [ -z "$DEB_FILE" ]; then
+            echo "No .deb file found!"
+            exit 1
+          fi
+          echo "DEB_FILE=$DEB_FILE" >> $GITHUB_ENV
+
       - name: Upload Linux .deb Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/linux/*.deb
+          asset_path: ${{ env.DEB_FILE }}
           asset_name: linux-package.deb
           asset_content_type: application/vnd.debian.binary-package
 
