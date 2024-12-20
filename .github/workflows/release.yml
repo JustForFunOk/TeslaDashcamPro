@@ -235,7 +235,7 @@ jobs:
         id: find_exe
         run: |
           # 查找 .exe 文件
-          EXE_FILE=$(find dist/linux -type f -name "*.exe" | head -n 1)
+          EXE_FILE=$(find dist/windows -type f -name "*.exe" | head -n 1)
           if [ -z "$EXE_FILE" ]; then
             echo "No .exe file found!"
             exit 1
@@ -254,7 +254,7 @@ jobs:
         id: find_app
         run: |
           # 查找 .zip 文件
-          MACOS_FILE=$(find dist/linux -type f -name "*.zip" | head -n 1)
+          MACOS_FILE=$(find dist/macos -type f -name "*.zip" | head -n 1)
           if [ -z "$MACOS_FILE" ]; then
             echo "No .zip file found!"
             exit 1
