@@ -27,6 +27,9 @@ jobs:
       - name: Build Linux Package
         run: npm run make
 
+      - name: Debug Output Directory
+        run: ls -R out/make
+
       - name: Upload .deb Package
         uses: actions/upload-artifact@v4
         with:
@@ -59,6 +62,9 @@ jobs:
       - name: Build Windows Package
         run: npm run make
 
+      - name: Debug Output Directory
+        run: ls -R out/make
+
       - name: Upload .exe Package
         uses: actions/upload-artifact@v4
         with:
@@ -84,6 +90,9 @@ jobs:
 
       - name: Build macOS Package
         run: npm run make
+
+      - name: Debug Output Directory
+        run: ls -R out/make
 
       - name: Upload .zip Package
         uses: actions/upload-artifact@v4
