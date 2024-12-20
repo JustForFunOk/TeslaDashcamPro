@@ -27,11 +27,30 @@ jobs:
       - name: Build Linux Package
         run: npm run make
 
-      - name: Upload Artifacts
+      - name: Find .deb and .rpm files
+        id: find_packages
+        run: |
+          # 查找 .deb 和 .rpm 文件路径
+          DEB_FILE=$(find out/make -type f -name "*.deb" | head -n 1)
+          RPM_FILE=$(find out/make -type f -name "*.rpm" | head -n 1)
+
+          # 输出路径供后续步骤使用
+          echo "DEB_FILE=$DEB_FILE" >> $GITHUB_ENV
+          echo "RPM_FILE=$RPM_FILE" >> $GITHUB_ENV
+
+      - name: Upload .deb Package
         uses: actions/upload-artifact@v4
+        if: ${{ env.DEB_FILE }}
         with:
-          name: linux-build
-          path: out/make # 打包输出路径
+          name: linux-deb-package
+          path: ${{ env.DEB_FILE }}
+
+      - name: Upload .rpm Package
+        uses: actions/upload-artifact@v4
+        if: ${{ env.RPM_FILE }}
+        with:
+          name: linux-rpm-package
+          path: ${{ env.RPM_FILE }}
 
   # 针对 Windows 构建
   build-windows:
@@ -53,11 +72,22 @@ jobs:
       - name: Build Windows Package
         run: npm run make
 
-      - name: Upload Artifacts
+      - name: Find exe files
+        id: find_packages
+        run: |
+          # 查找 .exe 文件路径
+          EXE_FILE=$(find out/make -type f -name "*.exe" | head -n 1)
+
+          # 输出路径供后续步骤使用
+          echo "EXE_FILE=$DEB_FILE" >> $GITHUB_ENV
+
+      - name: Upload .exe Package
         uses: actions/upload-artifact@v4
+        if: ${{ env.EXE_FILE }}
         with:
-          name: windows-build
-          path: out/make # 打包输出路径
+          name: windows-package
+          path: ${{ env.EXE_FILE }}
+
 
   # 针对 macOS 构建
   build-macos:
@@ -79,11 +109,21 @@ jobs:
       - name: Build macOS Package
         run: npm run make
 
-      - name: Upload Artifacts
+      - name: Find zip files
+        id: find_packages
+        run: |
+          # 查找 .zip 文件路径
+          ZIP_FILE=$(find out/make -type f -name "*.zip" | head -n 1)
+
+          # 输出路径供后续步骤使用
+          echo "ZIP_FILE=$ZIP_FILE" >> $GITHUB_ENV
+
+      - name: Upload .exe Package
         uses: actions/upload-artifact@v4
+        if: ${{ env.ZIP_FILE }}
         with:
-          name: macos-build
-          path: out/make # 打包输出路径
+          name: macos-package
+          path: ${{ env.ZIP_FILE }}
 
   # 发布到 GitHub Release
   release:
@@ -96,19 +136,19 @@ jobs:
       - name: Download Linux Build Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: linux-build
+          name: linux-deb-package
           path: dist/linux
 
       - name: Download Windows Build Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: windows-build
+          name: windows-package
           path: dist/windows
 
       - name: Download macOS Build Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: macos-build
+          name: macos-package
           path: dist/macos
 
       - name: Create Release
