@@ -27,30 +27,17 @@ jobs:
       - name: Build Linux Package
         run: npm run make
 
-      - name: Find .deb and .rpm files
-        id: find_packages
-        run: |
-          # 查找 .deb 和 .rpm 文件路径
-          DEB_FILE=$(find out/make -type f -name "*.deb" | head -n 1)
-          RPM_FILE=$(find out/make -type f -name "*.rpm" | head -n 1)
-
-          # 输出路径供后续步骤使用
-          echo "DEB_FILE=$DEB_FILE" >> $GITHUB_ENV
-          echo "RPM_FILE=$RPM_FILE" >> $GITHUB_ENV
-
       - name: Upload .deb Package
         uses: actions/upload-artifact@v4
-        if: ${{ env.DEB_FILE }}
         with:
           name: linux-deb-package
-          path: ${{ env.DEB_FILE }}
+          path: $(find out/make -type f -name "*.deb" | head -n 1)
 
       - name: Upload .rpm Package
         uses: actions/upload-artifact@v4
-        if: ${{ env.RPM_FILE }}
         with:
           name: linux-rpm-package
-          path: ${{ env.RPM_FILE }}
+          path: $(find out/make -type f -name "*.rpm" | head -n 1)
 
   # 针对 Windows 构建
   build-windows:
@@ -72,20 +59,11 @@ jobs:
       - name: Build Windows Package
         run: npm run make
 
-      - name: Find exe files
-        id: find_packages
-        run: |
-          # 使用 PowerShell 命令查找 .exe 文件
-          $EXE_FILE = Get-ChildItem -Path "out/make" -Recurse -Filter "*.exe" | Select-Object -First 1
-          echo "EXE_FILE=$($EXE_FILE.FullName)" >> $env:GITHUB_ENV
-
       - name: Upload .exe Package
         uses: actions/upload-artifact@v4
-        if: ${{ env.EXE_FILE }}
         with:
           name: windows-package
-          path: ${{ env.EXE_FILE }}
-
+          path: $(Get-ChildItem -Path "out/make" -Recurse -Filter "*.exe" | Select-Object -First 1).FullName
 
   # 针对 macOS 构建
   build-macos:
@@ -107,21 +85,11 @@ jobs:
       - name: Build macOS Package
         run: npm run make
 
-      - name: Find zip files
-        id: find_packages
-        run: |
-          # 查找 .zip 文件路径
-          ZIP_FILE=$(find out/make -type f -name "*.zip" | head -n 1)
-
-          # 输出路径供后续步骤使用
-          echo "ZIP_FILE=$ZIP_FILE" >> $GITHUB_ENV
-
-      - name: Upload .exe Package
+      - name: Upload .zip Package
         uses: actions/upload-artifact@v4
-        if: ${{ env.ZIP_FILE }}
         with:
           name: macos-package
-          path: ${{ env.ZIP_FILE }}
+          path: $(find out/make -type f -name "*.zip" | head -n 1)
 
   # 发布到 GitHub Release
   release:
@@ -131,19 +99,25 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Download Linux Build Artifacts
+      - name: Download Linux .deb Artifact
         uses: actions/download-artifact@v4
         with:
           name: linux-deb-package
           path: dist/linux
 
-      - name: Download Windows Build Artifacts
+      - name: Download Linux .rpm Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-rpm-package
+          path: dist/linux
+
+      - name: Download Windows Artifact
         uses: actions/download-artifact@v4
         with:
           name: windows-package
           path: dist/windows
 
-      - name: Download macOS Build Artifacts
+      - name: Download macOS Artifact
         uses: actions/download-artifact@v4
         with:
           name: macos-package
@@ -160,26 +134,34 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Linux Artifacts
+      - name: Upload Linux .deb Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/linux
-          asset_name: linux-build.zip
-          asset_content_type: application/zip
+          asset_path: dist/linux/*.deb
+          asset_name: linux-package.deb
+          asset_content_type: application/vnd.debian.binary-package
 
-      - name: Upload Windows Artifacts
+      - name: Upload Linux .rpm Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/windows
-          asset_name: windows-build.zip
-          asset_content_type: application/zip
+          asset_path: dist/linux/*.rpm
+          asset_name: linux-package.rpm
+          asset_content_type: application/x-rpm
 
-      - name: Upload macOS Artifacts
+      - name: Upload Windows Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/macos
-          asset_name: macos-build.zip
+          asset_path: dist/windows/*.exe
+          asset_name: windows-package.exe
+          asset_content_type: application/octet-stream
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/macos/*.zip
+          asset_name: macos-package.zip
           asset_content_type: application/zip
