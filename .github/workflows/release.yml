@@ -210,26 +210,61 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Find .rpm File
+        id: find_rpm
+        run: |
+          # 查找 .rpm 文件
+          RPM_FILE=$(find dist/linux -type f -name "*.rpm" | head -n 1)
+          if [ -z "$RPM_FILE" ]; then
+            echo "No .rpm file found!"
+            exit 1
+          fi
+          echo "RPM_FILE=$RPM_FILE" >> $GITHUB_ENV
+
       - name: Upload Linux .rpm Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/linux/*.rpm
+          asset_path: ${{ env.RPM_FILE }}
           asset_name: linux-package.rpm
           asset_content_type: application/x-rpm
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Find .exe File
+        id: find_exe
+        run: |
+          # 查找 .exe 文件
+          EXE_FILE=$(find dist/linux -type f -name "*.exe" | head -n 1)
+          if [ -z "$EXE_FILE" ]; then
+            echo "No .exe file found!"
+            exit 1
+          fi
+          echo "EXE_FILE=$EXE_FILE" >> $GITHUB_ENV
 
       - name: Upload Windows Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/windows/*.exe
+          asset_path: ${{ env.EXE_FILE }}
           asset_name: windows-package.exe
           asset_content_type: application/octet-stream
+
+      - name: Find .app File
+        id: find_app
+        run: |
+          # 查找 .zip 文件
+          MACOS_FILE=$(find dist/linux -type f -name "*.zip" | head -n 1)
+          if [ -z "$MACOS_FILE" ]; then
+            echo "No .zip file found!"
+            exit 1
+          fi
+          echo "MACOS_FILE=$MACOS_FILE" >> $GITHUB_ENV
 
       - name: Upload macOS Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/macos/*.zip
+          asset_path: ${{ env.MACOS_FILE }}
           asset_name: macos-package.zip
           asset_content_type: application/zip
