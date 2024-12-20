@@ -30,17 +30,32 @@ jobs:
       - name: Debug Output Directory
         run: ls -R out/make
 
+      - name: Find .deb and .rpm files
+        id: find_packages
+        run: |
+          # 查找 .deb 和 .rpm 文件路径
+          DEB_FILE=$(find out/make -type f -name "*.deb" | head -n 1)
+          echo $DEB_FILE
+          RPM_FILE=$(find out/make -type f -name "*.rpm" | head -n 1)
+          echo $RPM_FILE
+
+          # 输出路径供后续步骤使用
+          echo "DEB_FILE=$DEB_FILE" >> $GITHUB_ENV
+          echo "RPM_FILE=$RPM_FILE" >> $GITHUB_ENV
+
       - name: Upload .deb Package
         uses: actions/upload-artifact@v4
+        if: ${{ env.DEB_FILE }}
         with:
           name: linux-deb-package
-          path: $(find out/make -type f -name "*.deb" | head -n 1)
+          path: ${{ env.DEB_FILE }}
 
       - name: Upload .rpm Package
         uses: actions/upload-artifact@v4
+        if: ${{ env.RPM_FILE }}
         with:
           name: linux-rpm-package
-          path: $(find out/make -type f -name "*.rpm" | head -n 1)
+          path: ${{ env.RPM_FILE }}
 
   # 针对 Windows 构建
   build-windows:
@@ -65,11 +80,19 @@ jobs:
       - name: Debug Output Directory
         run: ls -R out/make
 
+      - name: Find exe files
+        id: find_packages
+        run: |
+          # 使用 PowerShell 命令查找 .exe 文件
+          $EXE_FILE = Get-ChildItem -Path "out/make" -Recurse -Filter "*.exe" | Select-Object -First 1
+          echo "EXE_FILE=$($EXE_FILE.FullName)" >> $env:GITHUB_ENV
+
       - name: Upload .exe Package
         uses: actions/upload-artifact@v4
+        if: ${{ env.EXE_FILE }}
         with:
           name: windows-package
-          path: $(Get-ChildItem -Path "out/make" -Recurse -Filter "*.exe" | Select-Object -First 1).FullName
+          path: ${{ env.EXE_FILE }}
 
   # 针对 macOS 构建
   build-macos:
@@ -94,11 +117,22 @@ jobs:
       - name: Debug Output Directory
         run: ls -R out/make
 
-      - name: Upload .zip Package
+      - name: Find zip files
+        id: find_packages
+        run: |
+          # 查找 .zip 文件路径
+          ZIP_FILE=$(find out/make -type f -name "*.zip" | head -n 1)
+          echo $ZIP_FILE
+
+          # 输出路径供后续步骤使用
+          echo "ZIP_FILE=$ZIP_FILE" >> $GITHUB_ENV
+
+      - name: Upload .exe Package
         uses: actions/upload-artifact@v4
+        if: ${{ env.ZIP_FILE }}
         with:
           name: macos-package
-          path: $(find out/make -type f -name "*.zip" | head -n 1)
+          path: ${{ env.ZIP_FILE }}
 
   # 发布到 GitHub Release
   release:
