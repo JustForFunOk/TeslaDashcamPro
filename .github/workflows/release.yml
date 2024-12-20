@@ -207,6 +207,8 @@ jobs:
           asset_path: ${{ env.DEB_FILE }}
           asset_name: linux-package.deb
           asset_content_type: application/vnd.debian.binary-package
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Linux .rpm Artifact
         uses: actions/upload-release-asset@v1
