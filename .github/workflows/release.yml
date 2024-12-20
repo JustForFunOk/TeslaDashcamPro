@@ -75,11 +75,9 @@ jobs:
       - name: Find exe files
         id: find_packages
         run: |
-          # 查找 .exe 文件路径
-          EXE_FILE=$(find out/make -type f -name "*.exe" | head -n 1)
-
-          # 输出路径供后续步骤使用
-          echo "EXE_FILE=$DEB_FILE" >> $GITHUB_ENV
+          # 使用 PowerShell 命令查找 .exe 文件
+          $EXE_FILE = Get-ChildItem -Path "out/make" -Recurse -Filter "*.exe" | Select-Object -First 1
+          echo "EXE_FILE=$($EXE_FILE.FullName)" >> $env:GITHUB_ENV
 
       - name: Upload .exe Package
         uses: actions/upload-artifact@v4
