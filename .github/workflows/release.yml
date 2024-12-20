@@ -1,0 +1,145 @@
+name: Build and Release by Platform
+
+on:
+  push:
+    tags:
+      - 'v*' # 当推送标签（如 v1.0.0）时触发
+  workflow_dispatch: # 手动触发
+
+jobs:
+  # 针对 Ubuntu 构建
+  build-linux:
+    name: Build for Linux
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.18.0
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Linux Package
+        run: npm run make
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-build
+          path: out/make # 打包输出路径
+
+  # 针对 Windows 构建
+  build-windows:
+    name: Build for Windows
+    runs-on: windows-2019
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.18.0
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Windows Package
+        run: npm run make
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: out/make # 打包输出路径
+
+  # 针对 macOS 构建
+  build-macos:
+    name: Build for macOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.18.0
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build macOS Package
+        run: npm run make
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-build
+          path: out/make # 打包输出路径
+
+  # 发布到 GitHub Release
+  release:
+    name: Release Artifacts
+    needs: [build-linux, build-windows, build-macos]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Linux Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-build
+          path: dist/linux
+
+      - name: Download Windows Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-build
+          path: dist/windows
+
+      - name: Download macOS Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-build
+          path: dist/macos
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Linux Artifacts
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/linux
+          asset_name: linux-build.zip
+          asset_content_type: application/zip
+
+      - name: Upload Windows Artifacts
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/windows
+          asset_name: windows-build.zip
+          asset_content_type: application/zip
+
+      - name: Upload macOS Artifacts
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/macos
+          asset_name: macos-build.zip
+          asset_content_type: application/zip
