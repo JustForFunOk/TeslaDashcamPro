@@ -238,21 +238,25 @@ jobs:
       - name: Find .exe File
         id: find_exe
         run: |
-          # 查找 .exe 文件
-          EXE_FILE=$(find dist/windows -type f -name "*.exe" | head -n 1)
-          if [ -z "$EXE_FILE" ]; then
-            echo "No .exe file found!"
+          # 使用 PowerShell 查找 .exe 文件
+          $EXE_FILE = Get-ChildItem -Path "dist/windows" -Recurse -Filter "*.exe" | Select-Object -First 1
+          if ($EXE_FILE -eq $null) {
+            Write-Host "No .exe file found!"
             exit 1
-          fi
-          echo "EXE_FILE=$EXE_FILE" >> $GITHUB_ENV
-          $EXE_FILE_NAME = Split-Path -Leaf $EXE_FILE
+          }
+          # 获取文件路径
+          $EXE_FILE_PATH = $EXE_FILE.FullName
+          # 使用 Split-Path 获取文件名
+          $EXE_FILE_NAME = Split-Path -Leaf $EXE_FILE_PATH
+          Write-Host "EXE_FILE_NAME=$EXE_FILE_NAME"
           echo "EXE_FILE_NAME=$EXE_FILE_NAME" >> $env:GITHUB_ENV
+          echo "EXE_FILE_PATH=$EXE_FILE_PATH" >> $env:GITHUB_ENV
 
       - name: Upload Windows Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.EXE_FILE }}
+          asset_path: ${{ env.EXE_FILE_PATH }}
           asset_name: ${{ env.EXE_FILE_NAME }}
           asset_content_type: application/octet-stream
         env:
