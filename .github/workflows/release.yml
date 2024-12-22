@@ -182,8 +182,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
           draft: false
           prerelease: false
         env:
@@ -199,13 +198,15 @@ jobs:
             exit 1
           fi
           echo "DEB_FILE=$DEB_FILE" >> $GITHUB_ENV
+          DEB_NAME=$(basename "$DEB_FILE")
+          echo "DEB_NAME=$DEB_NAME" >> $GITHUB_ENV
 
       - name: Upload Linux .deb Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.DEB_FILE }}
-          asset_name: linux-package.deb
+          asset_name: ${{ env.DEB_NAME }}
           asset_content_type: application/vnd.debian.binary-package
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -220,13 +221,15 @@ jobs:
             exit 1
           fi
           echo "RPM_FILE=$RPM_FILE" >> $GITHUB_ENV
+          RPM_NAME=$(basename "$RPM_FILE")
+          echo "RPM_NAME=$RPM_NAME" >> $GITHUB_ENV
 
       - name: Upload Linux .rpm Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.RPM_FILE }}
-          asset_name: linux-package.rpm
+          asset_name: ${{ env.RPM_NAME }}
           asset_content_type: application/x-rpm
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -241,14 +244,18 @@ jobs:
             exit 1
           fi
           echo "EXE_FILE=$EXE_FILE" >> $GITHUB_ENV
+          $EXE_FILE_NAME = Split-Path -Leaf $EXE_FILE
+          echo "EXE_FILE_NAME=$EXE_FILE_NAME" >> $env:GITHUB_ENV
 
       - name: Upload Windows Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.EXE_FILE }}
-          asset_name: windows-package.exe
+          asset_name: ${{ env.EXE_FILE_NAME }}
           asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Find .app File
         id: find_app
@@ -260,11 +267,15 @@ jobs:
             exit 1
           fi
           echo "MACOS_FILE=$MACOS_FILE" >> $GITHUB_ENV
+          MACOS_NAME=$(basename "$MACOS_FILE")
+          echo "MACOS_NAME=$MACOS_NAME" >> $GITHUB_ENV
 
       - name: Upload macOS Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.MACOS_FILE }}
-          asset_name: macos-package.zip
+          asset_name: ${{ env.MACOS_NAME }}
           asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
