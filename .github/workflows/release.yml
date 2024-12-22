@@ -238,7 +238,7 @@ jobs:
       - name: Find .exe File
         id: find_exe
         run: |
-          EXE_FILE=$(find dist/windows -type f -name "*.exe" | head -n 1)
+          $EXE_FILE = Get-ChildItem -Path "dist/windows" -Recurse -Filter "*.exe" | Select-Object -First 1
           if ($null -eq $EXE_FILE) {
             Write-Host "No .exe file found!"
             exit 1
