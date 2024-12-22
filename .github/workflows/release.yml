@@ -250,6 +250,7 @@ jobs:
           Write-Host "EXE_FILE_NAME=$EXE_FILE_NAME"
           echo "EXE_FILE_NAME=$EXE_FILE_NAME" >> $env:GITHUB_ENV
           echo "EXE_FILE_PATH=$EXE_FILE_PATH" >> $env:GITHUB_ENV
+        shell: pwsh
 
       - name: Upload Windows Artifact
         uses: actions/upload-release-asset@v1
