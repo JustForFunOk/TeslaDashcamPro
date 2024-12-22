@@ -238,12 +238,11 @@ jobs:
       - name: Find .exe File
         id: find_exe
         run: |
-          # 使用 PowerShell 查找 .exe 文件
-          $EXE_FILE = Get-ChildItem -Path "dist/windows" -Recurse -Filter "*.exe" | Select-Object -First 1
-          if ($EXE_FILE -eq $null) {
-            Write-Host "No .exe file found!"
+          EXE_FILE=$(find dist/windows -type f -name "*.exe" | head -n 1)
+          if [ -z "$EXE_FILE" ]; then
+            echo "No .exe file found!"
             exit 1
-          }
+          fi
           # 获取文件路径
           $EXE_FILE_PATH = $EXE_FILE.FullName
           # 使用 Split-Path 获取文件名
