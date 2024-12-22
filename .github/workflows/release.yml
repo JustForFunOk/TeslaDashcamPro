@@ -239,10 +239,10 @@ jobs:
         id: find_exe
         run: |
           EXE_FILE=$(find dist/windows -type f -name "*.exe" | head -n 1)
-          if [ -z "$EXE_FILE" ]; then
-            echo "No .exe file found!"
+          if ($null -eq $EXE_FILE) {
+            Write-Host "No .exe file found!"
             exit 1
-          fi
+          }
           # 获取文件路径
           $EXE_FILE_PATH = $EXE_FILE.FullName
           # 使用 Split-Path 获取文件名
