@@ -27,11 +27,35 @@ jobs:
       - name: Build Linux Package
         run: npm run make
 
-      - name: Upload Artifacts
+      - name: Debug Output Directory
+        run: ls -R out/make
+
+      - name: Find .deb and .rpm files
+        id: find_packages
+        run: |
+          # 查找 .deb 和 .rpm 文件路径
+          DEB_FILE=$(find out/make -type f -name "*.deb" | head -n 1)
+          echo $DEB_FILE
+          RPM_FILE=$(find out/make -type f -name "*.rpm" | head -n 1)
+          echo $RPM_FILE
+
+          # 输出路径供后续步骤使用
+          echo "DEB_FILE=$DEB_FILE" >> $GITHUB_ENV
+          echo "RPM_FILE=$RPM_FILE" >> $GITHUB_ENV
+
+      - name: Upload .deb Package
         uses: actions/upload-artifact@v4
+        if: ${{ env.DEB_FILE }}
         with:
-          name: linux-build
-          path: out/make # 打包输出路径
+          name: linux-deb-package
+          path: ${{ env.DEB_FILE }}
+
+      - name: Upload .rpm Package
+        uses: actions/upload-artifact@v4
+        if: ${{ env.RPM_FILE }}
+        with:
+          name: linux-rpm-package
+          path: ${{ env.RPM_FILE }}
 
   # 针对 Windows 构建
   build-windows:
@@ -53,11 +77,22 @@ jobs:
       - name: Build Windows Package
         run: npm run make
 
-      - name: Upload Artifacts
+      - name: Debug Output Directory
+        run: ls -R out/make
+
+      - name: Find exe files
+        id: find_packages
+        run: |
+          # 使用 PowerShell 命令查找 .exe 文件
+          $EXE_FILE = Get-ChildItem -Path "out/make" -Recurse -Filter "*.exe" | Select-Object -First 1
+          echo "EXE_FILE=$($EXE_FILE.FullName)" >> $env:GITHUB_ENV
+
+      - name: Upload .exe Package
         uses: actions/upload-artifact@v4
+        if: ${{ env.EXE_FILE }}
         with:
-          name: windows-build
-          path: out/make # 打包输出路径
+          name: windows-package
+          path: ${{ env.EXE_FILE }}
 
   # 针对 macOS 构建
   build-macos:
@@ -79,11 +114,25 @@ jobs:
       - name: Build macOS Package
         run: npm run make
 
-      - name: Upload Artifacts
+      - name: Debug Output Directory
+        run: ls -R out/make
+
+      - name: Find zip files
+        id: find_packages
+        run: |
+          # 查找 .zip 文件路径
+          ZIP_FILE=$(find out/make -type f -name "*.zip" | head -n 1)
+          echo $ZIP_FILE
+
+          # 输出路径供后续步骤使用
+          echo "ZIP_FILE=$ZIP_FILE" >> $GITHUB_ENV
+
+      - name: Upload .exe Package
         uses: actions/upload-artifact@v4
+        if: ${{ env.ZIP_FILE }}
         with:
-          name: macos-build
-          path: out/make # 打包输出路径
+          name: macos-package
+          path: ${{ env.ZIP_FILE }}
 
   # 发布到 GitHub Release
   release:
@@ -93,55 +142,145 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Download Linux Build Artifacts
+      - name: Download Linux .deb Artifact
         uses: actions/download-artifact@v4
         with:
-          name: linux-build
+          name: linux-deb-package
           path: dist/linux
 
-      - name: Download Windows Build Artifacts
+      - name: Check download result
+        run: ls -R dist
+
+      - name: Download Linux .rpm Artifact
         uses: actions/download-artifact@v4
         with:
-          name: windows-build
+          name: linux-rpm-package
+          path: dist/linux
+
+      - name: Check download result
+        run: ls -R dist
+
+      - name: Download Windows Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-package
           path: dist/windows
 
-      - name: Download macOS Build Artifacts
+      - name: Check download result
+        run: ls -R dist
+
+      - name: Download macOS Artifact
         uses: actions/download-artifact@v4
         with:
-          name: macos-build
+          name: macos-package
           path: dist/macos
+
+      - name: Check download result
+        run: ls -R dist
 
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
           draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Linux Artifacts
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/linux
-          asset_name: linux-build.zip
-          asset_content_type: application/zip
+      - name: Find .deb File
+        id: find_deb
+        run: |
+          # 查找 .deb 文件
+          DEB_FILE=$(find dist/linux -type f -name "*.deb" | head -n 1)
+          if [ -z "$DEB_FILE" ]; then
+            echo "No .deb file found!"
+            exit 1
+          fi
+          echo "DEB_FILE=$DEB_FILE" >> $GITHUB_ENV
+          DEB_NAME=$(basename "$DEB_FILE")
+          echo "DEB_NAME=$DEB_NAME" >> $GITHUB_ENV
 
-      - name: Upload Windows Artifacts
+      - name: Upload Linux .deb Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/windows
-          asset_name: windows-build.zip
-          asset_content_type: application/zip
+          asset_path: ${{ env.DEB_FILE }}
+          asset_name: ${{ env.DEB_NAME }}
+          asset_content_type: application/vnd.debian.binary-package
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload macOS Artifacts
+      - name: Find .rpm File
+        id: find_rpm
+        run: |
+          # 查找 .rpm 文件
+          RPM_FILE=$(find dist/linux -type f -name "*.rpm" | head -n 1)
+          if [ -z "$RPM_FILE" ]; then
+            echo "No .rpm file found!"
+            exit 1
+          fi
+          echo "RPM_FILE=$RPM_FILE" >> $GITHUB_ENV
+          RPM_NAME=$(basename "$RPM_FILE")
+          echo "RPM_NAME=$RPM_NAME" >> $GITHUB_ENV
+
+      - name: Upload Linux .rpm Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/macos
-          asset_name: macos-build.zip
+          asset_path: ${{ env.RPM_FILE }}
+          asset_name: ${{ env.RPM_NAME }}
+          asset_content_type: application/x-rpm
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Find .exe File
+        id: find_exe
+        run: |
+          $EXE_FILE = Get-ChildItem -Path "dist/windows" -Recurse -Filter "*.exe" | Select-Object -First 1
+          if ($null -eq $EXE_FILE) {
+            Write-Host "No .exe file found!"
+            exit 1
+          }
+          # 获取文件路径
+          $EXE_FILE_PATH = $EXE_FILE.FullName
+          # 使用 Split-Path 获取文件名
+          $EXE_FILE_NAME = Split-Path -Leaf $EXE_FILE_PATH
+          Write-Host "EXE_FILE_NAME=$EXE_FILE_NAME"
+          echo "EXE_FILE_NAME=$EXE_FILE_NAME" >> $env:GITHUB_ENV
+          echo "EXE_FILE_PATH=$EXE_FILE_PATH" >> $env:GITHUB_ENV
+        shell: pwsh
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.EXE_FILE_PATH }}
+          asset_name: ${{ env.EXE_FILE_NAME }}
+          asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Find .app File
+        id: find_app
+        run: |
+          # 查找 .zip 文件
+          MACOS_FILE=$(find dist/macos -type f -name "*.zip" | head -n 1)
+          if [ -z "$MACOS_FILE" ]; then
+            echo "No .zip file found!"
+            exit 1
+          fi
+          echo "MACOS_FILE=$MACOS_FILE" >> $GITHUB_ENV
+          MACOS_NAME=$(basename "$MACOS_FILE")
+          echo "MACOS_NAME=$MACOS_NAME" >> $GITHUB_ENV
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.MACOS_FILE }}
+          asset_name: ${{ env.MACOS_NAME }}
           asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
