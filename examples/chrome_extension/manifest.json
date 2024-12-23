@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "Local Video Player",
+    "version": "1.0",
+    "description": "Play local videos directly from a selected folder.",
+    "permissions": [
+        "storage"
+    ],
+    "host_permissions": [
+        "file:///*"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icon.png",
+            "48": "icon.png",
+            "128": "icon.png"
+        }
+    }
+}

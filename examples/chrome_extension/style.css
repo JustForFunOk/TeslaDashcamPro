@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 10px;
+}
+
+#videoList {
+    max-height: 200px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+}
+
+#videoList li {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+}
+
+#videoList li:hover {
+    background-color: #f0f0f0;
+}
