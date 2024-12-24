@@ -13,8 +13,8 @@
 #### 1.2.1 Windows 安装
 双击下载的.exe安装包，按照如下进行操作，允许安装未知发布者的应用程序。
 
-<img src="./docs/images/windows_install1.png" alt="windows安装1" width="300">
-<img src="./docs/images/windows_install2.png" alt="windows安装2" width="300">
+<img src="./docs/images/windows_install1.png" alt="windows安装1" width="300" style="display: inline-block; margin-right: 10px;">
+<img src="./docs/images/windows_install2.png" alt="windows安装2" width="300" style="display:inline-block;">
 
 #### 1.2.2 macOS 安装
 
