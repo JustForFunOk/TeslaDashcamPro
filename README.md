@@ -1,4 +1,4 @@
-| [软件下载](https://github.com/JustForFunOk/tesla_dashcam_pro/releases) | [English Version Readme](./README_EN.md) |
+| [软件安装](./install.md) | [English Version Readme](./README_EN.md) |
 
 <div align="center">
     <img src="docs/icon_src/tesla_dashcam_icon_128x128.png" alt="app icon" width="100">
