@@ -14,7 +14,6 @@
 双击下载的.exe安装包，按照如下进行操作，允许安装未知发布者的应用程序。
 
 <img src="./docs/images/windows_install1.png" alt="windows安装1" width="300">
-
 <img src="./docs/images/windows_install2.png" alt="windows安装2" width="300">
 
 #### 1.2.2 macOS 安装
@@ -46,7 +45,7 @@ sudo spctl --master-enable
 * CentOS上使用 `sudo rpm -i xxx.rpm` 命令安装。
 
 
-
+---
 
 
 ## 方法2：从源代码打包安装
