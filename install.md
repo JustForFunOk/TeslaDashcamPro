@@ -1,3 +1,5 @@
+| [English Version](./install_EN.md) |
+
 # 安装
 
 ## 方法1：下载编译好的安装包
@@ -70,10 +72,10 @@ npm run make
 ### 2.4 安装
 
 #### 2.4.1 Windows 安装
-直接双击生成的exe文件即可安装，安装后会在桌面生成快捷方式。
+直接双击生成的`exe`文件即可安装，安装后会在桌面生成快捷方式。
 
 #### 2.4.2 macOS 安装
-直接将生成的.app文件复制到/Applications/文件夹下即可。
+直接将生成的`.app文件`复制到`/Applications/`文件夹下即可。
 
 #### 2.4.3 Linux 安装
 * Ubuntu上使用 `sudo dpkg -i xxx.deb` 命令安装。

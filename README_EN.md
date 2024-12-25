@@ -1,4 +1,4 @@
-| [Install Software](./install.md) | [查看中文版说明](./README.md) |
+| [Install Software](./install_EN.md) | [查看中文版说明](./README.md) |
 
 <div align="center">
     <img src="docs/icon_src/tesla_dashcam_icon_128x128.png" alt="app icon" width="100">
