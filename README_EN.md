@@ -5,8 +5,8 @@
     <h1>Tesla Dashcam Pro</h1>
 </div>
 
-
-![screen shoot](./docs/images/player_demo.jpeg)
+![clips_list](./docs/images/clips_list.png)
+![player](./docs/images/player_linux.jpeg)
 
 
 ## Key Features

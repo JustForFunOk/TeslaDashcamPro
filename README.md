@@ -6,7 +6,8 @@
 </div>
 
 
-![软件截图](./docs/images/player_demo.jpeg)
+![视频列表](./docs/images/clips_list.png)
+![播放器](./docs/images/player_linux.jpeg)
 
 
 ## 主要特点
