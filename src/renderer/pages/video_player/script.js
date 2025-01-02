@@ -59,9 +59,10 @@ let totalClipsNumber = 0;
 // 这个变量不会有data race的情况，标准的浏览器环境中的 JavaScript 是单线程的
 let loadedVideosChannelCount = 0;  // 已经准备好播放的路数
 let endedVideosChannelCount = 0;  // 当前视频源已播放完毕的路数
+let stalledVideos = [];  // 视频因网络问题或其他原因无法继续加载的路数
 
 let validVideoChannels = [];
-let validVideosChannelCount = 0; // 有数据的路数 最多是4路
+let validVideosChannelCount = 0; // 有数据的路数 最多是4路 这里的有效代表存在视频文件
 
 // 4路都加载完毕自动播放
 let is_playing = true;
@@ -268,6 +269,44 @@ players[0].addEventListener('timeupdate', () => {
 });
 
 players.forEach(player => {
+    // 若同一时间4路视频文件全部损坏，则弹窗提醒
+    player.addEventListener('stalled', async () => {
+        stalledVideos.push(player.src);
+
+        player.removeAttribute("src");
+        player.poster = "no_video_min.svg";
+        player.classList.add("not-allowed-click");
+        player.load();
+
+        if(stalledVideos.length === validVideosChannelCount) {
+            // 本个时间段所有路视频均失效
+            stalledVideosStr = "";
+            stalledVideos.forEach(video => {
+                stalledVideosStr += video;
+                stalledVideosStr += "\n";
+            });
+
+            alert("Video load failed! Please check files: \n\n" + stalledVideosStr);
+
+            // 跳过继续处理
+            // 默认最后一段视频长度是1min，但很多情况下并不是，等到播放到最后哦一段时更新总时长
+            if (!hasGotLastClipDuration && currentIndex == totalClipsNumber - 1) {
+                // 去除最后一段默认的60s时长
+                clipsDuration = savedVideoFiles[type].at(index).duration - 60;
+
+                setVideoDuration();
+
+                hasGotLastClipDuration = true;
+
+                currentIndex = 0;  // 默认从头播放
+                await setVideosSrc(currentIndex);
+            } else {
+                currentIndex++;
+                await setVideosSrc(currentIndex);
+            }
+        }
+    });
+
     // 4个视频都加载第一帧完毕后再同步播放
     player.addEventListener('loadeddata', async () => {
         loadedVideosChannelCount++;
@@ -679,6 +718,7 @@ async function setVideosSrc(clipsIndex) {
 
         loadedVideosChannelCount = 0;  // 清零等待加载完毕
         endedVideosChannelCount = 0;
+        stalledVideos = [];
     }
     // 接下来会触发loadeddata事件
 }
