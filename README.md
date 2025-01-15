@@ -1,18 +1,17 @@
-| [软件安装](./install.md) | [English Version Readme](./README_EN.md) |
+|| [软件安装](./install.md) ||
 
 <div align="center">
     <img src="docs/icon_src/tesla_dashcam_icon_128x128.png" alt="app icon" width="100">
-    <h1>Tesla 行车记录仪增强版</h1>
+    <h1>Tesla 行车记录仪播放器</h1>
 </div>
 
-
 ![视频列表](./docs/images/clips_list.png)
-![播放器](./docs/images/player_linux.jpeg)
 
+![播放器](./docs/images/player_linux.jpg)
 
 ## 开发初衷
 
-_整理行车记录仪，想要查看并保存一些有意义的视频片断时，发现U盘里的行车记录仪是1分钟1个视频文件，1个视角1个视频文件，难以连贯的查看。_
+_整理行车记录仪，想要查看并保存一些有意义的视频片断时，发现U盘里的行车记录仪是1分钟1个视频文件，1个视角1个视频文件，查看起来较为困难。_
 
 _Github上已有的项目，没有现成的可以直接运行的电脑软件。_
 
@@ -35,10 +34,22 @@ _Github上已有的项目，没有现成的可以直接运行的电脑软件。_
 * 删除视频
 
 
-## 增强版
+---
+---
+
+<div align="center">
+    <h1>Tesla 行车记录仪增强版</h1>
+</div>
+
+![播放器](./docs/images/player_pro_linux.jpeg)
+
+_图中右上角显示的即为车辆的驾驶信息。_
+
+
+## 增强版主要功能
 
 1. 突破原车只能保存1小时行车记录仪的限制，U盘越大存的越久
-2. 接入车辆驾驶信息，目前支持的信号：
+2. 记录车辆驾驶信息，支持常见的信号：
     - 车速
     - 档位
     - 方向盘角度
@@ -51,4 +62,4 @@ _Github上已有的项目，没有现成的可以直接运行的电脑软件。_
     - 近光灯
     - 远光灯
 
-具体见[这里](./pro/README.md)。
+更具体的说明在[这里](./pro/README.md)。

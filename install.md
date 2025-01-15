@@ -8,7 +8,7 @@
 
 ### 1.1 下载平台对应的安装包
 
-[软件下载地址](https://github.com/JustForFunOk/tesla_dashcam_pro/releases)
+[![下载地址](https://img.shields.io/github/release/JustForFunOk/TeslaDashcamPro.svg)](https://github.com/JustForFunOk/TeslaDashcamPro/releases)
 
 ### 1.2 安装
 

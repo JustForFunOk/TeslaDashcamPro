@@ -8,7 +8,7 @@
 
 ### 1.1 Download the installation package for your platform
 
-[Download link](https://github.com/JustForFunOk/tesla_dashcam_pro/releases)
+[![Download Link](https://img.shields.io/github/release/JustForFunOk/TeslaDashcamPro.svg)](https://github.com/JustForFunOk/TeslaDashcamPro/releases)
 
 ### 1.2 Installation
 
