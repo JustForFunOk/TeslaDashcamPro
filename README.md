@@ -1,4 +1,4 @@
-|| [软件安装](./install.md) ||
+||  &#11015;[软件安装](./install.md)&#11015; ||  [bilibili视频：【开源项目】特斯拉车主来看看，我开发的行车记录仪播放器](https://www.bilibili.com/video/BV1Gdwue5EAz/?share_source=copy_web&vd_source=e201eeec19f502aae9dad5b9e17dba11)
 
 <div align="center">
     <img src="docs/icon_src/tesla_dashcam_icon_128x128.png" alt="app icon" width="100">
@@ -40,6 +40,8 @@ _Github上已有的项目，没有现成的可以直接运行的电脑软件。_
 <div align="center">
     <h1>Tesla 行车记录仪增强版</h1>
 </div>
+
+[bilibili视频：【全网首创】你肯定没见过，增强版的特斯拉行车记录仪](https://www.bilibili.com/video/BV11MwgeNEQa/?share_source=copy_web&vd_source=e201eeec19f502aae9dad5b9e17dba11)
 
 ![播放器](./docs/images/player_pro_linux.jpeg)
 
