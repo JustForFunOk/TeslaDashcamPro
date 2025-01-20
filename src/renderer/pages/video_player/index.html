@@ -82,25 +82,25 @@
 
     <div id="bottom-container" class="top-bottom-container">
         <div class="header-left">
-            <button id="back-button" class="tool-bar-button">
+            <button id="back-button" tabindex="-1" class="tool-bar-button">
                 <img id="back-icon" src="back_bold.svg" alt="back to home" class="invert-color-icon" />
             </button>
         </div>
         <div class="controls">
-            <button id="backward-btn" class="tool-bar-button" onclick="backward5Seconds()">
+            <button id="backward-btn" tabindex="-1" class="tool-bar-button">
                 <img id="backward-icon" src="backward_5_seconds_simple.svg" alt="backward 5 seconds"
                     class="invert-color-icon" />
             </button>
-            <button id="play-pause-btn" class="tool-bar-button" onclick="togglePlayPause()">
+            <button id="play-pause-btn" tabindex="-1" class="tool-bar-button">
                 <img id="play-pause-icon" src="play.svg" alt="play/pause icon" class="invert-color-icon" />
             </button>
-            <button id="x-speed-btn" class="tool-bar-button" onclick="forwardXSpeed()">
+            <button id="x-speed-btn" tabindex="-1" class="tool-bar-button">
                 <img id="x-speed-icon" src="x_speed.svg" alt="forward speed" class="invert-color-icon" />
                 <div id="x-speed-text" class="button-text">1x</div>
             </button>
             <div id="current-time" class="bar-time">mm:ss</div>
             <div class="slider-container">
-                <input type="range" id="progress-bar" value="0">
+                <input type="range" id="progress-bar" tabindex="-1" value="0">
                 <div id="event-marker" class="marker hidden"></div>
             </div>
             <div id="total-duration" class="bar-time">mm:ss</div>

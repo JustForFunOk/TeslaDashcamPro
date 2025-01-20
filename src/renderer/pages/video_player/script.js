@@ -27,6 +27,9 @@ const highBeamHeadlight = document.getElementById('high-beam-headlight');
 
 const bottomContainer = document.getElementById('bottom-container');
 const backButton = document.getElementById('back-button');
+const backwardButton = document.getElementById('backward-btn');
+const playPauseButton = document.getElementById('play-pause-btn');
+const xSpeedButton = document.getElementById('x-speed-btn');
 const playPauseIcon = document.getElementById('play-pause-icon');
 const progressBar = document.getElementById('progress-bar');
 const eventMarker = document.getElementById('event-marker');
@@ -46,16 +49,15 @@ document.addEventListener('keydown', (event) => {
     if (event.code === 'ArrowRight') {
         if (!isRightArrowPressed) {
             isRightArrowPressed = true;
-            pressStartTime = Date.now(); // 记录按下的时间
+            pressStartTime = Date.now();
 
             // 检查按键是否持续 0.5 秒以上
             const checkLongPress = () => {
                 if (isRightArrowPressed && (Date.now() - pressStartTime) >= 500) {
                     // 持续时间超过 0.5 秒，且尚未设置倍速播放
-                    if (!isSpeedSet) {
+                    if (!isSpeedSet && currentPlaybackRate === 1 && is_playing === true) {
                         // 设置倍速播放
-                        console.log("set play rate to 4");
-                        // video.playbackRate = 4;  // 设置为4倍速
+                        setPlaybackRate(3);
                         isSpeedSet = true;  // 设置倍速标志
                     }
                 }
@@ -65,17 +67,9 @@ document.addEventListener('keydown', (event) => {
             interval = setInterval(checkLongPress, 100);
         }
     } else if (event.code === 'Space') {
-        console.log("space pressed");
-        // 空格键：播放/暂停
-        // if (video.paused) {
-        //     video.play();
-        // } else {
-        //     video.pause();
-        // }
+        togglePlayPause();
     } else if (event.code === 'ArrowLeft') {
-        console.log("left pressed");
-        // 左箭头：后退 5 秒
-        // video.currentTime -= 5;
+        backward5Seconds();
     }
 });
 
@@ -84,16 +78,14 @@ document.addEventListener('keyup', (event) => {
     if (event.code === 'ArrowRight') {
         clearInterval(interval); // 清除计时器
         if (Date.now() - pressStartTime < 500) {
-            // 如果没有长按 0.5 秒，执行前进 10 秒
-            // video.currentTime += 10;
-            console.log("forward 10s");
+            // 短按前进5s
+            forward5Seconds();
         }
 
         // 恢复正常播放速度
-        if(isSpeedSet) {
-            // video.playbackRate = 1;
-            console.log("set paly rate back to 1");
-            isSpeedSet = false;  // 重置倍速标志
+        if (isSpeedSet) {
+            setPlaybackRate(1);
+            isSpeedSet = false;
         }
 
         isRightArrowPressed = false;
@@ -156,7 +148,7 @@ let eventJsonDataObject = {};
 
 let hasCanData = true;
 
-if(decodedCanFiles.length == 0) {
+if (decodedCanFiles.length == 0) {
     hasCanData = false;
     canDataDisplay.classList.add('hidden');
     topContainer.style.justifyContent = 'center';
@@ -165,12 +157,27 @@ if(decodedCanFiles.length == 0) {
 // 返回按钮点击事件，跳转回主页面
 backButton.addEventListener('click', () => window.history.back());
 
+backwardButton.addEventListener('click', () => {
+    backwardButton.blur();
+    backward5Seconds();
+});
+
+playPauseIcon.addEventListener('click', () => {
+    playPauseIcon.blur();  // 移除focus属性，避免键盘和鼠标同时操作导致的冲突，其他按钮同样
+    togglePlayPause();
+});
+
+xSpeedButton.addEventListener('click', () => {
+    xSpeedButton.blur();
+    forwardXSpeed();
+});
+
 // 当用户拖动进度条时同步视频的播放时间
 progressBar.addEventListener('input', async () => {
     await changeProgressBarValue();
 
     // 解决用户手动拖动进度条到最后，不能触发player的ended事件，导致再次点击播放按钮会从最后一个视频的头部播放的bug
-    if(progressBar.value == progressBar.max) {
+    if (progressBar.value == progressBar.max) {
         currentIndex = totalClipsNumber;
 
         playPauseIcon.src = "play.svg";
@@ -183,16 +190,17 @@ progressBar.addEventListener('input', async () => {
 
 // 解决第一次resize之后progress bar长度不能正确更新的问题
 window.addEventListener('resize', () => {
-    setEventTriggerTimestampMarker();});
+    setEventTriggerTimestampMarker();
+});
 
 
 players[0].addEventListener('timeupdate', () => {
-    if(!hasGotLastClipDuration) {
+    if (!hasGotLastClipDuration) {
         return;
     }
 
     // 手动拖动进度条到最后时跳过执行，否则会越界
-    if(currentIndex >= totalClipsNumber) {
+    if (currentIndex >= totalClipsNumber) {
         return;
     }
 
@@ -278,7 +286,7 @@ players[0].addEventListener('timeupdate', () => {
         if (canData.turn_left == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_left == "TURN_SIGNAL_ACTIVE_LOW") {
             // addGreenFilter();
             turnLeftIndicator.style.filter = grayToGreenFilter;
-        } else if (canData.turn_left == "TURN_SIGNAL_OFF"){
+        } else if (canData.turn_left == "TURN_SIGNAL_OFF") {
             // removeGreenFilter();
             turnLeftIndicator.style.filter = "";
         }
@@ -286,7 +294,7 @@ players[0].addEventListener('timeupdate', () => {
         if (canData.turn_right == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_right == "TURN_SIGNAL_ACTIVE_LOW") {
             // addGreenFilter();
             turnRightIndicator.style.filter = grayToGreenFilter;
-        } else if (canData.turn_right == "TURN_SIGNAL_OFF"){
+        } else if (canData.turn_right == "TURN_SIGNAL_OFF") {
             // removeGreenFilter();
             turnRightIndicator.style.filter = "";
         }
@@ -314,8 +322,8 @@ players[0].addEventListener('timeupdate', () => {
             highBeamHeadlight.style.filter = "";
         }
 
-        if(canData.ap_state !== null && canData.acc_speed_limit != null) {
-            if(canData.ap_state == "ACTIVE_NOMINAL" || canData.ap_state == "ACTIVE_NAV" || canData.ap_state == "ACTIVE_RESTRICTED") {
+        if (canData.ap_state !== null && canData.acc_speed_limit != null) {
+            if (canData.ap_state == "ACTIVE_NOMINAL" || canData.ap_state == "ACTIVE_NAV" || canData.ap_state == "ACTIVE_RESTRICTED") {
                 drivingMode.style.filter = grayToGreenFilter;
                 drivingModeText.innerHTML = "AP";
             } else if (canData.acc_speed_limit !== "NONE") {
@@ -342,7 +350,7 @@ players.forEach(player => {
         player.classList.add("not-allowed-click");
         player.load();
 
-        if(stalledVideos.length === validVideosChannelCount) {
+        if (stalledVideos.length === validVideosChannelCount) {
             // 本个时间段所有路视频均失效
             stalledVideosStr = "";
             stalledVideos.forEach(video => {
@@ -540,16 +548,16 @@ function binarySearchLoadedCanData(canJsonList, targetDateStr) {
 
 // 对于savedClips和sentryClips,根据读取的event.json文件，在进度条上设置触发的时间点标识
 function setEventTriggerTimestampMarker() {
-    if('timestamp' in eventJsonDataObject) {
+    if ('timestamp' in eventJsonDataObject) {
         // 日期格式如：2024-09-04T12:04:41 符合 ISO 8601 格式，JavaScript 原生支持该格式的解析
         eventTriggerTimestamp = new Date(eventJsonDataObject['timestamp']);
 
         // 触发时间距离开头时间的时长
-        if(clipsGroupStartTimestamp.length > 0 && clipsDuration > 0) {
+        if (clipsGroupStartTimestamp.length > 0 && clipsDuration > 0) {
             const sliderWidth = progressBar.offsetWidth;
 
             const markerLeft = (eventTriggerTimestamp - clipsGroupStartTimestamp[0]) / 1000 / clipsDuration * sliderWidth;
-        
+
             // 设置标识的水平位置
             eventMarker.style.left = `${markerLeft}px`;
             eventMarker.classList.remove('hidden');
@@ -588,6 +596,12 @@ async function togglePlayPause() {
 // 回退5s
 async function backward5Seconds() {
     const newValue = Number(progressBar.value) - 5;
+    progressBar.value = newValue;
+    await changeProgressBarValue();
+}
+
+async function forward5Seconds() {
+    const newValue = Number(progressBar.value) + 5;
     progressBar.value = newValue;
     await changeProgressBarValue();
 }
@@ -719,7 +733,7 @@ async function setVideosSrc(clipsIndex) {
         // 加载can文件，通过视频时间戳查找对应can文件并加载
 
         // video_ts格式如：2024-10-03_16-35-13
-        if(hasGotLastClipDuration) {
+        if (hasGotLastClipDuration) {
             await loadTwoMinutesCanData(video_ts);
         }
 
@@ -915,7 +929,7 @@ function resizeWindow() {
 }
 
 (
-    async() => {
+    async () => {
         if (savedVideoFiles) {
             if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
                 selectVideo(players[0]); // 主动选择 video-f
@@ -925,7 +939,7 @@ function resizeWindow() {
                 clipsDuration = savedVideoFiles[type].at(index).duration;
 
                 totalClipsNumber = savedVideoFiles[type].at(index).clips.length;
-        
+
                 // 获取每段视频的起始时间
                 savedVideoFiles[type].at(index).clips.forEach(clip => {
                     clipsGroupStartTimestamp.push(filenameDateToJsDate(clip.filename_ts));
@@ -933,7 +947,7 @@ function resizeWindow() {
 
                 // 针对Sentry和Saved加载json文件
                 eventJsonFilePath = savedVideoFiles[type].at(index).jsonPath;
-                if(eventJsonFilePath !== "") {
+                if (eventJsonFilePath !== "") {
                     eventJsonDataObject = await loadEventJsonFile(eventJsonFilePath);
                 }
 
