@@ -36,6 +36,70 @@ const xSpeedTextElement = document.getElementById('x-speed-text');
 const xSpeedButtonElement = document.getElementById('x-speed-btn');
 
 
+let pressStartTime = null;  // 记录按键开始按下的时间，用来区分长摁和短摁
+let isRightArrowPressed = false;  // 记录右键状态用来避免重复触发长摁
+let interval = null; // 用来清除 setInterval 的引用
+let isSpeedSet = false;  // 记录是否通过按键触发了倍速播放
+
+// 监听键盘按下事件
+document.addEventListener('keydown', (event) => {
+    if (event.code === 'ArrowRight') {
+        if (!isRightArrowPressed) {
+            isRightArrowPressed = true;
+            pressStartTime = Date.now(); // 记录按下的时间
+
+            // 检查按键是否持续 0.5 秒以上
+            const checkLongPress = () => {
+                if (isRightArrowPressed && (Date.now() - pressStartTime) >= 500) {
+                    // 持续时间超过 0.5 秒，且尚未设置倍速播放
+                    if (!isSpeedSet) {
+                        // 设置倍速播放
+                        console.log("set play rate to 4");
+                        // video.playbackRate = 4;  // 设置为4倍速
+                        isSpeedSet = true;  // 设置倍速标志
+                    }
+                }
+            };
+
+            // 每 100 毫秒检查一次是否长按
+            interval = setInterval(checkLongPress, 100);
+        }
+    } else if (event.code === 'Space') {
+        console.log("space pressed");
+        // 空格键：播放/暂停
+        // if (video.paused) {
+        //     video.play();
+        // } else {
+        //     video.pause();
+        // }
+    } else if (event.code === 'ArrowLeft') {
+        console.log("left pressed");
+        // 左箭头：后退 5 秒
+        // video.currentTime -= 5;
+    }
+});
+
+// 监听键盘松开事件
+document.addEventListener('keyup', (event) => {
+    if (event.code === 'ArrowRight') {
+        clearInterval(interval); // 清除计时器
+        if (Date.now() - pressStartTime < 500) {
+            // 如果没有长按 0.5 秒，执行前进 10 秒
+            // video.currentTime += 10;
+            console.log("forward 10s");
+        }
+
+        // 恢复正常播放速度
+        if(isSpeedSet) {
+            // video.playbackRate = 1;
+            console.log("set paly rate back to 1");
+            isSpeedSet = false;  // 重置倍速标志
+        }
+
+        isRightArrowPressed = false;
+    }
+});
+
 // 加载数据
 // 获取URL中的查询参数
 const urlParams = new URLSearchParams(window.location.search);
