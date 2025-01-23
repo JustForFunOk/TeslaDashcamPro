@@ -24,7 +24,7 @@ module.exports = {
 
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['windows'],
+      platforms: ['win32'],
       config: {
         overrideTargets: ['zip'], // 强制覆盖为 ZIP
       },
