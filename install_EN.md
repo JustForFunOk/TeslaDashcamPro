@@ -12,7 +12,7 @@
 
 ### 1.2 Installation
 
-#### 1.2.1 Windows Installation
+#### 1.2.1 Windows(win10 or later) Installation
 Double-click the downloaded `.exe` installation package and follow the steps below, allowing the installation of apps from unknown publishers.
 
 <img src="./docs/images/windows_install1.png" alt="windows installation 1" width="300" style="display: inline-block; margin-right: 10px;">
