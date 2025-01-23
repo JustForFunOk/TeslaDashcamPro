@@ -23,6 +23,9 @@ module.exports = {
     {
       name: '@electron-forge/maker-zip',
       platforms: ['darwin', 'windows', 'linux'],
+      config: {
+        overrideTargets: ['zip'],
+      },
     },
     {
       name: '@electron-forge/maker-deb',
