@@ -15,16 +15,16 @@ module.exports = {
   rebuildConfig: {},
   makers: [
     {
-      name: '@electron-forge/maker-squirrel',
-      config: {
-        setupIcon: 'assets/icon/tesla_dashcam_icon.ico',
-      },
-    },
-    {
       name: '@electron-forge/maker-zip',
       platforms: ['darwin', 'windows', 'linux'],
       config: {
         overrideTargets: ['zip'],
+      },
+    },
+    {
+      name: '@electron-forge/maker-squirrel',
+      config: {
+        setupIcon: 'assets/icon/tesla_dashcam_icon.ico',
       },
     },
     {
