@@ -30,18 +30,21 @@ jobs:
       - name: Debug Output Directory
         run: ls -R out/make
 
-      - name: Find .deb and .rpm files
+      - name: Find .deb, .rpm and .zip files
         id: find_packages
         run: |
-          # 查找 .deb 和 .rpm 文件路径
+          # 查找文件路径
           DEB_FILE=$(find out/make -type f -name "*.deb" | head -n 1)
           echo $DEB_FILE
           RPM_FILE=$(find out/make -type f -name "*.rpm" | head -n 1)
           echo $RPM_FILE
+          LINUX_ZIP_FILE=$(find out/make -type f -name "*.zip" | head -n 1)
+          echo $LINUX_ZIP_FILE
 
           # 输出路径供后续步骤使用
           echo "DEB_FILE=$DEB_FILE" >> $GITHUB_ENV
           echo "RPM_FILE=$RPM_FILE" >> $GITHUB_ENV
+          echo "LINUX_ZIP_FILE=$LINUX_ZIP_FILE" >> $GITHUB_ENV
 
       - name: Upload .deb Package
         uses: actions/upload-artifact@v4
@@ -56,6 +59,13 @@ jobs:
         with:
           name: linux-rpm-package
           path: ${{ env.RPM_FILE }}
+
+      - name: Upload .zip Package
+        uses: actions/upload-artifact@v4
+        if: ${{ env.LINUX_ZIP_FILE }}
+        with:
+          name: linux-zip-package
+          path: ${{ env.LINUX_ZIP_FILE }}
 
   # 针对 Windows 构建
   build-windows:
@@ -80,19 +90,29 @@ jobs:
       - name: Debug Output Directory
         run: ls -R out/make
 
-      - name: Find exe files
+      - name: Find exe and zip files
         id: find_packages
         run: |
           # 使用 PowerShell 命令查找 .exe 文件
           $EXE_FILE = Get-ChildItem -Path "out/make" -Recurse -Filter "*.exe" | Select-Object -First 1
           echo "EXE_FILE=$($EXE_FILE.FullName)" >> $env:GITHUB_ENV
 
+          $WIN_ZIP_FILE = Get-ChildItem -Path "out/make" -Recurse -Filter "*.zip" | Select-Object -First 1
+          echo "WIN_ZIP_FILE=$($WIN_ZIP_FILE.FullName)" >> $env:GITHUB_ENV
+
       - name: Upload .exe Package
         uses: actions/upload-artifact@v4
         if: ${{ env.EXE_FILE }}
         with:
-          name: windows-package
+          name: windows-exe-package
           path: ${{ env.EXE_FILE }}
+
+      - name: Upload .zip Package
+        uses: actions/upload-artifact@v4
+        if: ${{ env.WIN_ZIP_FILE }}
+        with:
+          name: windows-zip-package
+          path: ${{ env.WIN_ZIP_FILE }}
 
   # 针对 macOS 构建
   build-macos:
@@ -199,10 +219,28 @@ jobs:
       - name: Check download result
         run: ls -R dist
 
-      - name: Download Windows Artifact
+      - name: Download Linux .zip Artifact
         uses: actions/download-artifact@v4
         with:
-          name: windows-package
+          name: linux-zip-package
+          path: dist/linux
+
+      - name: Check download result
+        run: ls -R dist
+
+      - name: Download Windows .exe Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-exe-package
+          path: dist/windows
+
+      - name: Check download result
+        run: ls -R dist
+
+      - name: Download Windows .zip Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-zip-package
           path: dist/windows
 
       - name: Check download result
@@ -283,6 +321,29 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Find linux .zip File
+        id: find_linux_zip
+        run: |
+          # 查找 .zip 文件
+          LINUX_ZIP_FILE=$(find dist/linux -type f -name "*.zip" | head -n 1)
+          if [ -z "$LINUX_ZIP_FILE" ]; then
+            echo "No .zip file found!"
+            exit 1
+          fi
+          echo "LINUX_ZIP_FILE=$LINUX_ZIP_FILE" >> $GITHUB_ENV
+          LINUX_ZIP_NAME=$(basename "$LINUX_ZIP_FILE")
+          echo "LINUX_ZIP_NAME=$LINUX_ZIP_NAME" >> $GITHUB_ENV
+
+      - name: Upload Linux .zip Artifact
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.LINUX_ZIP_FILE }}
+          asset_name: ${{ env.LINUX_ZIP_NAME }}
+          asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Find .exe File
         id: find_exe
         run: |
@@ -300,13 +361,40 @@ jobs:
           echo "EXE_FILE_PATH=$EXE_FILE_PATH" >> $env:GITHUB_ENV
         shell: pwsh
 
-      - name: Upload Windows Artifact
+      - name: Upload Windows .exe Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.EXE_FILE_PATH }}
           asset_name: ${{ env.EXE_FILE_NAME }}
           asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Find windows .zip File
+        id: find_windows_zip
+        run: |
+          $WIN_ZIP_FILE = Get-ChildItem -Path "dist/windows" -Recurse -Filter "*.zip" | Select-Object -First 1
+          if ($null -eq $WIN_ZIP_FILE) {
+            Write-Host "No .zip file found!"
+            exit 1
+          }
+          # 获取文件路径
+          $WIN_ZIP_FILE_PATH = $WIN_ZIP_FILE.FullName
+          # 使用 Split-Path 获取文件名
+          $WIN_ZIP_FILE_NAME = Split-Path -Leaf $WIN_ZIP_FILE_PATH
+          Write-Host "WIN_ZIP_FILE_NAME=$WIN_ZIP_FILE_NAME"
+          echo "WIN_ZIP_FILE_NAME=$WIN_ZIP_FILE_NAME" >> $env:GITHUB_ENV
+          echo "WIN_ZIP_FILE_PATH=$WIN_ZIP_FILE_PATH" >> $env:GITHUB_ENV
+        shell: pwsh
+
+      - name: Upload Windows .zip Artifact
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.WIN_ZIP_FILE_PATH }}
+          asset_name: ${{ env.WIN_ZIP_FILE_NAME }}
+          asset_content_type: application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

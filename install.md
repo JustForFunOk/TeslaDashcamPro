@@ -10,9 +10,14 @@
 
 [![下载地址](https://img.shields.io/github/release/JustForFunOk/TeslaDashcamPro.svg)](https://github.com/JustForFunOk/TeslaDashcamPro/releases)
 
+windows和linux下同时提供了免安装的.zip包，可以解压后直接运行。
+
 ### 1.2 安装
 
-#### 1.2.1 Windows 安装
+#### 1.2.1 Windows(win10及以上) 安装 
+
+_不支持win10之前的系统，详情见[issue#6](https://github.com/JustForFunOk/TeslaDashcamPro/issues/6)。_
+
 双击下载的.exe安装包，按照如下进行操作，允许安装未知发布者的应用程序。
 
 <img src="./docs/images/windows_install1.png" alt="windows安装1" width="300" style="display: inline-block; margin-right: 10px;">
