@@ -15,14 +15,14 @@ module.exports = {
   rebuildConfig: {},
   makers: [
     {
+      name: '@electron-forge/maker-zip',
+      platforms: ['darwin', 'linux', 'win32'],
+    },
+    {
       name: '@electron-forge/maker-squirrel',
       config: {
         setupIcon: 'assets/icon/tesla_dashcam_icon.ico',
       },
-    },
-    {
-      name: '@electron-forge/maker-zip',
-      platforms: ['darwin'],
     },
     {
       name: '@electron-forge/maker-deb',
