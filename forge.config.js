@@ -21,12 +21,12 @@ module.exports = {
         overrideTargets: ['zip'],
       },
     },
-    {
-      name: '@electron-forge/maker-squirrel',
-      config: {
-        setupIcon: 'assets/icon/tesla_dashcam_icon.ico',
-      },
-    },
+    // {
+    //   name: '@electron-forge/maker-squirrel',
+    //   config: {
+    //     setupIcon: 'assets/icon/tesla_dashcam_icon.ico',
+    //   },
+    // },
     {
       name: '@electron-forge/maker-deb',
       config: {
