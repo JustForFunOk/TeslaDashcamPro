@@ -35,17 +35,13 @@ jobs:
       - name: Find Build Artifacts
         id: find_packages
         run: |
-          case "${{ matrix.os }}" in
-            ubuntu-20.04)
-              ARTIFACT=$(find out/make -type f \( -name "*.deb" -o -name "*.rpm" -o -name "*.zip" \) | head -n 1)
-              ;;
-            windows-2019)
-              ARTIFACT=$(Get-ChildItem -Path "out/make" -Recurse -Filter "*.exe" | Select-Object -First 1 | ForEach-Object { $_.FullName })
-              ;;
-            macos*)
-              ARTIFACT=$(find out/make -type f -name "*.zip" | head -n 1)
-              ;;
-          esac
+          if [ "${{ matrix.os }}" == "ubuntu-20.04" ]; then
+            ARTIFACT=$(find out/make -type f \( -name "*.deb" -o -name "*.rpm" -o -name "*.zip" \) | head -n 1)
+          elif [ "${{ matrix.os }}" == "windows-2019" ]; then
+            ARTIFACT=$(pwsh -Command "Get-ChildItem -Path 'out/make' -Recurse -Filter '*.exe' | Select-Object -First 1 | ForEach-Object { $_.FullName }")
+          elif [[ "${{ matrix.os }}" == macos* ]]; then
+            ARTIFACT=$(find out/make -type f -name "*.zip" | head -n 1)
+          fi
           echo "ARTIFACT=$ARTIFACT" >> $GITHUB_ENV
 
       - name: Upload Artifact
