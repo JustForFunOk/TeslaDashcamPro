@@ -16,26 +16,14 @@ module.exports = {
   makers: [
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin', 'linux'],
-      config: {
-        overrideTargets: ['zip'], // 强制覆盖为 ZIP
-      },
+      platforms: ['darwin', 'linux', 'win32'],
     },
-
     {
-      name: '@electron-forge/maker-zip',
-      platforms: ['win32'],
+      name: '@electron-forge/maker-squirrel',
       config: {
-        overrideTargets: ['zip'], // 强制覆盖为 ZIP
+        setupIcon: 'assets/icon/tesla_dashcam_icon.ico',
       },
     },
-
-    // {
-    //   name: '@electron-forge/maker-squirrel',
-    //   config: {
-    //     setupIcon: 'assets/icon/tesla_dashcam_icon.ico',
-    //   },
-    // },
     {
       name: '@electron-forge/maker-deb',
       config: {
