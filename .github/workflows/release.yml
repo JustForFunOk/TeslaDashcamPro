@@ -7,11 +7,11 @@ on:
   workflow_dispatch: # 手动触发
 
 jobs:
-  build:
-    name: Build and Package for All Platforms
+  build_unix:
+    name: Build and Package for Unix Platforms
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2019, macos-latest, macos-13]
+        os: [ubuntu-20.04, macos-latest, macos-13]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Code
@@ -37,8 +37,6 @@ jobs:
         run: |
           if [ "${{ matrix.os }}" == "ubuntu-20.04" ]; then
             ARTIFACT=$(find out/make -type f \( -name "*.deb" -o -name "*.rpm" -o -name "*.zip" \) | head -n 1)
-          elif [ "${{ matrix.os }}" == "windows-2019" ]; then
-            ARTIFACT=$(pwsh -Command "Get-ChildItem -Path 'out/make' -Recurse -Filter '*.exe' | Select-Object -First 1 | ForEach-Object { $_.FullName }")
           elif [[ "${{ matrix.os }}" == macos* ]]; then
             ARTIFACT=$(find out/make -type f -name "*.zip" | head -n 1)
           fi
@@ -51,9 +49,49 @@ jobs:
           name: ${{ matrix.os }}-artifact
           path: ${{ env.ARTIFACT }}
 
+  build_windows:
+    name: Build and Package for Windows
+    runs-on: windows-2019
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.18.0
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Package
+        run: npm run make
+
+      - name: Debug Output Directory
+        run: dir out\make /s
+
+      - name: Find Build Artifacts
+        id: find_packages
+        run: |
+          pwsh -Command "
+          if (Test-Path 'out/make') {
+              \$artifact = Get-ChildItem -Path 'out/make' -Recurse -Filter '*.exe' | Select-Object -First 1
+              if (\$artifact) {
+                  Write-Output \"ARTIFACT=\$($artifact.FullName)\" | Out-File -FilePath $env:GITHUB_ENV -Append
+              }
+          }"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        if: ${{ env.ARTIFACT }}
+        with:
+          name: windows-artifact
+          path: ${{ env.ARTIFACT }}
+
   release:
     name: Create GitHub Release
-    needs: build
+    needs: [build_unix, build_windows]
     runs-on: ubuntu-latest
     permissions:
       contents: write
