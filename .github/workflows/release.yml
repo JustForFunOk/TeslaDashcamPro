@@ -361,7 +361,7 @@ jobs:
           echo "EXE_FILE_PATH=$EXE_FILE_PATH" >> $env:GITHUB_ENV
         shell: pwsh
 
-      - name: Upload Windows Artifact
+      - name: Upload Windows .exe Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -384,11 +384,11 @@ jobs:
           # 使用 Split-Path 获取文件名
           $WIN_ZIP_FILE_NAME = Split-Path -Leaf $WIN_ZIP_FILE_PATH
           Write-Host "WIN_ZIP_FILE_NAME=$WIN_ZIP_FILE_NAME"
-          echo "WIN_ZIP_FILE_NAME=$EXE_WIN_ZIP_FILE_NAMEFILE_NAME" >> $env:GITHUB_ENV
+          echo "WIN_ZIP_FILE_NAME=$EXE_WIN_ZIP_FILE_NAME" >> $env:GITHUB_ENV
           echo "WIN_ZIP_FILE_PATH=$WIN_ZIP_FILE_PATH" >> $env:GITHUB_ENV
         shell: pwsh
 
-      - name: Upload Windows Artifact
+      - name: Upload Windows .zip Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
