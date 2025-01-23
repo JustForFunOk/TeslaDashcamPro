@@ -16,7 +16,15 @@ module.exports = {
   makers: [
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin', 'windows', 'linux'],
+      platforms: ['darwin', 'linux'],
+      config: {
+        overrideTargets: ['zip'], // 强制覆盖为 ZIP
+      },
+    },
+
+    {
+      name: '@electron-forge/maker-zip',
+      platforms: ['windows'],
       config: {
         overrideTargets: ['zip'], // 强制覆盖为 ZIP
       },
