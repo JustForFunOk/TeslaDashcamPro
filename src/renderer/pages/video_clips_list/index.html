@@ -259,8 +259,19 @@
 
         .video-duration {
             position: absolute;
-            bottom: 5px;
-            right: 10px;
+            bottom: 8px;
+            right: 5px;
+            background-color: rgba(23, 23, 23, 0.5);
+            color: #fff;
+            padding: 2px 5px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .city {
+            position: absolute;
+            bottom: 28px;
+            right: 5px;
             background-color: rgba(23, 23, 23, 0.5);
             color: #fff;
             padding: 2px 5px;
@@ -470,6 +481,14 @@
 
                 videoThumbnailDiv.appendChild(img);
                 videoThumbnailDiv.appendChild(durationDivElement);
+
+                if (entry.city && entry.city.trim() != '') {
+                    const cityDivElement = document.createElement("div");
+                    cityDivElement.classList.add("city");
+                    cityDivElement.textContent = entry.city;
+                    videoThumbnailDiv.appendChild(cityDivElement);
+                }
+
                 leftVideoInfoContainer.appendChild(videoThumbnailDiv);
 
                 const rightVideoActionContainer = document.createElement("div");

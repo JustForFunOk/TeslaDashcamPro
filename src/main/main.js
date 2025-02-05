@@ -78,22 +78,33 @@ async function processSubClips(dirPath, result, allClips) {
             clips: [],  // 视频列表
             jsonPath: "",  // event.json路径
             thumbPath: "",  // thumb.png路径
-            duration: 0  // 暂时还未使用
+            duration: 0,  // clips的时长
+            city: "",  // 触发时所在的位置，只有Sentry和Saved有这个信息
         };
 
         let tmpClips = [];
 
         const subDirPath = path.join(dirPath, subDir);
         const files = fs.readdirSync(subDirPath);
-        files.forEach(file => {
+        for (const file of files) {
             if (file.endsWith('.mp4')) {
                 tmpClips.push(file);
             } else if (file === 'event.json') {
                 dataStructureObject.jsonPath = path.join(subDirPath, file);
+                try {
+                    const data = fs.readFileSync(dataStructureObject.jsonPath, 'utf8');
+                    const jsonData = JSON.parse(data);
+
+                    if ('city' in jsonData) {
+                        dataStructureObject.city = jsonData.city;
+                    }
+                } catch (error) {
+                    console.error('Error reading or parsing the JSON file:', error);
+                }
             } else if (file === 'thumb.png') {
                 dataStructureObject.thumbPath = path.join(subDirPath, file);
             }
-        });
+        }
 
         tmpClips.sort();  // 正序，一组中的视频文件是正序的用于播放
         let previousTimestamp = "";
@@ -165,7 +176,8 @@ async function processAllClips(allClips, result) {
                         clips: [],  // 视频列表
                         jsonPath: "",  // event.json路径
                         thumbPath: "",  // thumb.png路径
-                        duration: 0  // 暂时还未使用
+                        duration: 0,
+                        city: ""
                     }
                 );
             }
