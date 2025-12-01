@@ -3,8 +3,15 @@ const players = [
     document.getElementById('video-f'),  // F
     document.getElementById('video-b'),  // B
     document.getElementById('video-l'),  // L
-    document.getElementById('video-r')   // R
+    document.getElementById('video-r'),  // R
+    document.getElementById('video-lf'),  // LF
+    document.getElementById('video-rf')   // RF
 ];
+
+const overlayLF = document.getElementById('overlay-lf');
+const overlayRF = document.getElementById('overlay-rf');
+const labelLF = document.getElementById('label-lf');
+const labelRF = document.getElementById('label-rf');
 
 const timeDisplay = document.getElementById('timestamp');
 
@@ -793,6 +800,49 @@ async function setVideosSrc(clipsIndex) {
             validVideosChannelCount++;
         }
         players[3].load();
+
+        if (videos.LF === '') {
+            players[4].removeAttribute("src");
+            players[4].poster = "no_video_min.svg";
+            players[4].classList.add("not-allowed-click");
+        } else {
+            players[4].src = videos.LF;
+            players[4].removeAttribute("poster");
+            players[4].classList.remove("not-allowed-click");
+            validVideoChannels.push("LF");
+            validVideosChannelCount++;
+        }
+        players[4].load();
+
+        if (videos.RF === '') {
+            players[5].removeAttribute("src");
+            players[5].poster = "no_video_min.svg";
+            players[5].classList.add("not-allowed-click");
+        } else {
+            players[5].src = videos.RF;
+            players[5].removeAttribute("poster");
+            players[5].classList.remove("not-allowed-click");
+            validVideoChannels.push("RF");
+            validVideosChannelCount++;
+        }
+        players[5].load();
+
+        if (videos.LF === '' && videos.RF === '') {
+            // 若左右前视都没有视频源，则隐藏这两个视频元素
+            players[4].classList.add("hidden");
+            players[5].classList.add("hidden");
+            overlayLF.classList.add("hidden");
+            overlayRF.classList.add("hidden");
+            labelLF.classList.add("hidden");
+            labelRF.classList.add("hidden");
+        } else {
+            players[4].classList.remove("hidden");
+            players[5].classList.remove("hidden");
+            overlayLF.classList.remove("hidden");
+            overlayRF.classList.remove("hidden");
+            labelLF.classList.remove("hidden");
+            labelRF.classList.remove("hidden");
+        }
 
         loadedVideosChannelCount = 0;  // 清零等待加载完毕
         endedVideosChannelCount = 0;

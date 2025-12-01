@@ -235,6 +235,16 @@ button:focus {
     right: 2%;
 }
 
+#video-lf {
+    top: 25%;
+    left: 2%;
+}
+
+#video-rf {
+    top: 25%;
+    right: 2%;
+}
+
 #video-l {
     bottom: 2%;
     left: 2%;
@@ -269,6 +279,16 @@ button:focus {
     right: 2%;
 }
 
+#overlay-lf {
+    top: 25%;
+    left: 2%;
+}
+
+#overlay-rf {
+    top: 25%;
+    right: 2%;
+}
+
 #overlay-l {
     bottom: 2%;
     left: 2%;
@@ -298,6 +318,16 @@ button:focus {
 
 #label-b {
     top: 2%;
+    right: 2%;
+}
+
+#label-lf {
+    top: 25%;
+    left: 2%;
+}
+
+#label-rf {
+    top: 25%;
     right: 2%;
 }
 

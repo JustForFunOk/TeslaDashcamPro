@@ -58,12 +58,16 @@
         <!-- 半透明的灰色窗口 -->
         <div id="overlay-f" class="overlay"></div>
         <div id="overlay-b" class="overlay"></div>
+        <div id="overlay-lf" class="overlay"></div>
+        <div id="overlay-rf" class="overlay"></div>
         <div id="overlay-l" class="overlay"></div>
         <div id="overlay-r" class="overlay"></div>
 
         <!-- 视角文本  这里不能作为overlay的子类 因为z层级不一样-->
         <div id="label-f" class="label">Front</div>
         <div id="label-b" class="label">Rear</div>
+        <div id="label-lf" class="label">LeftFront</div>
+        <div id="label-rf" class="label">RightFront</div>
         <div id="label-l" class="label">Left</div>
         <div id="label-r" class="label">Right</div>
 
@@ -71,6 +75,10 @@
         <video id="video-f" class="video large" onclick="selectVideo(this)" muted src="">
         </video>
         <video id="video-b" class="video small" onclick="selectVideo(this)" muted src="">
+        </video>
+        <video id="video-lf" class="video small" onclick="selectVideo(this)" muted src="">
+        </video>
+        <video id="video-rf" class="video small" onclick="selectVideo(this)" muted src="">
         </video>
         <video id="video-l" class="video small" onclick="selectVideo(this)" muted src="">
         </video>
