@@ -201,6 +201,8 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4 # ★ 必须要加，让 gh 能找到 .git
+
       - name: Download Linux .deb Artifact
         uses: actions/download-artifact@v4
         with:
