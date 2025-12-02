@@ -194,105 +194,105 @@ jobs:
           path: ${{ env.ZIP_FILE }}
 
   # 发布到 GitHub Release
-release:
-  name: Release Artifacts
-  needs: [build-linux, build-windows, build-macos, build-macos-intel]
-  runs-on: ubuntu-latest
-  permissions:
-    contents: write
+  release:
+    name: Release Artifacts
+    needs: [build-linux, build-windows, build-macos, build-macos-intel]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
-  steps:
-    - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-    # ========================
-    # 下载所有 artifacts
-    # ========================
+      # ========================
+      # 下载所有 artifacts
+      # ========================
 
-    - name: Download Linux .deb Artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: linux-deb-package
-        path: dist/linux
+      - name: Download Linux .deb Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-deb-package
+          path: dist/linux
 
-    - name: Download Linux .rpm Artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: linux-rpm-package
-        path: dist/linux
+      - name: Download Linux .rpm Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-rpm-package
+          path: dist/linux
 
-    - name: Download Linux .zip Artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: linux-zip-package
-        path: dist/linux
+      - name: Download Linux .zip Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-zip-package
+          path: dist/linux
 
-    - name: Download Windows .exe Artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: windows-exe-package
-        path: dist/windows
+      - name: Download Windows .exe Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-exe-package
+          path: dist/windows
 
-    - name: Download Windows .zip Artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: windows-zip-package
-        path: dist/windows
+      - name: Download Windows .zip Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-zip-package
+          path: dist/windows
 
-    - name: Download macOS Artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: macos-package
-        path: dist/macos
+      - name: Download macOS Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-package
+          path: dist/macos
 
-    - name: Download macOS Intel Artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: macos-intel-package
-        path: dist/macos-intel
+      - name: Download macOS Intel Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-intel-package
+          path: dist/macos-intel
 
-    - name: Check download result
-      run: ls -R dist
+      - name: Check download result
+        run: ls -R dist
 
-    # ========================
-    # 创建 Release
-    # ========================
-    - name: Create Release
-      run: |
-        gh release create "${{ github.ref_name }}" \
-          --title "${{ github.ref_name }}" \
-          --notes "" \
-          --draft=false \
-          --prerelease=false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # ========================
+      # 创建 Release
+      # ========================
+      - name: Create Release
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --title "${{ github.ref_name }}" \
+            --notes "" \
+            --draft=false \
+            --prerelease=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # ========================
-    # 上传所有文件 (自动扫描)
-    # ========================
-    - name: Upload All Artifacts
-      run: |
-        echo "Uploading Linux files..."
-        for file in dist/linux/*; do
-          echo "Uploading $file"
-          gh release upload "${{ github.ref_name }}" "$file"
-        done
+      # ========================
+      # 上传所有文件 (自动扫描)
+      # ========================
+      - name: Upload All Artifacts
+        run: |
+          echo "Uploading Linux files..."
+          for file in dist/linux/*; do
+            echo "Uploading $file"
+            gh release upload "${{ github.ref_name }}" "$file"
+          done
 
-        echo "Uploading Windows files..."
-        for file in dist/windows/*; do
-          echo "Uploading $file"
-          gh release upload "${{ github.ref_name }}" "$file"
-        done
+          echo "Uploading Windows files..."
+          for file in dist/windows/*; do
+            echo "Uploading $file"
+            gh release upload "${{ github.ref_name }}" "$file"
+          done
 
-        echo "Uploading macOS ARM files..."
-        for file in dist/macos/*; do
-          echo "Uploading $file"
-          gh release upload "${{ github.ref_name }}" "$file"
-        done
+          echo "Uploading macOS ARM files..."
+          for file in dist/macos/*; do
+            echo "Uploading $file"
+            gh release upload "${{ github.ref_name }}" "$file"
+          done
 
-        echo "Uploading macOS Intel files..."
-        for file in dist/macos-intel/*; do
-          echo "Uploading $file"
-          gh release upload "${{ github.ref_name }}" "$file"
-        done
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "Uploading macOS Intel files..."
+          for file in dist/macos-intel/*; do
+            echo "Uploading $file"
+            gh release upload "${{ github.ref_name }}" "$file"
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
