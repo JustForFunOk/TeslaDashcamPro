@@ -47,6 +47,8 @@ async function parseTeslaCamFolder(folderPath) {
 function addVideoToDict(dict, position, fullPath) {
     if (position === 'front') dict.F = fullPath;
     if (position === 'back') dict.B = fullPath;
+    if (position === 'left_pillar') dict.LF = fullPath;
+    if (position === 'right_pillar') dict.RF = fullPath;
     if (position === 'left_repeater') dict.L = fullPath;
     if (position === 'right_repeater') dict.R = fullPath;
 }
@@ -122,6 +124,8 @@ async function processSubClips(dirPath, result, allClips) {
                             videos: {
                                 F: "",
                                 B: "",
+                                LF: "",
+                                RF: "",
                                 L: "",
                                 R: ""
                             }
@@ -190,6 +194,8 @@ async function processAllClips(allClips, result) {
                         videos: {
                             F: "",
                             B: "",
+                            LF: "",
+                            RF: "",
                             L: "",
                             R: ""
                         }
@@ -212,7 +218,7 @@ async function processAllClips(allClips, result) {
 }
 
 function parseFileName(fileName) {
-    const regex = /^(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})-(front|back|left_repeater|right_repeater)\.mp4$/;
+    const regex = /^(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})-(front|back|left_pillar|right_pillar|left_repeater|right_repeater)\.mp4$/;
     const match = fileName.match(regex);
     if (match) {
         const file_ts = `${match[1]}-${match[2]}-${match[3]}_${match[4]}-${match[5]}-${match[6]}`;
