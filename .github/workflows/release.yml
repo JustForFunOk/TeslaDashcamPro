@@ -194,253 +194,105 @@ jobs:
           path: ${{ env.ZIP_FILE }}
 
   # 发布到 GitHub Release
-  release:
-    name: Release Artifacts
-    needs: [build-linux, build-windows, build-macos, build-macos-intel]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4 # ★ 必须要加，让 gh 能找到 .git
+release:
+  name: Release Artifacts
+  needs: [build-linux, build-windows, build-macos, build-macos-intel]
+  runs-on: ubuntu-latest
+  permissions:
+    contents: write
 
-      - name: Download Linux .deb Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: linux-deb-package
-          path: dist/linux
+  steps:
+    - uses: actions/checkout@v4
 
-      - name: Check download result
-        run: ls -R dist
+    # ========================
+    # 下载所有 artifacts
+    # ========================
 
-      - name: Download Linux .rpm Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: linux-rpm-package
-          path: dist/linux
+    - name: Download Linux .deb Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: linux-deb-package
+        path: dist/linux
 
-      - name: Check download result
-        run: ls -R dist
+    - name: Download Linux .rpm Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: linux-rpm-package
+        path: dist/linux
 
-      - name: Download Linux .zip Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: linux-zip-package
-          path: dist/linux
+    - name: Download Linux .zip Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: linux-zip-package
+        path: dist/linux
 
-      - name: Check download result
-        run: ls -R dist
+    - name: Download Windows .exe Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: windows-exe-package
+        path: dist/windows
 
-      - name: Download Windows .exe Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: windows-exe-package
-          path: dist/windows
+    - name: Download Windows .zip Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: windows-zip-package
+        path: dist/windows
 
-      - name: Check download result
-        run: ls -R dist
+    - name: Download macOS Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: macos-package
+        path: dist/macos
 
-      - name: Download Windows .zip Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: windows-zip-package
-          path: dist/windows
+    - name: Download macOS Intel Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: macos-intel-package
+        path: dist/macos-intel
 
-      - name: Check download result
-        run: ls -R dist
+    - name: Check download result
+      run: ls -R dist
 
-      - name: Download macOS Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: macos-package
-          path: dist/macos
+    # ========================
+    # 创建 Release
+    # ========================
+    - name: Create Release
+      run: |
+        gh release create "${{ github.ref_name }}" \
+          --title "${{ github.ref_name }}" \
+          --notes "" \
+          --draft=false \
+          --prerelease=false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check download result
-        run: ls -R dist
+    # ========================
+    # 上传所有文件 (自动扫描)
+    # ========================
+    - name: Upload All Artifacts
+      run: |
+        echo "Uploading Linux files..."
+        for file in dist/linux/*; do
+          echo "Uploading $file"
+          gh release upload "${{ github.ref_name }}" "$file"
+        done
 
-      - name: Download macOS Intel Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: macos-intel-package
-          path: dist/macos-intel
+        echo "Uploading Windows files..."
+        for file in dist/windows/*; do
+          echo "Uploading $file"
+          gh release upload "${{ github.ref_name }}" "$file"
+        done
 
-      - name: Check download result
-        run: ls -R dist
+        echo "Uploading macOS ARM files..."
+        for file in dist/macos/*; do
+          echo "Uploading $file"
+          gh release upload "${{ github.ref_name }}" "$file"
+        done
 
-      - name: Create Release
-        run: |
-          gh release create "${{ github.ref_name }}" \
-            --title "${{ github.ref_name }}" \
-            --notes "" \
-            --draft=false \
-            --prerelease=false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Find .deb File
-        id: find_deb
-        run: |
-          # 查找 .deb 文件
-          DEB_FILE=$(find dist/linux -type f -name "*.deb" | head -n 1)
-          if [ -z "$DEB_FILE" ]; then
-            echo "No .deb file found!"
-            exit 1
-          fi
-          echo "DEB_FILE=$DEB_FILE" >> $GITHUB_ENV
-          DEB_NAME=$(basename "$DEB_FILE")
-          echo "DEB_NAME=$DEB_NAME" >> $GITHUB_ENV
-
-      - name: Upload Linux .deb Artifact
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.DEB_FILE }}
-          asset_name: ${{ env.DEB_NAME }}
-          asset_content_type: application/vnd.debian.binary-package
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Find .rpm File
-        id: find_rpm
-        run: |
-          # 查找 .rpm 文件
-          RPM_FILE=$(find dist/linux -type f -name "*.rpm" | head -n 1)
-          if [ -z "$RPM_FILE" ]; then
-            echo "No .rpm file found!"
-            exit 1
-          fi
-          echo "RPM_FILE=$RPM_FILE" >> $GITHUB_ENV
-          RPM_NAME=$(basename "$RPM_FILE")
-          echo "RPM_NAME=$RPM_NAME" >> $GITHUB_ENV
-
-      - name: Upload Linux .rpm Artifact
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.RPM_FILE }}
-          asset_name: ${{ env.RPM_NAME }}
-          asset_content_type: application/x-rpm
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Find linux .zip File
-        id: find_linux_zip
-        run: |
-          # 查找 .zip 文件
-          LINUX_ZIP_FILE=$(find dist/linux -type f -name "*.zip" | head -n 1)
-          if [ -z "$LINUX_ZIP_FILE" ]; then
-            echo "No .zip file found!"
-            exit 1
-          fi
-          echo "LINUX_ZIP_FILE=$LINUX_ZIP_FILE" >> $GITHUB_ENV
-          LINUX_ZIP_NAME=$(basename "$LINUX_ZIP_FILE")
-          echo "LINUX_ZIP_NAME=$LINUX_ZIP_NAME" >> $GITHUB_ENV
-
-      - name: Upload Linux .zip Artifact
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.LINUX_ZIP_FILE }}
-          asset_name: ${{ env.LINUX_ZIP_NAME }}
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Find .exe File
-        id: find_exe
-        run: |
-          $EXE_FILE = Get-ChildItem -Path "dist/windows" -Recurse -Filter "*.exe" | Select-Object -First 1
-          if ($null -eq $EXE_FILE) {
-            Write-Host "No .exe file found!"
-            exit 1
-          }
-          # 获取文件路径
-          $EXE_FILE_PATH = $EXE_FILE.FullName
-          # 使用 Split-Path 获取文件名
-          $EXE_FILE_NAME = Split-Path -Leaf $EXE_FILE_PATH
-          Write-Host "EXE_FILE_NAME=$EXE_FILE_NAME"
-          echo "EXE_FILE_NAME=$EXE_FILE_NAME" >> $env:GITHUB_ENV
-          echo "EXE_FILE_PATH=$EXE_FILE_PATH" >> $env:GITHUB_ENV
-        shell: pwsh
-
-      - name: Upload Windows .exe Artifact
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.EXE_FILE_PATH }}
-          asset_name: ${{ env.EXE_FILE_NAME }}
-          asset_content_type: application/octet-stream
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Find windows .zip File
-        id: find_windows_zip
-        run: |
-          $WIN_ZIP_FILE = Get-ChildItem -Path "dist/windows" -Recurse -Filter "*.zip" | Select-Object -First 1
-          if ($null -eq $WIN_ZIP_FILE) {
-            Write-Host "No .zip file found!"
-            exit 1
-          }
-          # 获取文件路径
-          $WIN_ZIP_FILE_PATH = $WIN_ZIP_FILE.FullName
-          # 使用 Split-Path 获取文件名
-          $WIN_ZIP_FILE_NAME = Split-Path -Leaf $WIN_ZIP_FILE_PATH
-          Write-Host "WIN_ZIP_FILE_NAME=$WIN_ZIP_FILE_NAME"
-          echo "WIN_ZIP_FILE_NAME=$WIN_ZIP_FILE_NAME" >> $env:GITHUB_ENV
-          echo "WIN_ZIP_FILE_PATH=$WIN_ZIP_FILE_PATH" >> $env:GITHUB_ENV
-        shell: pwsh
-
-      - name: Upload Windows .zip Artifact
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.WIN_ZIP_FILE_PATH }}
-          asset_name: ${{ env.WIN_ZIP_FILE_NAME }}
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Find .app File
-        id: find_macos_m1_app
-        run: |
-          # 查找 .zip 文件
-          MACOS_FILE=$(find dist/macos -type f -name "*.zip" | head -n 1)
-          if [ -z "$MACOS_FILE" ]; then
-            echo "No .zip file found!"
-            exit 1
-          fi
-          echo "MACOS_FILE=$MACOS_FILE" >> $GITHUB_ENV
-          MACOS_NAME=$(basename "$MACOS_FILE")
-          echo "MACOS_NAME=$MACOS_NAME" >> $GITHUB_ENV
-
-      - name: Upload macOS Artifact
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.MACOS_FILE }}
-          asset_name: ${{ env.MACOS_NAME }}
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Find .app(intel) File
-        id: find_macos_intel_app
-        run: |
-          # 查找 .zip 文件
-          MACOS_INTEL_FILE=$(find dist/macos-intel -type f -name "*.zip" | head -n 1)
-          if [ -z "$MACOS_INTEL_FILE" ]; then
-            echo "No .zip file found!"
-            exit 1
-          fi
-          echo "MACOS_INTEL_FILE=$MACOS_INTEL_FILE" >> $GITHUB_ENV
-          MACOS_INTEL_NAME=$(basename "$MACOS_INTEL_FILE")
-          echo "MACOS_INTEL_NAME=$MACOS_INTEL_NAME" >> $GITHUB_ENV
-
-      - name: Upload macOS Artifact
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.MACOS_INTEL_FILE }}
-          asset_name: ${{ env.MACOS_INTEL_NAME }}
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        echo "Uploading macOS Intel files..."
+        for file in dist/macos-intel/*; do
+          echo "Uploading $file"
+          gh release upload "${{ github.ref_name }}" "$file"
+        done
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
