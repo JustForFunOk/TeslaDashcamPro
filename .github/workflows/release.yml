@@ -3,14 +3,14 @@ name: Build and Release by Platform
 on:
   push:
     tags:
-      - 'v*' # 当推送标签（如 v1.0.0）时触发
+      - "v*" # 当推送标签（如 v1.0.0）时触发
   workflow_dispatch: # 手动触发
 
 jobs:
   # 针对 Ubuntu 构建
   build-linux:
     name: Build for Linux
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
