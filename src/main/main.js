@@ -54,7 +54,7 @@ async function getTeslaSeiData(filePath, SeiMetadataModel) {
         const parser = new DashcamMP4(arrayBuffer);
 
         // 4. 提取 SEI 消息
-        const seiMessages = parser.extractSeiMessages(SeiMetadataModel);
+        const seiMessages = parser.parseFrames(SeiMetadataModel);
 
         // console.log(seiMessages);
         return seiMessages;

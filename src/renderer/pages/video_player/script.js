@@ -37,7 +37,7 @@ const xSpeedButton = document.getElementById('x-speed-btn');
 const playPauseIcon = document.getElementById('play-pause-icon');
 const progressBar = document.getElementById('progress-bar');
 const eventMarker = document.getElementById('event-marker');
-const currentTime = document.getElementById('current-time');
+const currentDuration = document.getElementById('current-time');
 const totalDuration = document.getElementById('total-duration');
 const xSpeedTextElement = document.getElementById('x-speed-text');
 const xSpeedButtonElement = document.getElementById('x-speed-btn');
@@ -174,7 +174,7 @@ progressBar.addEventListener('input', async () => {
         is_playing = false;
         setPlaybackRate(1);
 
-        currentTime.innerHTML = formatDuration(progressBar.max);
+        currentDuration.innerHTML = formatDuration(progressBar.max);
     }
 });
 
@@ -217,7 +217,7 @@ players[0].addEventListener('timeupdate', () => {
     const currentDate = formatDate(currentFrameTimestamp);
 
     // 更新时间戳
-    currentTime.innerHTML = formatDuration(progressBar.value);
+    currentDuration.innerHTML = formatDuration(progressBar.value);
     timeDisplay.innerHTML = currentDate;
 
     // 这里更新驾驶信息
@@ -225,14 +225,17 @@ players[0].addEventListener('timeupdate', () => {
     // 通过帧率换算成索引
     // 通过索引获取metadata数据
     // 更新UI
+
     if (seiData && seiData.length > 0) {
-        canDataDisplay.classList.remove('hidden');
         topContainer.style.justifyContent = 'space-between';
 
         const seiIndex = Math.round(playTimeInClip * 36);
-        if (seiIndex < seiData.length) {
-            console.log(seiIndex);
-            console.log(seiData[seiIndex]);
+
+        if (seiIndex < seiData.length && seiData[seiIndex] != null) {
+            canDataDisplay.classList.remove('hidden');
+
+            window.logger.debug("update sei index: ", seiIndex);
+            // window.logger.debug(seiData[seiIndex]);
 
             const frameSeiData = seiData[seiIndex];
 
@@ -267,18 +270,14 @@ players[0].addEventListener('timeupdate', () => {
             steeringWheelIcon.style.transform = `rotate(${steeringAngle}deg)`;
 
             if (frameSeiData.blinkerOnLeft) {
-                // addGreenFilter();
                 turnLeftIndicator.style.filter = grayToGreenFilter;
             } else {
-                // removeGreenFilter();
                 turnLeftIndicator.style.filter = "";
             }
 
             if (frameSeiData.blinkerOnRight) {
-                // addGreenFilter();
                 turnRightIndicator.style.filter = grayToGreenFilter;
             } else {
-                // removeGreenFilter();
                 turnRightIndicator.style.filter = "";
             }
 
@@ -307,6 +306,8 @@ players[0].addEventListener('timeupdate', () => {
                     break;
             }
 
+        } else {
+            canDataDisplay.classList.add('hidden');
         }
     } else {
         canDataDisplay.classList.add('hidden');
@@ -365,6 +366,9 @@ players.forEach(player => {
     player.addEventListener('ended', async () => {
         endedVideosChannelCount++;
         if (endedVideosChannelCount === validVideosChannelCount) {
+            // 清空上一个视频的sei
+            seiData = [];
+
             // x路视频都播放完毕
             currentIndex++;
 
@@ -535,7 +539,7 @@ async function loadEventJsonFile(filePath) {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error loading JSON:', error);
+        window.logger.error('Error loading JSON:', error);
         return {};
     }
 }
@@ -563,7 +567,8 @@ async function setVideosSrc(clipsIndex) {
             // 解析数据
             window.logger.debug("解析:", videos.F);
             seiData = await window.electronAPI.parseVideoSei(videos.F);
-            // console.log(seiData);
+            // window.logger.debug(seiData);
+            window.logger.debug("共计:", seiData.length, "帧SEI数据");
         }
         players[0].load();
 
@@ -783,11 +788,6 @@ function resizeWindow() {
     window.electronAPI.resizeWindow(videoW, videoH, extraWidth, extraHeight);
 }
 
-/**
- * 获取视频时长（异步）
- * @param {string} url 视频地址或 Blob URL
- * @returns {Promise<number>} 返回视频时长（秒）
- */
 function getVideoDuration(url) {
     return new Promise((resolve, reject) => {
         const video = document.createElement('video');
@@ -809,8 +809,6 @@ function getVideoDuration(url) {
 
 async function updateClipsDuration() {
     try {
-        console.log("正在获取总视频时长...");
-
         // 获取最后一段视频的地址且找到第一个有效的视频地址
         const videos = AllClipsList[type].at(index).clips.at(totalClipsNumber - 1).videos;
         const keys = ['F', 'B', 'L', 'R', 'LF', 'RF'];

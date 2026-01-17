@@ -50,6 +50,7 @@ class DashcamMP4 {
     /** Extract all SEI messages for CSV export */
     // 扫描NALU单元，如果非SEI信息则跳过
     // 储存布局：SEI是随帧存储的。第 1 帧视频后面跟着一个包含第 1 帧状态的 SEI，第 2 帧视频后面跟着第 2 帧的 SEI，所以需要全量扫描
+    // 这个函数只会导出有效的SEI信息，车辆未启动的时候不会保存SEI信息
     extractSeiMessages(SeiMetadata) {
         const mdat = this.findMdat();
         const messages = [];
@@ -75,7 +76,36 @@ class DashcamMP4 {
         return messages;
     }
 
+
+    /** Parse video frames with SEI metadata */
+    parseFrames(SeiMetadata) {
+        const mdat = this.findMdat();
+        const frames = [];
+        let cursor = mdat.offset;
+        const end = mdat.offset + mdat.size;
+        let pendingSei = null;
+
+        while (cursor + 4 <= end) {
+            const len = this.view.getUint32(cursor);
+            cursor += 4;
+            if (len < 1 || cursor + len > this.view.byteLength) break;
+
+            const type = this.view.getUint8(cursor) & 0x1F;
+
+            if (type === 6) {
+                const data = new Uint8Array(this.buffer.slice(cursor, cursor + len));
+                pendingSei = this.decodeSei(data, SeiMetadata); // SEI
+            } else if (type === 5 || type === 1) { // IDR or Slice
+                frames.push(pendingSei);
+                pendingSei = null;
+            }
+            cursor += len;
+        }
+        return frames;
+    }
+
     /** Decode SEI NAL unit to protobuf message */
+    // 这个函数相比上个函数可以将无SEI时的帧也包含进去用于和视频的对齐
     decodeSei(nal, SeiMetadata) {
         if (!SeiMetadata || nal.length < 4) return null;
 
