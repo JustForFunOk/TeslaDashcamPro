@@ -377,12 +377,11 @@
 
         selectFolderBtn.addEventListener('click', async () => {
             // 调用 Electron API 选择文件夹
-            [isReadSuccess, videoFilesData, decodedCanFilesData] = await window.electronAPI.selectFolder();
+            [isReadSuccess, videoFilesData] = await window.electronAPI.selectFolder();
 
             if (isReadSuccess) {
                 // 保存视频列表到sessionStorage本地应用运行期间都可以获取其中的内容
                 sessionStorage.setItem('videoFiles', JSON.stringify(videoFilesData));
-                sessionStorage.setItem('decodedCanFiles', JSON.stringify(decodedCanFilesData));
 
                 loadEntries("SavedClips");
                 loadEntries("SentryClips");

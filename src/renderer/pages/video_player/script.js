@@ -27,10 +27,7 @@ const acceleratorPedal = document.getElementById('accelerator-pedal');
 const accelPercentage = document.getElementById('accel-percentage-text');
 const turnLeftIndicator = document.getElementById('left-turn-light');
 const turnRightIndicator = document.getElementById('right-turn-light');
-const sideMarker = document.getElementById('side-marker-light');
-const lowBeamHeadlight = document.getElementById('low-beam-headlight');
-const highBeamHeadlight = document.getElementById('high-beam-headlight');
-// const fogLight = document.getElementById('fog-light');
+
 
 const bottomContainer = document.getElementById('bottom-container');
 const backButton = document.getElementById('back-button');
@@ -50,6 +47,8 @@ let pressStartTime = null;  // 记录按键开始按下的时间，用来区分�
 let isRightArrowPressed = false;  // 记录右键状态用来避免重复触发长摁
 let interval = null; // 用来清除 setInterval 的引用
 let isSpeedSet = false;  // 记录是否通过按键触发了倍速播放
+let seiData = null;
+
 
 // 监听键盘按下事件
 document.addEventListener('keydown', (event) => {
@@ -107,7 +106,6 @@ const index = urlParams.get('index');
 
 // 通过sessionStorage实现快页面的数据共享
 const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
-const decodedCanFiles = JSON.parse(sessionStorage.getItem('decodedCanFiles'));
 
 const grayToGreenFilter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
 const grayToRedFilter = "brightness(0) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(353deg) brightness(96%) contrast(111%)";
@@ -145,21 +143,7 @@ let hasGotLastClipDuration = false;
 let currentPlaybackRate = 1;
 const maxPlaybackRate = 8;
 
-// can data
-// CAN时间与视频时间的差值，若CAN时间比视频时间提前这个值为正，否则为负
-const deltaT = 0.0;
-
-let twoMinutesJsonCanDataArray = [];
-
 let eventJsonDataObject = {};
-
-let hasCanData = true;
-
-if (decodedCanFiles.length == 0) {
-    hasCanData = false;
-    canDataDisplay.classList.add('hidden');
-    topContainer.style.justifyContent = 'center';
-}
 
 // 返回按钮点击事件，跳转回主页面
 backButton.addEventListener('click', () => window.history.back());
@@ -241,109 +225,97 @@ players[0].addEventListener('timeupdate', () => {
     currentTime.innerHTML = formatDuration(progressBar.value);
     timeDisplay.innerHTML = currentDate;
 
-    // ISO 8601 格式的日期，当地时间 2024-10-03T16:35:09.7
-    const canDate = getCurrentCanDate(currentFrameTimestamp, decimalPart, deltaT);
+    // 这里更新驾驶信息
+    // 通过playTimeInClip目前视频的播放时间
+    // 通过帧率换算成索引
+    // 通过索引获取metadata数据
+    // 更新UI
+    if (seiData && seiData.length > 0) {
+        canDataDisplay.classList.remove('hidden');
+        topContainer.style.justifyContent = 'space-between';
 
+        const seiIndex = Math.round(playTimeInClip * 36);
+        if (seiIndex < seiData.length) {
+            console.log(seiIndex);
+            console.log(seiData[seiIndex]);
 
-    if (!hasCanData) {
-        return;
-    }
+            const frameSeiData = seiData[seiIndex];
 
-    // 转换为can数据的时间戳，二分查找对应can数据
-    const dataIndex = binarySearchLoadedCanData(twoMinutesJsonCanDataArray, canDate);
-
-    const canData = twoMinutesJsonCanDataArray[dataIndex];
-
-    if (canData) {
-        if (typeof canData.v === "number" && canData.v >= 0) {
-            vehicleSpeed.innerHTML = canData.v + ' km/h';
-        }
-
-        switch (canData.gear) {
-            case "DI_GEAR_D":
-                gearPosition.innerHTML = "D";
-                break;
-            case "DI_GEAR_P":
-                gearPosition.innerHTML = "P";
-                break;
-            case "DI_GEAR_R":
-                gearPosition.innerHTML = "R";
-                break;
-            case "DI_GEAR_N":
-                gearPosition.innerHTML = "N";
-                break;
-            default:
-                break;
-        }
-
-        if (canData.accel_pos > 0.0) {
-            acceleratorPedal.style.filter = grayToGreenFilter;
-            accelPercentage.innerHTML = Math.round(canData.accel_pos) + "%";
-        } else {
-            acceleratorPedal.style.filter = "";
-            accelPercentage.innerHTML = "";
-        }
-
-        if (canData.brake_pedal == "DRIVER_APPLYING_BRAKES") {
-            brakePedal.style.filter = grayToRedFilter;
-        } else if (canData.brake_pedal !== null) {
-            brakePedal.style.filter = "";
-        }
-
-        if (canData.turn_left == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_left == "TURN_SIGNAL_ACTIVE_LOW") {
-            // addGreenFilter();
-            turnLeftIndicator.style.filter = grayToGreenFilter;
-        } else if (canData.turn_left == "TURN_SIGNAL_OFF") {
-            // removeGreenFilter();
-            turnLeftIndicator.style.filter = "";
-        }
-
-        if (canData.turn_right == "TURN_SIGNAL_ACTIVE_HIGH" || canData.turn_right == "TURN_SIGNAL_ACTIVE_LOW") {
-            // addGreenFilter();
-            turnRightIndicator.style.filter = grayToGreenFilter;
-        } else if (canData.turn_right == "TURN_SIGNAL_OFF") {
-            // removeGreenFilter();
-            turnRightIndicator.style.filter = "";
-        }
-
-        // canData.hazard_light这个显示这里无需判断，触发双闪的时候，turn_left和turn_right会同时触发，可以达到双闪的显示效果
-        // if (canData.hazard_light == "TURN_SIGNAL_ACTIVE_HIGH")
-
-        // 开启近光灯时，side marker信号为off 但是灯应该还在亮着？
-        if (canData.side_marker == "LIGHT_ON" || canData.low_beam == "LIGHT_ON") {
-            sideMarker.style.filter = grayToGreenFilter;
-        } else if (canData.side_marker !== null) {
-            // 可能为OFF FAULT SNA，null可能是因为每分钟开头的无效数据
-            sideMarker.style.filter = "";
-        }
-
-        if (canData.low_beam == "LIGHT_ON") {
-            lowBeamHeadlight.style.filter = grayToGreenFilter;
-        } else if (canData.low_beam !== null) {
-            lowBeamHeadlight.style.filter = "";
-        }
-
-        if (canData.high_beam == "LIGHT_ON") {
-            highBeamHeadlight.style.filter = grayToBlueFilter;
-        } else if (canData.high_beam !== null) {
-            highBeamHeadlight.style.filter = "";
-        }
-
-        if (canData.ap_state !== null && canData.acc_speed_limit != null) {
-            if (canData.ap_state == "ACTIVE_NOMINAL" || canData.ap_state == "ACTIVE_NAV" || canData.ap_state == "ACTIVE_RESTRICTED") {
-                drivingMode.style.filter = grayToGreenFilter;
-                drivingModeText.innerHTML = "AP";
-            } else if (canData.acc_speed_limit !== "NONE") {
-                drivingMode.style.filter = "invert(50%)";  // 这里不加上filter会影响ACC文本位置的显示，原因未知
-                drivingModeText.innerHTML = "ACC";
-            } else {
-                drivingMode.style.filter = "invert(50%)";
-                drivingModeText.innerHTML = "";
+            switch (frameSeiData.gearState) {
+                case "GEAR_DRIVE":
+                    gearPosition.innerHTML = "D";
+                    break;
+                case "GEAR_PARK":
+                    gearPosition.innerHTML = "P";
+                    break;
+                case "GEAR_REVERSE":
+                    gearPosition.innerHTML = "R";
+                    break;
+                case "GEAR_NEUTRAL":
+                    gearPosition.innerHTML = "N";
+                    break;
+                default:
+                    break;
             }
-        }
 
-        const steeringAngle = Math.round(canData.steering_angle) % 360;
-        steeringWheelIcon.style.transform = `rotate(${steeringAngle}deg)`;
+            vehicleSpeed.innerHTML = Math.round(frameSeiData.vehicleSpeedMps * 3.6) + ' km/h';
+
+            if (frameSeiData.acceleratorPedalPosition > 0.0) {
+                acceleratorPedal.style.filter = grayToGreenFilter;
+                accelPercentage.innerHTML = Math.round(frameSeiData.acceleratorPedalPosition) + "%";
+            } else {
+                acceleratorPedal.style.filter = "";
+                accelPercentage.innerHTML = "";
+            }
+
+            const steeringAngle = Math.round(frameSeiData.steeringWheelAngle) % 360;
+            steeringWheelIcon.style.transform = `rotate(${steeringAngle}deg)`;
+
+            if (frameSeiData.blinkerOnLeft) {
+                // addGreenFilter();
+                turnLeftIndicator.style.filter = grayToGreenFilter;
+            } else {
+                // removeGreenFilter();
+                turnLeftIndicator.style.filter = "";
+            }
+
+            if (frameSeiData.blinkerOnRight) {
+                // addGreenFilter();
+                turnRightIndicator.style.filter = grayToGreenFilter;
+            } else {
+                // removeGreenFilter();
+                turnRightIndicator.style.filter = "";
+            }
+
+            if (frameSeiData.brakeApplied) {
+                brakePedal.style.filter = grayToRedFilter;
+            } else {
+                brakePedal.style.filter = "";
+            }
+
+            switch (frameSeiData.autopilotState) {
+                case "SELF_DRIVING":
+                    drivingMode.style.filter = grayToGreenFilter;
+                    drivingModeText.innerHTML = "SELF_DRIVING";
+                    break;
+                case "AUTOSTEER":
+                    drivingMode.style.filter = grayToGreenFilter;
+                    drivingModeText.innerHTML = "AUTOSTEER";
+                    break;
+                case "TACC":
+                    drivingMode.style.filter = grayToGreenFilter;
+                    drivingModeText.innerHTML = "TACC";
+                    break;
+                default:
+                    drivingMode.style.filter = "invert(50%)";
+                    drivingModeText.innerHTML = "";
+                    break;
+            }
+
+        }
+    } else {
+        canDataDisplay.classList.add('hidden');
+        topContainer.style.justifyContent = 'center';
     }
 });
 
@@ -483,25 +455,6 @@ function formatDate(date) {
     return `${weekDay}, ${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-// 将视频时间转换为can信号时间
-// date 当前播放的时间
-// decimalPart 当前播放的0.1s部分
-// deltaT can信号中的时间与视频时间的时间差，单位s，浮点数，精确到小数点后1位，如1.5
-function getCurrentCanDate(date, decimalPart, deltaT) {
-    const canTsMs = date.getTime() + decimalPart * 100 + deltaT * 1000;
-    const videoDate = new Date(canTsMs);
-
-    const year = videoDate.getFullYear();
-    const month = String(videoDate.getMonth() + 1).padStart(2, '0'); // 月份从0开始
-    const day = String(videoDate.getDate()).padStart(2, '0');
-    const hours = String(videoDate.getHours()).padStart(2, '0');
-    const minutes = String(videoDate.getMinutes()).padStart(2, '0');
-    const seconds = String(videoDate.getSeconds()).padStart(2, '0');
-    const decimal = Math.floor(videoDate.getMilliseconds() / 100);
-
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${decimal}`;
-}
-
 
 // 将输入的时长（以秒为单位）转换为小时:分钟:秒 的格式
 function formatDuration(seconds) {
@@ -520,37 +473,6 @@ function formatDuration(seconds) {
     } else {
         return `${formattedMinutes}:${formattedSeconds}`;
     }
-}
-
-// targetDateStr 格式：2024-10-03T16:41:20.2
-function binarySearchLoadedCanData(canJsonList, targetDateStr) {
-    let left = 0;
-    let right = canJsonList.length - 1;
-
-    while (left <= right) {
-        const mid = Math.floor((left + right) / 2);
-
-        const comparison = canJsonList[mid].ts.localeCompare(targetDateStr);
-
-        if (comparison === 0) {
-            return mid;  // 找到目标字符串，返回索引
-        } else if (comparison < 0) {
-            left = mid + 1;  // 目标字符串应该在右侧
-        } else {
-            right = mid - 1; // 目标字符串应该在左侧
-        }
-    }
-
-    if (right < 0) {
-        right = 0;
-    }
-
-    if (right > canJsonList.length - 1) {
-        right = canJsonList.length - 1;
-    }
-
-    // 如果没有找到目标字符串，返回右指针位置的前一个位置
-    return right;
 }
 
 // 对于savedClips和sentryClips,根据读取的event.json文件，在进度条上设置触发的时间点标识
@@ -644,83 +566,6 @@ function setPlaybackRate(rate) {
     }
 }
 
-
-// targetDateStr 格式：YYYY-MM-DD_HH-MM-SS
-function binarySearchCanJsonFile(canJsonList, targetDateStr) {
-    let left = 0;
-    let right = canJsonList.length - 1;
-
-    while (left <= right) {
-        const mid = Math.floor((left + right) / 2);
-
-        const comparison = canJsonList[mid].timestamp.localeCompare(targetDateStr);
-
-        if (comparison === 0) {
-            return mid;  // 找到目标字符串，返回索引
-        } else if (comparison < 0) {
-            left = mid + 1;  // 目标字符串应该在右侧
-        } else {
-            right = mid - 1; // 目标字符串应该在左侧
-        }
-    }
-
-    if (right < 0) {
-        right = 0;
-    }
-
-    if (right > canJsonList.length - 1) {
-        right = canJsonList.length - 1;
-    }
-
-    // 如果没有找到目标字符串，返回右指针位置的前一个位置
-    return right;
-}
-
-// 根据视频的时间戳来查找并加载对应的json文件
-async function loadTwoMinutesCanData(video_ts) {
-    twoMinutesJsonCanDataArray.length = 0;
-
-    // 加上时间偏置，获取真实的对应到can到时间
-    const targetCanDate = filenameDateToJsDate(video_ts);
-    targetCanDate.setSeconds(targetCanDate.getSeconds() + Math.floor(deltaT));
-    const targetCanDateStr = jsDateToFilenameDate(targetCanDate);
-
-    // 根据时间戳找到要加载的两个json文件
-    fileIndex = binarySearchCanJsonFile(decodedCanFiles, targetCanDateStr);
-
-    if (fileIndex >= 0 && fileIndex < decodedCanFiles.length) {
-        // 检查是否是临近时间的数据 1.5min内
-        const jsonDate = filenameDateToJsDate(decodedCanFiles[fileIndex].timestamp);
-        const deltaMs = targetCanDate - jsonDate;
-        try {
-            const file1 = decodedCanFiles[fileIndex].filePath;
-            const response = await fetch(file1);
-            const data = await response.json();
-            twoMinutesJsonCanDataArray = data;
-            // console.log('JSON data loaded successfully: %s', file1);
-        } catch (error) {
-            console.error('Error loading JSON:', error);
-        }
-    }
-
-    if (fileIndex + 1 >= 0 && fileIndex + 1 < decodedCanFiles.length) {
-        // 检查是否是临近时间的数据 1.5min内
-        const jsonDate = filenameDateToJsDate(decodedCanFiles[fileIndex + 1].timestamp);
-        const deltaMs = targetCanDate - jsonDate;
-        if (Math.abs(deltaMs) < 1.5 * 60000) {
-            try {
-                const file2 = decodedCanFiles[fileIndex + 1].filePath;
-                const response = await fetch(file2);
-                const data = await response.json();
-                twoMinutesJsonCanDataArray.push(...data);
-                // console.log('JSON data loaded successfully: %s', file2);
-            } catch (error) {
-                console.error('Error loading JSON:', error);
-            }
-        }
-    }
-}
-
 async function loadEventJsonFile(filePath) {
     try {
         const response = await fetch(filePath);
@@ -736,14 +581,6 @@ async function loadEventJsonFile(filePath) {
 async function setVideosSrc(clipsIndex) {
     // 设置播放源
     if (clipsIndex < savedVideoFiles[type].at(index).clips.length) {
-        const video_ts = savedVideoFiles[type].at(index).clips.at(clipsIndex).filename_ts;
-        // 加载can文件，通过视频时间戳查找对应can文件并加载
-
-        // video_ts格式如：2024-10-03_16-35-13
-        if (hasGotLastClipDuration) {
-            await loadTwoMinutesCanData(video_ts);
-        }
-
         const videos = savedVideoFiles[type].at(index).clips.at(clipsIndex).videos;
 
         validVideosChannelCount = 0;
@@ -759,6 +596,12 @@ async function setVideosSrc(clipsIndex) {
             players[0].classList.remove("not-allowed-click");
             validVideoChannels.push("F");
             validVideosChannelCount++;
+
+            // 解析数据
+            console.log("解析:", videos.F);
+            // TODO: 这里触发了两次
+            seiData = await window.electronAPI.parseVideoSei(videos.F);
+            // console.log(seiData);
         }
         players[0].load();
 

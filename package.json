@@ -25,6 +25,7 @@
     "three": "^0.169.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-squirrel-startup": "^1.0.1",
+    "protobufjs": "7.5.4"
   }
 }

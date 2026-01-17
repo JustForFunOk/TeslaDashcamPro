@@ -6,4 +6,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     deleteFile: (filePath) => ipcRenderer.invoke('delete-file', filePath),
     deleteParentFolder: (filePath) => ipcRenderer.invoke("delete-parent-folder", filePath),
     openFolder: (filePath) => ipcRenderer.invoke('open-folder', filePath),
+    parseVideoSei: (filePath) => ipcRenderer.invoke('parse-video-sei', filePath),
 });

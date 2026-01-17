@@ -1,6 +1,8 @@
 const { app, BrowserWindow, Menu, dialog, ipcMain, screen, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const protobuf = require('protobufjs');  // 版本和官方使用保持一致v7.5.4
+const { DashcamMP4 } = require(path.join(__dirname, 'vendor/dashcam-mp4.js'));
 
 // 跳过windows中使用squirrel打包的exe启动动画
 if (require('electron-squirrel-startup')) {
@@ -10,6 +12,43 @@ if (require('electron-squirrel-startup')) {
 // 将saved 和 sentry 文件夹下的也加入到recent中，目的是组成连贯的视频。
 // 但是会导致recent中视频段变得很多，先关掉这个功能
 const addSavedAndSentryToRecent = false;
+
+let seiMetadataModel = null;
+
+async function loadSeiModel() {
+    const root = await protobuf.load("./src/main/vendor/dashcam.proto");
+    return root.lookupType("SeiMetadata"); // proto 中定义的名称
+}
+
+async function getTeslaSeiData(filePath, SeiMetadataModel) {
+    // console.log("Model State:", SeiMetadataModel);
+    if (!SeiMetadataModel || typeof SeiMetadataModel.decode !== 'function') {
+        console.error("Protobuf 模型未正确加载！");
+    }
+
+    try {
+        // 1. 读取文件到 Buffer
+        const fileBuffer = await fs.promises.readFile(filePath);
+
+        // 2. 将 Node.js Buffer 转换为 ArrayBuffer (DashcamMP4 需要)
+        const arrayBuffer = fileBuffer.buffer.slice(
+            fileBuffer.byteOffset,
+            fileBuffer.byteOffset + fileBuffer.byteLength
+        );
+
+        // 3. 实例化解析器
+        const parser = new DashcamMP4(arrayBuffer);
+
+        // 4. 提取 SEI 消息
+        const seiMessages = parser.extractSeiMessages(SeiMetadataModel);
+
+        // console.log(seiMessages);
+        return seiMessages;
+    } catch (error) {
+        console.error("解析 Tesla 视频失败:", error);
+        throw error;
+    }
+}
 
 async function parseTeslaCamFolder(folderPath) {
     const result = {
@@ -274,52 +313,16 @@ async function getClipsDuration(sorted_clips) {
     return duration_s;
 }
 
-// 获取指定文件夹或子文件夹下所有名为 decoded_can 文件夹下的所有json文件
-function findJsonFilesInDecodedCan(dirPath) {
-    const result = [];
-
-    // 递归查找文件夹
-    function exploreFolder(currentPath) {
-        const files = fs.readdirSync(currentPath);
-        for (let file of files) {
-            const fullPath = path.join(currentPath, file);
-            const stat = fs.statSync(fullPath);
-
-            if (stat.isDirectory()) {
-                // 如果是目录，检查其是否为 decoded_can
-                if (file === 'decoded_can') {
-                    // 查找该文件夹下所有的 JSON 文件
-                    const decodedCanFiles = fs.readdirSync(fullPath);
-                    for (let decodedFile of decodedCanFiles) {
-                        if (decodedFile.endsWith('.json')) {
-                            // 提取时间戳（假设文件名格式为 "YYYY-MM-DD_HH-MM-SS.json"）
-                            const timestamp = decodedFile.split('.')[0]; // 获取文件名部分，去除扩展名
-                            result.push({
-                                timestamp: timestamp,
-                                filePath: path.join(fullPath, decodedFile)
-                            });
-                        }
-                    }
-                } else {
-                    // 继续递归子文件夹
-                    exploreFolder(fullPath);
-                }
-            }
-        }
-    }
-
-    // 开始遍历
-    exploreFolder(dirPath);
-
-    // 对结果按照时间戳进行排序
-    result.sort((a, b) => { return a.timestamp.localeCompare(b.timestamp); });
-
-    return result;
-}
-
 let mainWindow;
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+    try {
+        seiMetadataModel = await loadSeiModel();
+        console.log("SEI Protobuf load success");
+    } catch (e) {
+        console.error("SEI Protobuf load failed:", e);
+    }
+
     const isDev = process.env.NODE_ENV === 'development';
 
     mainWindow = new BrowserWindow({
@@ -359,10 +362,7 @@ ipcMain.handle('select-folder', async () => {
         const videoFiles = await parseTeslaCamFolder(folderPath);
         // console.log(JSON.stringify(videoFiles, null, 2));
 
-        // 尝试加载所有CAN数据路径
-        const decodedCanFiles = findJsonFilesInDecodedCan(folderPath);
-
-        return [true, videoFiles, decodedCanFiles];
+        return [true, videoFiles];
     }
 });
 
@@ -453,4 +453,9 @@ ipcMain.handle("delete-parent-folder", async (event, filePath) => {
 
 ipcMain.handle('open-folder', (event, filePath) => {
     shell.showItemInFolder(filePath);
+});
+
+ipcMain.handle('parse-video-sei', async (event, filePath) => {
+    const results = await getTeslaSeiData(filePath, seiMetadataModel);
+    return results;
 });
