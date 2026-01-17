@@ -20,11 +20,11 @@
 
         // 加载已保存的视频列表（如果存在）
         function loadSavedVideoList() {
-            const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
+            const AllClipsList = JSON.parse(sessionStorage.getItem('videoFiles'));
 
-            if (savedVideoFiles) {
+            if (AllClipsList) {
                 // 显示已保存的视频文件
-                for (const [ts, files] of Object.entries(savedVideoFiles)) {
+                for (const [ts, files] of Object.entries(AllClipsList)) {
                     const li = document.createElement('li');
                     const link = document.createElement('a');
 

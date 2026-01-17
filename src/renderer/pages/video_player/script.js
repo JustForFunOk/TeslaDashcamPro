@@ -105,7 +105,7 @@ const type = urlParams.get('type');
 const index = urlParams.get('index');
 
 // 通过sessionStorage实现快页面的数据共享
-const savedVideoFiles = JSON.parse(sessionStorage.getItem('videoFiles'));
+const AllClipsList = JSON.parse(sessionStorage.getItem('videoFiles'));
 
 const grayToGreenFilter = "invert(50%) sepia(100%) saturate(1000%) hue-rotate(90deg)";
 const grayToRedFilter = "brightness(0) saturate(100%) invert(31%) sepia(79%) saturate(7442%) hue-rotate(353deg) brightness(96%) contrast(111%)";
@@ -138,7 +138,6 @@ let clipsDuration = 0;
 let clipsGroupStartTimestamp = [];
 
 let hasResizedWindow = false;
-let hasGotLastClipDuration = false;
 
 let currentPlaybackRate = 1;
 const maxPlaybackRate = 8;
@@ -186,10 +185,6 @@ window.addEventListener('resize', () => {
 
 
 players[0].addEventListener('timeupdate', () => {
-    if (!hasGotLastClipDuration) {
-        return;
-    }
-
     // 手动拖动进度条到最后时跳过执行，否则会越界
     if (currentIndex >= totalClipsNumber) {
         return;
@@ -198,11 +193,11 @@ players[0].addEventListener('timeupdate', () => {
     // TODO: 限制下述代码的执行频率
     // 通过目前播放的视频 计算出进度条的进度
     // 第一个视频片段的起始时间
-    const first_ts = savedVideoFiles[type].at(index).clips.at(0).filename_ts;
+    const first_ts = AllClipsList[type].at(index).clips.at(0).filename_ts;
     const firstTimestamp = filenameDateToJsDate(first_ts);
 
     // 目前视频片段的起始时间
-    const current_clip_ts = savedVideoFiles[type].at(index).clips.at(currentIndex).filename_ts;
+    const current_clip_ts = AllClipsList[type].at(index).clips.at(currentIndex).filename_ts;
     const currentClipStartTimestamp = filenameDateToJsDate(current_clip_ts);
 
     // 目前视频片段的播放时间
@@ -338,23 +333,6 @@ players.forEach(player => {
             });
 
             alert("Video load failed! Please check files: \n\n" + stalledVideosStr);
-
-            // 跳过继续处理
-            // 默认最后一段视频长度是1min，但很多情况下并不是，等到播放到最后哦一段时更新总时长
-            if (!hasGotLastClipDuration && currentIndex == totalClipsNumber - 1) {
-                // 去除最后一段默认的60s时长
-                clipsDuration = savedVideoFiles[type].at(index).duration - 60;
-
-                setVideoDuration();
-
-                hasGotLastClipDuration = true;
-
-                currentIndex = 0;  // 默认从头播放
-                await setVideosSrc(currentIndex);
-            } else {
-                currentIndex++;
-                await setVideosSrc(currentIndex);
-            }
         }
     });
 
@@ -367,20 +345,6 @@ players.forEach(player => {
             if (!hasResizedWindow) {
                 resizeWindow();
                 hasResizedWindow = true;
-            }
-
-            // 默认最后一段视频长度是1min，但很多情况下并不是，等到播放到最后哦一段时更新总时长
-            if (!hasGotLastClipDuration && currentIndex == totalClipsNumber - 1) {
-                clipsDuration = savedVideoFiles[type].at(index).duration - 60 + Math.round(selectedPlayer.duration);
-
-                setVideoDuration();
-
-                hasGotLastClipDuration = true;
-
-                currentIndex = 0;  // 默认从头播放
-                await setVideosSrc(currentIndex);
-
-                return;
             }
 
             // 设置倍率需要等缓冲完，否则设置不生效
@@ -401,7 +365,7 @@ players.forEach(player => {
     player.addEventListener('ended', async () => {
         endedVideosChannelCount++;
         if (endedVideosChannelCount === validVideosChannelCount) {
-            // 4路视频都播放完毕
+            // x路视频都播放完毕
             currentIndex++;
 
             if (currentIndex < totalClipsNumber) {
@@ -411,7 +375,6 @@ players.forEach(player => {
                 playPauseIcon.src = "play.svg";
                 is_playing = false;
                 setPlaybackRate(1);
-
             }
         }
     });
@@ -580,8 +543,8 @@ async function loadEventJsonFile(filePath) {
 
 async function setVideosSrc(clipsIndex) {
     // 设置播放源
-    if (clipsIndex < savedVideoFiles[type].at(index).clips.length) {
-        const videos = savedVideoFiles[type].at(index).clips.at(clipsIndex).videos;
+    if (clipsIndex < AllClipsList[type].at(index).clips.length) {
+        const videos = AllClipsList[type].at(index).clips.at(clipsIndex).videos;
 
         validVideosChannelCount = 0;
         validVideoChannels = [];
@@ -598,8 +561,7 @@ async function setVideosSrc(clipsIndex) {
             validVideosChannelCount++;
 
             // 解析数据
-            console.log("解析:", videos.F);
-            // TODO: 这里触发了两次
+            window.logger.debug("解析:", videos.F);
             seiData = await window.electronAPI.parseVideoSei(videos.F);
             // console.log(seiData);
         }
@@ -821,31 +783,80 @@ function resizeWindow() {
     window.electronAPI.resizeWindow(videoW, videoH, extraWidth, extraHeight);
 }
 
+/**
+ * 获取视频时长（异步）
+ * @param {string} url 视频地址或 Blob URL
+ * @returns {Promise<number>} 返回视频时长（秒）
+ */
+function getVideoDuration(url) {
+    return new Promise((resolve, reject) => {
+        const video = document.createElement('video');
+        video.preload = 'metadata'; // 仅加载元数据
+        video.muted = true;         // 静音以增加兼容性
+
+        video.onloadedmetadata = () => {
+            const duration = video.duration;
+            resolve(duration);
+        };
+
+        video.onerror = () => {
+            reject("视频加载失败，请检查 URL 或跨域设置");
+        };
+
+        video.src = url;
+    });
+}
+
+async function updateClipsDuration() {
+    try {
+        console.log("正在获取总视频时长...");
+
+        // 获取最后一段视频的地址且找到第一个有效的视频地址
+        const videos = AllClipsList[type].at(index).clips.at(totalClipsNumber - 1).videos;
+        const keys = ['F', 'B', 'L', 'R', 'LF', 'RF'];
+        const video = keys.map(key => videos[key]).find(val => val && val.trim() !== "");
+
+        // 等待获取时长完成
+        const lastClipDuration = await getVideoDuration(video);
+        window.logger.debug("最后一个视频时长:", lastClipDuration, "秒");
+
+        clipsDuration = AllClipsList[type].at(index).duration - 60 + Math.round(lastClipDuration);
+        window.logger.debug("总视频时长:", clipsDuration, "秒");
+
+        setVideoDuration();
+
+    } catch (error) {
+        window.logger.error("更新总视频时长发生错误:", error);
+    }
+}
+
+
 (
     async () => {
-        if (savedVideoFiles) {
-            if (type in savedVideoFiles && savedVideoFiles[type].length > index) {
+        if (AllClipsList) {
+            if (type in AllClipsList && AllClipsList[type].length > index) {
                 selectVideo(players[0]); // 主动选择 video-f
 
                 // 设置进度条长度
                 // 这里的duration是假设最后一段视频长度为1min，需要等到播放到最后一段时更新总时长
-                clipsDuration = savedVideoFiles[type].at(index).duration;
+                // clipsDuration = AllClipsList[type].at(index).duration;
 
-                totalClipsNumber = savedVideoFiles[type].at(index).clips.length;
+                totalClipsNumber = AllClipsList[type].at(index).clips.length;
 
                 // 获取每段视频的起始时间
-                savedVideoFiles[type].at(index).clips.forEach(clip => {
+                AllClipsList[type].at(index).clips.forEach(clip => {
                     clipsGroupStartTimestamp.push(filenameDateToJsDate(clip.filename_ts));
                 });
 
                 // 针对Sentry和Saved加载json文件
-                eventJsonFilePath = savedVideoFiles[type].at(index).jsonPath;
+                eventJsonFilePath = AllClipsList[type].at(index).jsonPath;
                 if (eventJsonFilePath !== "") {
                     eventJsonDataObject = await loadEventJsonFile(eventJsonFilePath);
                 }
 
                 if (totalClipsNumber > 0) {
-                    currentIndex = totalClipsNumber - 1;  // 先加载最后一段视频获取总视频长度
+                    await updateClipsDuration();
+                    currentIndex = 0;  // 默认从头播放
                     await setVideosSrc(currentIndex);
                 }
             }

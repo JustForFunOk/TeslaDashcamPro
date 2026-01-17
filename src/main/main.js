@@ -1,8 +1,22 @@
 const { app, BrowserWindow, Menu, dialog, ipcMain, screen, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const log = require('electron-log/main');
 const protobuf = require('protobufjs');  // 版本和官方使用保持一致v7.5.4
 const { DashcamMP4 } = require(path.join(__dirname, 'vendor/dashcam-mp4.js'));
+
+log.initialize();
+
+if (process.env.NODE_ENV === 'production') {
+    // 生产环境配置
+    log.transports.console.level = false;      // 关闭控制台实时打印，提升性能
+    log.transports.file.level = 'info';        // 仅记录 info 及以上级别到文件
+} else {
+    // 开发环境配置
+    log.transports.console.level = 'debug';    // 开启所有级别的控制台打印
+    log.transports.file.level = false;         // 开发时通常不需要写文件
+    log.debug('Logger initialized in development mode');
+}
 
 // 跳过windows中使用squirrel打包的exe启动动画
 if (require('electron-squirrel-startup')) {
