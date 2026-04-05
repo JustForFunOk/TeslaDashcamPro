@@ -12,7 +12,7 @@
 
 [bilibili视频：【全网首创】你肯定没见过，增强版的特斯拉行车记录仪](https://www.bilibili.com/video/BV11MwgeNEQa/?share_source=copy_web&vd_source=e201eeec19f502aae9dad5b9e17dba11)
 
-![播放器](../docs/images/player_pro_linux.jpeg)
+![播放器](../images/player_pro_linux.jpeg)
 
 _图中右上角显示的即为车辆的驾驶信息。_
 
@@ -75,7 +75,7 @@ _..._
 2. CAN信号线：连接到原车CAN总线上以采集车辆驾驶信息。
 
 
-![diagram](../docs/images/device_diagram.svg)
+![diagram](../images/device_diagram.svg)
 
 
 ## 安装难度以及影响

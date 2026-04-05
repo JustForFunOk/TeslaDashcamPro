@@ -10,6 +10,7 @@ module.exports = {
       /README\.md/,
       /examples/,
       /docs/,
+      /assets/,
     ],
   },
   rebuildConfig: {},

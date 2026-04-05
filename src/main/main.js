@@ -342,7 +342,7 @@ app.whenReady().then(async () => {
     mainWindow = new BrowserWindow({
         width: 960,
         height: 810,
-        icon: path.join(app.getAppPath(), 'assets/icon/tesla_dashcam_icon.png'),
+        icon: path.join(app.getAppPath(), 'src/main/tesla_dashcam_icon.png'),
         resizable: isDev, // 仅开发模式允许窗口缩放
         maximizable: isDev, // 仅开发模式允许最大化
         fullscreenable: isDev, // 仅开发模式允许全屏
