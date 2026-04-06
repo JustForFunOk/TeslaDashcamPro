@@ -17,3 +17,5 @@ install_EN.md
 .gitignore
 .vscode/
 .github/
+
+*.png
