@@ -1,17 +1,21 @@
 // 获取DOM元素
-const players = [
-    document.getElementById('video-f'),  // F
-    document.getElementById('video-b'),  // B
-    document.getElementById('video-l'),  // L
-    document.getElementById('video-r'),  // R
-    document.getElementById('video-lf'),  // LF
-    document.getElementById('video-rf')   // RF
-];
-
-const overlayLF = document.getElementById('overlay-lf');
-const overlayRF = document.getElementById('overlay-rf');
-const labelLF = document.getElementById('label-lf');
-const labelRF = document.getElementById('label-rf');
+const mainVideo = document.getElementById('main-video');
+const thumbnailItems = {
+    'F': document.querySelector('.thumbnail-item[data-view="F"]'),
+    'B': document.querySelector('.thumbnail-item[data-view="B"]'),
+    'L': document.querySelector('.thumbnail-item[data-view="L"]'),
+    'R': document.querySelector('.thumbnail-item[data-view="R"]'),
+    'LF': document.querySelector('.thumbnail-item[data-view="LF"]'),
+    'RF': document.querySelector('.thumbnail-item[data-view="RF"]')
+};
+const thumbnailVideos = {
+    'F': thumbnailItems['F'].querySelector('.thumbnail-video'),
+    'B': thumbnailItems['B'].querySelector('.thumbnail-video'),
+    'L': thumbnailItems['L'].querySelector('.thumbnail-video'),
+    'R': thumbnailItems['R'].querySelector('.thumbnail-video'),
+    'LF': thumbnailItems['LF'].querySelector('.thumbnail-video'),
+    'RF': thumbnailItems['RF'].querySelector('.thumbnail-video')
+};
 
 const timeDisplay = document.getElementById('timestamp');
 
@@ -125,11 +129,11 @@ let stalledVideos = [];  // 视频因网络问题或其他原因无法继续加�
 let validVideoChannels = [];
 let validVideosChannelCount = 0; // 有数据的路数 最多是4路 这里的有效代表存在视频文件
 
-// 4路都加载完毕自动播放
-let is_playing = true;
+// 初始状态为暂停，等待用户点击播放
+let is_playing = false;
 
 // 默认选择前视最大化显示
-let selectedPlayer = players[0];
+let selectedView = 'F';
 
 // 整个视频段的时长，用来设置进度条的长度
 let clipsDuration = 0;
@@ -162,6 +166,14 @@ xSpeedButton.addEventListener('click', () => {
     forwardXSpeed();
 });
 
+// 为缩略图项添加点击事件监听器
+Object.values(thumbnailItems).forEach(item => {
+    item.addEventListener('click', () => {
+        const view = item.getAttribute('data-view');
+        selectView(view);
+    });
+});
+
 // 当用户拖动进度条时同步视频的播放时间
 progressBar.addEventListener('input', async () => {
     await changeProgressBarValue();
@@ -184,7 +196,7 @@ window.addEventListener('resize', () => {
 });
 
 
-players[0].addEventListener('timeupdate', () => {
+mainVideo.addEventListener('timeupdate', () => {
     // 手动拖动进度条到最后时跳过执行，否则会越界
     if (currentIndex >= totalClipsNumber) {
         return;
@@ -201,7 +213,7 @@ players[0].addEventListener('timeupdate', () => {
     const currentClipStartTimestamp = filenameDateToJsDate(current_clip_ts);
 
     // 目前视频片段的播放时间
-    const playTimeInClip = players[0].currentTime;
+    const playTimeInClip = mainVideo.currentTime;
 
     // 计算出当前播放进度在整个视频片段中的时长，设置进度条
     progressBar.value = playTimeInClip + (currentClipStartTimestamp - firstTimestamp) / 1000;
@@ -315,67 +327,90 @@ players[0].addEventListener('timeupdate', () => {
     }
 });
 
-players.forEach(player => {
-    // 若同一时间4路视频文件全部损坏，则弹窗提醒
-    player.addEventListener('stalled', async () => {
-        stalledVideos.push(player.src);
+// 监听主视频事件
+mainVideo.addEventListener('stalled', async () => {
+    stalledVideos.push(mainVideo.src);
 
-        player.removeAttribute("src");
-        player.poster = "no_video_min.svg";
-        player.classList.add("not-allowed-click");
-        player.load();
+    mainVideo.removeAttribute("src");
+    mainVideo.poster = "no_video_min.svg";
+    mainVideo.load();
 
-        if (stalledVideos.length === validVideosChannelCount) {
-            // 本个时间段所有路视频均失效
-            stalledVideosStr = "";
-            stalledVideos.forEach(video => {
-                stalledVideosStr += video;
-                stalledVideosStr += "\n";
-            });
+    if (stalledVideos.length === 1) {
+        // 主视频加载失败
+        alert("Video load failed! Please check file: \n\n" + mainVideo.src);
+    }
+});
 
-            alert("Video load failed! Please check files: \n\n" + stalledVideosStr);
+// 主视频加载完成
+mainVideo.addEventListener('loadeddata', async () => {
+    loadedVideosChannelCount++;
+
+    if (loadedVideosChannelCount === validVideosChannelCount) {
+        // 初次加载时会根据视频分辨率缩放窗口
+        if (!hasResizedWindow) {
+            resizeWindow();
+            hasResizedWindow = true;
         }
-    });
 
-    // 4个视频都加载第一帧完毕后再同步播放
-    player.addEventListener('loadeddata', async () => {
+        // 设置倍率需要等缓冲完，否则设置不生效
+        mainVideo.playbackRate = currentPlaybackRate;
+
+        // 如果用户暂停播放，拖动进度条视频跨越了视频，加载完成之后，不自动播放
+        // 最开始的时候，加载完成之后，自动播放
+        if (is_playing) {
+            playAllVideos();
+        }
+    }
+});
+
+// 播放完视频自动播放下一个
+mainVideo.addEventListener('ended', async () => {
+    endedVideosChannelCount++;
+    if (endedVideosChannelCount === validVideosChannelCount) {
+        // 清空上一个视频的sei
+        seiData = [];
+
+        // x路视频都播放完毕
+        currentIndex++;
+
+        if (currentIndex < totalClipsNumber) {
+            await setVideosSrc(currentIndex);
+        } else {
+            // 播放到进度条结束
+            playPauseIcon.src = "play.svg";
+            is_playing = false;
+            setPlaybackRate(1);
+        }
+    }
+});
+
+// 监听缩略图视频加载完成
+Object.values(thumbnailVideos).forEach(video => {
+    video.addEventListener('loadeddata', async () => {
         loadedVideosChannelCount++;
 
         if (loadedVideosChannelCount === validVideosChannelCount) {
-            // 初次加载时会根据视频分辨率缩放窗口
+            // 所有视频加载完成
             if (!hasResizedWindow) {
                 resizeWindow();
                 hasResizedWindow = true;
             }
 
-            // 设置倍率需要等缓冲完，否则设置不生效
-            players.forEach(player => {
-                player.playbackRate = currentPlaybackRate;
-            });
-
-            // 如果用户暂停播放，拖动进度条视频跨越了视频，加载完成之后，不自动播放
-            // 最开始的时候，加载完成之后，自动播放
             if (is_playing) {
                 playAllVideos();
             }
         }
     });
 
-    // 播放完视频自动播放下一个
-    // 当当前视频播放结束时，加载并播放下一个视频
-    player.addEventListener('ended', async () => {
+    video.addEventListener('ended', async () => {
         endedVideosChannelCount++;
         if (endedVideosChannelCount === validVideosChannelCount) {
-            // 清空上一个视频的sei
-            seiData = [];
-
-            // x路视频都播放完毕
+            // 所有视频播放完毕
             currentIndex++;
 
             if (currentIndex < totalClipsNumber) {
                 await setVideosSrc(currentIndex);
             } else {
-                // 播放到进度条结束
                 playPauseIcon.src = "play.svg";
                 is_playing = false;
                 setPlaybackRate(1);
@@ -485,6 +520,7 @@ async function togglePlayPause() {
             currentIndex = 0;
             await setVideosSrc(currentIndex);
             is_playing = true;
+            playAllVideos();
         }
     }
 }
@@ -521,9 +557,15 @@ function setPlaybackRate(rate) {
     if (currentPlaybackRate > maxPlaybackRate) {
         currentPlaybackRate = 1;
     }
-    players.forEach(player => {
-        player.playbackRate = currentPlaybackRate;
+
+    // 设置主视频倍速
+    mainVideo.playbackRate = currentPlaybackRate;
+
+    // 设置所有缩略图视频倍速
+    Object.values(thumbnailVideos).forEach(video => {
+        video.playbackRate = currentPlaybackRate;
     });
+
     xSpeedTextElement.innerHTML = currentPlaybackRate + "x";
 
     if (currentPlaybackRate == 1) {
@@ -553,106 +595,44 @@ async function setVideosSrc(clipsIndex) {
         validVideosChannelCount = 0;
         validVideoChannels = [];
 
-        if (videos.F === '') {
-            players[0].removeAttribute("src");
-            players[0].poster = "no_video_min.svg";
-            players[0].classList.add("not-allowed-click");
-        } else {
-            players[0].src = videos.F;
-            players[0].removeAttribute("poster");
-            players[0].classList.remove("not-allowed-click");
-            validVideoChannels.push("F");
-            validVideosChannelCount++;
+        // 处理每个视角的视频
+        const views = ['F', 'B', 'L', 'R', 'LF', 'RF'];
 
-            // 解析数据
-            window.logger.debug("解析:", videos.F);
-            seiData = await window.electronAPI.parseVideoSei(videos.F);
-            // window.logger.debug(seiData);
-            window.logger.debug("共计:", seiData.length, "帧SEI数据");
-        }
-        players[0].load();
+        for (const view of views) {
+            const videoUrl = videos[view];
+            const thumbnailItem = thumbnailItems[view];
+            const thumbnailVideo = thumbnailVideos[view];
 
-        if (videos.B === '') {
-            players[1].removeAttribute("src");
-            players[1].poster = "no_video_min.svg";
-            players[1].classList.add("not-allowed-click");
-        } else {
-            players[1].src = videos.B;
-            players[1].removeAttribute("poster");
-            players[1].classList.remove("not-allowed-click");
-            validVideoChannels.push("B");
-            validVideosChannelCount++;
-        }
-        players[1].load();
+            if (videoUrl === '') {
+                // 没有视频源，隐藏该视角
+                thumbnailItem.classList.add('hidden');
+                thumbnailVideo.removeAttribute("src");
+                thumbnailVideo.poster = "no_video_min.svg";
+            } else {
+                // 有视频源，显示该视角
+                thumbnailItem.classList.remove('hidden');
+                thumbnailVideo.src = videoUrl;
+                thumbnailVideo.removeAttribute("poster");
+                validVideoChannels.push(view);
+                validVideosChannelCount++;
 
-        if (videos.L === '') {
-            players[2].removeAttribute("src");
-            players[2].poster = "no_video_min.svg";
-            players[2].classList.add("not-allowed-click");
-        } else {
-            players[2].src = videos.L;
-            players[2].removeAttribute("poster");
-            players[2].classList.remove("not-allowed-click");
-            validVideoChannels.push("L");
-            validVideosChannelCount++;
-        }
-        players[2].load();
+                // 如果是选中的视角，设置主视频源
+                if (view === selectedView) {
+                    mainVideo.src = videoUrl;
+                    mainVideo.removeAttribute("poster");
 
-        if (videos.R === '') {
-            players[3].removeAttribute("src");
-            players[3].poster = "no_video_min.svg";
-            players[3].classList.add("not-allowed-click");
-        } else {
-            players[3].src = videos.R;
-            players[3].removeAttribute("poster");
-            players[3].classList.remove("not-allowed-click");
-            validVideoChannels.push("R");
-            validVideosChannelCount++;
-        }
-        players[3].load();
+                    // 解析SEI数据（只解析主视角的视频）
+                    window.logger.debug("解析:", videoUrl);
+                    seiData = await window.electronAPI.parseVideoSei(videoUrl);
+                    window.logger.debug("共计:", seiData.length, "帧SEI数据");
+                }
 
-        if (videos.LF === '') {
-            players[4].removeAttribute("src");
-            players[4].poster = "no_video_min.svg";
-            players[4].classList.add("not-allowed-click");
-        } else {
-            players[4].src = videos.LF;
-            players[4].removeAttribute("poster");
-            players[4].classList.remove("not-allowed-click");
-            validVideoChannels.push("LF");
-            validVideosChannelCount++;
+                thumbnailVideo.load();
+            }
         }
-        players[4].load();
 
-        if (videos.RF === '') {
-            players[5].removeAttribute("src");
-            players[5].poster = "no_video_min.svg";
-            players[5].classList.add("not-allowed-click");
-        } else {
-            players[5].src = videos.RF;
-            players[5].removeAttribute("poster");
-            players[5].classList.remove("not-allowed-click");
-            validVideoChannels.push("RF");
-            validVideosChannelCount++;
-        }
-        players[5].load();
-
-        if (videos.LF === '' && videos.RF === '') {
-            // 若左右前视都没有视频源，则隐藏这两个视频元素
-            players[4].classList.add("hidden");
-            players[5].classList.add("hidden");
-            overlayLF.classList.add("hidden");
-            overlayRF.classList.add("hidden");
-            labelLF.classList.add("hidden");
-            labelRF.classList.add("hidden");
-        } else {
-            players[4].classList.remove("hidden");
-            players[5].classList.remove("hidden");
-            overlayLF.classList.remove("hidden");
-            overlayRF.classList.remove("hidden");
-            labelLF.classList.remove("hidden");
-            labelRF.classList.remove("hidden");
-        }
+        // 加载主视频
+        mainVideo.load();
 
         loadedVideosChannelCount = 0;  // 清零等待加载完毕
         endedVideosChannelCount = 0;
@@ -663,22 +643,36 @@ async function setVideosSrc(clipsIndex) {
 
 
 function playAllVideos() {
-    players.forEach(player => {
-        if (player.hasAttribute("src")) {
-            player.play();
+    if (mainVideo.hasAttribute("src")) {
+        mainVideo.play().catch(error => {
+            console.error('Main video play() failed:', error);
+        });
+    }
+
+    // 播放所有缩略图视频
+    Object.values(thumbnailVideos).forEach(video => {
+        if (video.hasAttribute("src")) {
+            video.play().catch(error => {
+                console.error('Thumbnail video play() failed:', error);
+            });
         }
     });
+
     playPauseIcon.src = "pause_min.svg";
     is_playing = true;
 }
 
 function pauseAllVideos() {
-    players.forEach(player => {
-        if (player.hasAttribute("src")) {
-            player.pause();
+    if (mainVideo.hasAttribute("src")) {
+        mainVideo.pause();
+    }
 
-            // 当暂停时，将所有视频同步到被放大视频的当前时间，防止4路播放不同步
-            player.currentTime = selectedPlayer.currentTime;
+    // 暂停所有缩略图视频
+    Object.values(thumbnailVideos).forEach(video => {
+        if (video.hasAttribute("src")) {
+            video.pause();
+            // 同步时间到主视频
+            video.currentTime = mainVideo.currentTime;
         }
     });
 
@@ -686,40 +680,91 @@ function pauseAllVideos() {
     is_playing = false;
 }
 
-function selectVideo(selectedVideo) {
-    // 获取所有视频元素
-    players.forEach(player => {
-        if (player === selectedVideo) {
-            // 放大选中的视频
-            player.classList.remove('small');
-            player.classList.add('large');
+async function selectView(view) {
+    // 如果已经是选中的视角，不执行任何操作
+    if (selectedView === view) {
+        return;
+    }
 
-            // 清除定位属性，使放大视频居中
-            selectedVideo.style.top = '0';
-            selectedVideo.style.left = '0';
-            selectedVideo.style.right = '';
-            selectedVideo.style.bottom = '';
-
-            selectedPlayer = selectedVideo;
-        } else {
-            // 缩小其他视频
-            player.classList.remove('large');
-            player.classList.add('small');
-
-            // 清除定位属性，确保视频回到它的小角落
-            player.style.top = '';
-            player.style.left = '';
-            player.style.right = '';
-            player.style.bottom = '';
-        }
+    // 更新选中状态
+    Object.values(thumbnailItems).forEach(item => {
+        item.classList.remove('selected');
     });
+    thumbnailItems[view].classList.add('selected');
+
+    // 保存选中的视角
+    selectedView = view;
+
+    // 如果当前有视频在播放，切换到新视角
+    if (currentIndex < totalClipsNumber) {
+        const videos = AllClipsList[type].at(index).clips.at(currentIndex).videos;
+        const videoUrl = videos[view];
+
+        if (videoUrl !== '') {
+            // 保存当前播放状态和时间
+            const wasPlaying = is_playing;
+            const currentTime = mainVideo.currentTime;
+
+            // 切换主视频源
+            mainVideo.src = videoUrl;
+            mainVideo.removeAttribute("poster");
+
+            // 解析新视角的SEI数据
+            window.logger.debug("切换视角，解析:", videoUrl);
+            seiData = await window.electronAPI.parseVideoSei(videoUrl);
+            window.logger.debug("共计:", seiData.length, "帧SEI数据");
+
+            // 设置播放时间
+            mainVideo.currentTime = currentTime;
+
+            // 加载视频
+            mainVideo.load();
+
+            // 等待视频加载完成
+            await new Promise((resolve, reject) => {
+                const onLoadedData = () => {
+                    cleanup();
+                    resolve();
+                };
+
+                const onError = () => {
+                    cleanup();
+                    reject(new Error('Failed to load video'));
+                };
+
+                const cleanup = () => {
+                    mainVideo.removeEventListener('loadeddata', onLoadedData);
+                    mainVideo.removeEventListener('error', onError);
+                };
+
+                mainVideo.addEventListener('loadeddata', onLoadedData);
+                mainVideo.addEventListener('error', onError);
+
+                // 设置超时
+                setTimeout(() => {
+                    cleanup();
+                    reject(new Error('Video load timeout'));
+                }, 5000);
+            });
+
+            // 如果之前正在播放，继续播放
+            if (wasPlaying) {
+                mainVideo.play().catch(error => {
+                    console.error('Failed to resume playback after view switch:', error);
+                });
+            }
+        }
+    }
 }
 
 
 // 设置视频的播放时间
 function setVideoTime(time) {
-    players.forEach(player => {
-        player.currentTime = time;
+    mainVideo.currentTime = time;
+
+    // 同步所有缩略图视频时间
+    Object.values(thumbnailVideos).forEach(video => {
+        video.currentTime = time;
     });
 }
 
@@ -770,9 +815,9 @@ async function changeProgressBarValue() {
 }
 
 function resizeWindow() {
-    // 获取分辨率
-    const videoW = selectedPlayer.videoWidth;
-    const videoH = selectedPlayer.videoHeight;
+    // 获取主视频分辨率
+    const videoW = mainVideo.videoWidth;
+    const videoH = mainVideo.videoHeight;
     const extraWidth = 0;  // 若左边显示3D渲染结果则需要设置这个值
 
     const topContainerStyle = window.getComputedStyle(topContainer);
@@ -783,7 +828,12 @@ function resizeWindow() {
     const bottomContainerMarginTop = parseFloat(bottomContainerStyle.marginTop);
     const bottomContainerMarginBottom = parseFloat(bottomContainerStyle.marginBottom);
 
-    const extraHeight = topContainer.offsetHeight + topContainerMarginTop + topContainerMarginBottom + bottomContainer.offsetHeight + bottomContainerMarginTop + bottomContainerMarginBottom;
+    const multiViewContainer = document.querySelector('.multi-view-container');
+    const multiViewContainerHeight = multiViewContainer ? multiViewContainer.offsetHeight : 120;
+
+    const extraHeight = topContainer.offsetHeight + topContainerMarginTop + topContainerMarginBottom +
+        bottomContainer.offsetHeight + bottomContainerMarginTop + bottomContainerMarginBottom +
+        multiViewContainerHeight;
 
     window.electronAPI.resizeWindow(videoW, videoH, extraWidth, extraHeight);
 }
@@ -833,11 +883,8 @@ async function updateClipsDuration() {
     async () => {
         if (AllClipsList) {
             if (type in AllClipsList && AllClipsList[type].length > index) {
-                selectVideo(players[0]); // 主动选择 video-f
-
-                // 设置进度条长度
-                // 这里的duration是假设最后一段视频长度为1min，需要等到播放到最后一段时更新总时长
-                // clipsDuration = AllClipsList[type].at(index).duration;
+                // 设置默认选中的视角
+                selectView('F');
 
                 totalClipsNumber = AllClipsList[type].at(index).clips.length;
 

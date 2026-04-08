@@ -187,158 +187,86 @@ button:focus {
 }
 
 
-.video-container {
-    position: relative;
-    width: 100%;
-    /* 容器宽度为 100% 的视口宽度 */
+/* 主播放区域 */
+.main-video-container {
     flex-grow: 1;
-    /* 高度上自动填充剩余的空间 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
     overflow: hidden;
-    /* 隐藏溢出的部分 */
+    position: relative;
 }
 
-.video {
-    position: absolute;
-    object-fit: contain;
-    /* contain确保不会有隐藏区域 但是周围可能会补充空白 */
-    /* cover能填满显示区域 但是会有被隐藏的区域 */
-}
-
-.large {
+.main-video {
     width: 100%;
     height: 100%;
-    z-index: 0;
+    object-fit: contain;
 }
 
-.small {
-    width: 15%;
-    height: 15%;
-    z-index: 2;
+/* 底部多视角缩略图列表 */
+.multi-view-container {
+    height: 120px;
+    background-color: var(--background-color);
+    border-top: 1px solid var(--foreground-color);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 0;
+}
+
+.multi-view-list {
+    display: flex;
+    gap: 10px;
+    padding: 0 20px;
+    height: 100%;
+    min-width: min-content;
+}
+
+.thumbnail-item {
+    position: relative;
+    width: 160px;
+    height: 100px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
     cursor: pointer;
-    border-radius: var(--small-window-radius);
+    flex-shrink: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: border-color 0.2s, transform 0.2s;
 }
 
-.small.not-allowed-click {
-    pointer-events: none;
-    cursor: not-allowed;
-    /* 显示禁止点击的光标 */
+.thumbnail-item:hover {
+    border-color: var(--foreground-color);
+    transform: scale(1.05);
 }
 
-
-#video-f {
-    top: 2%;
-    left: 2%;
+.thumbnail-item.selected {
+    border-color: var(--selected-item-color);
+    border-width: 3px;
 }
 
-#video-b {
-    top: 2%;
-    right: 2%;
+.thumbnail-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-#video-lf {
-    top: 25%;
-    left: 2%;
-}
-
-#video-rf {
-    top: 25%;
-    right: 2%;
-}
-
-#video-l {
-    bottom: 2%;
-    left: 2%;
-}
-
-#video-r {
-    bottom: 2%;
-    right: 2%;
-}
-
-/* 半透明灰色窗口 */
-.overlay {
+.thumbnail-label {
     position: absolute;
-    background-color: rgba(128, 128, 128, 0.5);
-    z-index: 1;
-    /* 位于小视频上，但在放大视频下 */
-    width: 15%;
-    height: 15%;
-    pointer-events: none;
-    /* 让鼠标穿过 overlay 不影响视频点击 */
-    border-radius: var(--small-window-radius);
-}
-
-/* 半透明窗口的位置 */
-#overlay-f {
-    top: 2%;
-    left: 2%;
-}
-
-#overlay-b {
-    top: 2%;
-    right: 2%;
-}
-
-#overlay-lf {
-    top: 25%;
-    left: 2%;
-}
-
-#overlay-rf {
-    top: 25%;
-    right: 2%;
-}
-
-#overlay-l {
-    bottom: 2%;
-    left: 2%;
-}
-
-#overlay-r {
-    bottom: 2%;
-    right: 2%;
-}
-
-/* 添加文字标签的位置和样式 */
-.label {
-    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    font-size: 14px;
-    z-index: 3;
-    /* 确保文字在所有内容上方 */
-    padding: 2px 5px;
-    /* 显示中文将上下padding调小一点 这样看起来居中些 */
+    font-size: 12px;
+    padding: 4px;
+    text-align: center;
+    pointer-events: none;
 }
 
-/* 标签相对于 video-container 的位置, 根据 overlay 位置和长宽来换算 */
-#label-f {
-    top: 2%;
-    left: 2%;
-}
-
-#label-b {
-    top: 2%;
-    right: 2%;
-}
-
-#label-lf {
-    top: 25%;
-    left: 2%;
-}
-
-#label-rf {
-    top: 25%;
-    right: 2%;
-}
-
-#label-l {
-    bottom: 2%;
-    left: 2%;
-}
-
-#label-r {
-    bottom: 2%;
-    right: 2%;
+/* 隐藏没有视频的视角 */
+.thumbnail-item.hidden {
+    display: none;
 }
 
 .top-bottom-container {
