@@ -174,6 +174,9 @@ Object.values(thumbnailItems).forEach(item => {
     });
 });
 
+// 防止快速连续切换视角
+let isSwitchingView = false;
+
 // 当用户拖动进度条时同步视频的播放时间
 progressBar.addEventListener('input', async () => {
     await changeProgressBarValue();
@@ -508,6 +511,8 @@ function setVideoDuration() {
 
 // 播放暂停按钮
 async function togglePlayPause() {
+    window.logger.debug("togglePlayPause called, is_playing:", is_playing);
+    window.logger.debug("currentIndex:", currentIndex, "totalClipsNumber:", totalClipsNumber);
     if (is_playing) {
         pauseAllVideos();
         // 暂停则恢复播放1倍速播放
@@ -591,6 +596,8 @@ async function setVideosSrc(clipsIndex) {
     // 设置播放源
     if (clipsIndex < AllClipsList[type].at(index).clips.length) {
         const videos = AllClipsList[type].at(index).clips.at(clipsIndex).videos;
+        window.logger.debug("setVideosSrc called for clipsIndex:", clipsIndex);
+        window.logger.debug("videos object:", videos);
 
         validVideosChannelCount = 0;
         validVideoChannels = [];
@@ -618,6 +625,7 @@ async function setVideosSrc(clipsIndex) {
 
                 // 如果是选中的视角，设置主视频源
                 if (view === selectedView) {
+                    window.logger.debug("Setting main video source for view", view, ":", videoUrl);
                     mainVideo.src = videoUrl;
                     mainVideo.removeAttribute("poster");
 
@@ -631,8 +639,13 @@ async function setVideosSrc(clipsIndex) {
             }
         }
 
-        // 加载主视频
-        mainVideo.load();
+        // 加载主视频（只有在有源的情况下）
+        if (mainVideo.hasAttribute("src")) {
+            mainVideo.load();
+        } else {
+            window.logger.warn("No video source for selected view:", selectedView);
+            mainVideo.poster = "no_video_min.svg";
+        }
 
         loadedVideosChannelCount = 0;  // 清零等待加载完毕
         endedVideosChannelCount = 0;
@@ -643,10 +656,15 @@ async function setVideosSrc(clipsIndex) {
 
 
 function playAllVideos() {
+    window.logger.debug("playAllVideos called, mainVideo.hasAttribute('src'):", mainVideo.hasAttribute("src"));
+    window.logger.debug("mainVideo.src:", mainVideo.src);
     if (mainVideo.hasAttribute("src")) {
         mainVideo.play().catch(error => {
             console.error('Main video play() failed:', error);
+            window.logger.error('Main video play() failed:', error);
         });
+    } else {
+        window.logger.error("mainVideo has no src attribute, cannot play");
     }
 
     // 播放所有缩略图视频
@@ -714,38 +732,20 @@ async function selectView(view) {
             seiData = await window.electronAPI.parseVideoSei(videoUrl);
             window.logger.debug("共计:", seiData.length, "帧SEI数据");
 
-            // 设置播放时间
-            mainVideo.currentTime = currentTime;
-
             // 加载视频
             mainVideo.load();
 
             // 等待视频加载完成
-            await new Promise((resolve, reject) => {
+            await new Promise((resolve) => {
                 const onLoadedData = () => {
-                    cleanup();
+                    mainVideo.removeEventListener('loadeddata', onLoadedData);
                     resolve();
                 };
-
-                const onError = () => {
-                    cleanup();
-                    reject(new Error('Failed to load video'));
-                };
-
-                const cleanup = () => {
-                    mainVideo.removeEventListener('loadeddata', onLoadedData);
-                    mainVideo.removeEventListener('error', onError);
-                };
-
                 mainVideo.addEventListener('loadeddata', onLoadedData);
-                mainVideo.addEventListener('error', onError);
-
-                // 设置超时
-                setTimeout(() => {
-                    cleanup();
-                    reject(new Error('Video load timeout'));
-                }, 5000);
             });
+
+            // 设置播放时间 - 必须在loadeddata之后设置
+            mainVideo.currentTime = currentTime;
 
             // 如果之前正在播放，继续播放
             if (wasPlaying) {
@@ -753,7 +753,15 @@ async function selectView(view) {
                     console.error('Failed to resume playback after view switch:', error);
                 });
             }
+        } else {
+            // 选中的视角没有视频
+            window.logger.warn("Selected view has no video:", view);
+            mainVideo.removeAttribute("src");
+            mainVideo.poster = "no_video_min.svg";
         }
+    } else {
+        // 如果没有视频加载，只是更新选中状态，视频源会在setVideosSrc中设置
+        window.logger.debug("selectView called during initialization, only updating UI selection");
     }
 }
 
@@ -883,9 +891,6 @@ async function updateClipsDuration() {
     async () => {
         if (AllClipsList) {
             if (type in AllClipsList && AllClipsList[type].length > index) {
-                // 设置默认选中的视角
-                selectView('F');
-
                 totalClipsNumber = AllClipsList[type].at(index).clips.length;
 
                 // 获取每段视频的起始时间
@@ -903,6 +908,9 @@ async function updateClipsDuration() {
                     await updateClipsDuration();
                     currentIndex = 0;  // 默认从头播放
                     await setVideosSrc(currentIndex);
+
+                    // 设置默认选中的视角（UI状态）
+                    selectView('F');
                 }
             }
         }
