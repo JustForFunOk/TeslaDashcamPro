@@ -11,38 +11,67 @@
 </head>
 
 <body>
-    <div id="top-container" class="top-bottom-container">
-        <div id="timestamp" class="header-center"></div>
+    <!-- 主播放区域容器 -->
+    <div class="main-video-wrapper">
+        <!-- 主播放视频 -->
+        <div class="main-video-container">
+            <video id="main-video" class="main-video" muted src=""></video>
 
-        <div id="can-data" class="header-right">
-            <div id="speed"></div>
-            <div id="gear" class="vehicle-info-icon"></div>
-            <div id="driving-mode" class="vehicle-info-icon">
-                <img id="steering-wheel-icon" src="steering_wheel_min.svg" alt="steering wheel icon" class="icon" />
-                <div id="driving-mode-text" class="icon-bottom-text"></div>
+            <!-- 左上角 overlay: 返回按钮和时间 -->
+            <div class="overlay-top-left">
+                <button id="back-button" tabindex="-1" class="overlay-button">
+                    <img id="back-icon" src="back_bold.svg" alt="back to home" class="invert-color-icon" />
+                </button>
+                <div id="timestamp" class="overlay-timestamp"></div>
             </div>
-            <div id="brake-pedal" class="vehicle-info-icon">
-                <img id="brake-pedal-icon" src="brake_pedal_min.svg" alt="brake pedal status" class="icon" />
+
+            <!-- 右上角 overlay: 驾驶信息 -->
+            <div id="can-data" class="overlay-top-right">
+                <div id="speed" class="overlay-speed"></div>
+                <div id="gear" class="vehicle-info-icon overlay-vehicle-icon"></div>
+                <div id="driving-mode" class="vehicle-info-icon overlay-vehicle-icon">
+                    <img id="steering-wheel-icon" src="steering_wheel_min.svg" alt="steering wheel icon" class="icon" />
+                    <div id="driving-mode-text" class="icon-bottom-text"></div>
+                </div>
+                <div id="brake-pedal" class="vehicle-info-icon overlay-vehicle-icon">
+                    <img id="brake-pedal-icon" src="brake_pedal_min.svg" alt="brake pedal status" class="icon" />
+                </div>
+                <div id="accelerator-pedal" class="vehicle-info-icon overlay-vehicle-icon">
+                    <img id="accelerator-pedal-icon" src="accelerator_pedal_min.svg" alt="accelerator pedal status"
+                        class="icon" />
+                    <div id="accel-percentage-text" class="icon-bottom-text"></div>
+                </div>
+                <div id="left-turn-light" class="vehicle-info-icon overlay-vehicle-icon">
+                    <img id="left-arrow-icon" src="left_arrow.svg" alt="turn left light status" class="icon" />
+                </div>
+                <div id="right-turn-light" class="vehicle-info-icon overlay-vehicle-icon">
+                    <img id="right-arrow-icon" src="right_arrow.svg" alt="turn right light status" class="icon" />
+                </div>
             </div>
-            <div id="accelerator-pedal" class="vehicle-info-icon">
-                <img id="accelerator-pedal-icon" src="accelerator_pedal_min.svg" alt="accelerator pedal status"
-                    class="icon" />
-                <div id="accel-percentage-text" class="icon-bottom-text"></div>
-            </div>
-            <div id="left-turn-light" class="vehicle-info-icon">
-                <img id="left-arrow-icon" src="left_arrow.svg" alt="turn left light status" class="icon" />
-            </div>
-            <div id="right-turn-light" class="vehicle-info-icon">
-                <img id="right-arrow-icon" src="right_arrow.svg" alt="turn right light status" class="icon" />
+
+            <!-- 底部 overlay: 播放控制 -->
+            <div class="overlay-bottom-controls">
+                <div class="controls-overlay">
+                    <button id="backward-btn" tabindex="-1" class="tool-bar-button overlay-control-button">
+                        <img id="backward-icon" src="backward_5_seconds_simple.svg" alt="backward 5 seconds"
+                            class="invert-color-icon" />
+                    </button>
+                    <button id="play-pause-btn" tabindex="-1" class="tool-bar-button overlay-control-button">
+                        <img id="play-pause-icon" src="play.svg" alt="play/pause icon" class="invert-color-icon" />
+                    </button>
+                    <button id="x-speed-btn" tabindex="-1" class="tool-bar-button overlay-control-button">
+                        <img id="x-speed-icon" src="x_speed.svg" alt="forward speed" class="invert-color-icon" />
+                        <div id="x-speed-text" class="button-text">1x</div>
+                    </button>
+                    <div id="current-time" class="bar-time overlay-time">mm:ss</div>
+                    <div class="slider-container-overlay">
+                        <input type="range" id="progress-bar" tabindex="-1" value="0">
+                        <div id="event-marker" class="marker hidden"></div>
+                    </div>
+                    <div id="total-duration" class="bar-time overlay-time">mm:ss</div>
+                </div>
             </div>
         </div>
-
-    </div>
-
-
-    <!-- 主播放区域 -->
-    <div class="main-video-container">
-        <video id="main-video" class="main-video" muted src=""></video>
     </div>
 
     <!-- 底部多视角缩略图列表 -->
@@ -82,37 +111,6 @@
     </div>
 
 
-    <div id="bottom-container" class="top-bottom-container">
-        <div class="header-left">
-            <button id="back-button" tabindex="-1" class="tool-bar-button">
-                <img id="back-icon" src="back_bold.svg" alt="back to home" class="invert-color-icon" />
-            </button>
-        </div>
-        <div class="controls">
-            <button id="backward-btn" tabindex="-1" class="tool-bar-button">
-                <img id="backward-icon" src="backward_5_seconds_simple.svg" alt="backward 5 seconds"
-                    class="invert-color-icon" />
-            </button>
-            <button id="play-pause-btn" tabindex="-1" class="tool-bar-button">
-                <img id="play-pause-icon" src="play.svg" alt="play/pause icon" class="invert-color-icon" />
-            </button>
-            <button id="x-speed-btn" tabindex="-1" class="tool-bar-button">
-                <img id="x-speed-icon" src="x_speed.svg" alt="forward speed" class="invert-color-icon" />
-                <div id="x-speed-text" class="button-text">1x</div>
-            </button>
-            <div id="current-time" class="bar-time">mm:ss</div>
-            <div class="slider-container">
-                <input type="range" id="progress-bar" tabindex="-1" value="0">
-                <div id="event-marker" class="marker hidden"></div>
-            </div>
-            <div id="total-duration" class="bar-time">mm:ss</div>
-        </div>
-        <!-- <div>
-            <button id="delete-button" class="tool-bar-button">
-                <img src="delete_icon_regular.svg" alt="delete video" class="icon" />
-            </button>
-        </div> -->
-    </div>
 
     <script src="./script.js"></script>
 </body>

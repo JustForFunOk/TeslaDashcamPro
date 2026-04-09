@@ -20,7 +20,6 @@ const thumbnailVideos = {
 const timeDisplay = document.getElementById('timestamp');
 
 const canDataDisplay = document.getElementById('can-data');
-const topContainer = document.getElementById('top-container');
 const drivingMode = document.getElementById('driving-mode');
 const steeringWheelIcon = document.getElementById('steering-wheel-icon');
 const drivingModeText = document.getElementById('driving-mode-text');
@@ -31,9 +30,6 @@ const acceleratorPedal = document.getElementById('accelerator-pedal');
 const accelPercentage = document.getElementById('accel-percentage-text');
 const turnLeftIndicator = document.getElementById('left-turn-light');
 const turnRightIndicator = document.getElementById('right-turn-light');
-
-
-const bottomContainer = document.getElementById('bottom-container');
 const backButton = document.getElementById('back-button');
 const backwardButton = document.getElementById('backward-btn');
 const playPauseButton = document.getElementById('play-pause-btn');
@@ -242,8 +238,6 @@ mainVideo.addEventListener('timeupdate', () => {
     // 更新UI
 
     if (seiData && seiData.length > 0) {
-        topContainer.style.justifyContent = 'space-between';
-
         const seiIndex = Math.round(playTimeInClip * 36);
 
         if (seiIndex < seiData.length && seiData[seiIndex] != null) {
@@ -326,7 +320,6 @@ mainVideo.addEventListener('timeupdate', () => {
         }
     } else {
         canDataDisplay.classList.add('hidden');
-        topContainer.style.justifyContent = 'center';
     }
 });
 
@@ -828,20 +821,12 @@ function resizeWindow() {
     const videoH = mainVideo.videoHeight;
     const extraWidth = 0;  // 若左边显示3D渲染结果则需要设置这个值
 
-    const topContainerStyle = window.getComputedStyle(topContainer);
-    const topContainerMarginTop = parseFloat(topContainerStyle.marginTop);
-    const topContainerMarginBottom = parseFloat(topContainerStyle.marginBottom);
-
-    const bottomContainerStyle = window.getComputedStyle(bottomContainer);
-    const bottomContainerMarginTop = parseFloat(bottomContainerStyle.marginTop);
-    const bottomContainerMarginBottom = parseFloat(bottomContainerStyle.marginBottom);
-
+    // 在新的布局中，只需要考虑多视角区域的高度
     const multiViewContainer = document.querySelector('.multi-view-container');
-    const multiViewContainerHeight = multiViewContainer ? multiViewContainer.offsetHeight : 120;
+    const multiViewContainerHeight = multiViewContainer ? multiViewContainer.offsetHeight : 100; // 更新为100px
 
-    const extraHeight = topContainer.offsetHeight + topContainerMarginTop + topContainerMarginBottom +
-        bottomContainer.offsetHeight + bottomContainerMarginTop + bottomContainerMarginBottom +
-        multiViewContainerHeight;
+    // Overlay元素不占用额外高度，因为它们是绝对定位的
+    const extraHeight = multiViewContainerHeight;
 
     window.electronAPI.resizeWindow(videoW, videoH, extraWidth, extraHeight);
 }
